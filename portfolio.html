@@ -986,10 +986,16 @@
                   return (
                     <button
                       key={i}
-                      onClick={() => setActiveWorkIdx(i)}
+                      onClick={() => {
+                        if (isActive && w.caseStudy) {
+                          window.location.href = w.caseStudy;
+                        } else {
+                          setActiveWorkIdx(i);
+                        }
+                      }}
                       style={{
                         all: "unset",
-                        cursor: "pointer",
+                        cursor: isActive && w.caseStudy ? "pointer" : "pointer",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
