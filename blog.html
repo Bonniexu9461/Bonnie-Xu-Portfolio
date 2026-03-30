@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Bonnie Xu | Product & UX Designer</title>
+    <meta name="description" content="Design insights, AI workflow tips, and case studies by Bonnie Xu — a product & UX designer exploring the intersection of design and AI." />
+    <meta property="og:title" content="Blog — Bonnie Xu" />
+    <meta property="og:description" content="Design insights, AI workflow tips, and case studies by Bonnie Xu." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="favicon.svg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-page: #F4F2F1;
+            --bg-card: #FBFAF9;
+            --text-1: #2B2B2B;
+            --text-2: #808080;
+            --border: #DDDBD9;
+            --border-lt: #EDEDEB;
+            --accent: #E8452A;
+            --r-sm: 15px;
+            --r-md: 24px;
+            --r-lg: 32px;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-1);
+        }
+
+        /* Main content — matches projects.html structure.
+           shared-nav.js already sets body { padding-top: 72px },
+           so no margin-top needed here. */
+        main {
+            padding: 80px 0;
+        }
+
+        .cs-inner {
+            max-width: 1440px;
+            padding: 0 80px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Page header */
+        .page-header {
+            padding: 0px 0 40px 0;
+        }
+
+        .t-label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .t-display {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: clamp(36px, 8vw, 64px);
+            font-weight: 700;
+            color: var(--text-1);
+            letter-spacing: -2.5px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .page-subtitle {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--text-2);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        /* Featured post */
+        .featured-section {
+            padding: 80px 0;
+        }
+
+        .featured-post {
+            display: grid;
+            grid-template-columns: 480px 1fr;
+            gap: 48px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-lt);
+            border-radius: var(--r-lg);
+            overflow: hidden;
+            padding: 48px;
+            align-items: center;
+        }
+
+        .featured-image {
+            aspect-ratio: 16/9;
+            background: #EBEBEA;
+            border-radius: var(--r-sm);
+            overflow: hidden;
+            height: 270px;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .featured-content .t-h2 {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: clamp(26px, 5vw, 36px);
+            font-weight: 700;
+            color: var(--text-1);
+            letter-spacing: -1.5px;
+            line-height: 1.2;
+        }
+
+        .featured-content .t-body-lg {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: #555;
+            line-height: 1.85;
+        }
+
+        .featured-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-lt);
+        }
+
+        .featured-meta-left {
+            display: flex;
+            gap: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--text-2);
+        }
+
+        .featured-read-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--accent);
+            text-decoration: none;
+            transition: gap 0.3s;
+        }
+
+        .featured-read-link:hover {
+            gap: 12px;
+        }
+
+        /* Category tag */
+        .category-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border: 1px solid var(--text-2);
+            border-radius: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+        }
+
+        /* Posts grid */
+        .posts-section {
+            padding: 80px 0;
+            flex: 1;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .post-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-lt);
+            border-radius: var(--r-md);
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-card-image {
+            aspect-ratio: 16/9;
+            background: #EBEBEA;
+            overflow: hidden;
+        }
+
+        .post-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .post-card-content {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .post-card-title {
+            font-family: 'Bricolage Grotesque', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-1);
+            letter-spacing: -0.5px;
+            line-height: 1.4;
+            transition: color 0.3s;
+        }
+
+        .post-card:hover .post-card-title {
+            color: var(--accent);
+        }
+
+        .post-card-excerpt {
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--text-2);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .post-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-lt);
+            font-family: 'Poppins', sans-serif;
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--text-2);
+        }
+
+        /* Contact form */
+        .contact-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:80px; align-items:start; padding-bottom:0px; }
+        .contact-input::placeholder { color:rgba(255,255,255,0.35); }
+        .contact-input:focus { outline:none; border-bottom-color:rgba(255,255,255,0.7) !important; }
+
+        /* Scroll animation — premium easing */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .img-reveal { overflow: hidden; }
+        .img-reveal img { transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease; transform: scale(1.08); opacity: 0; }
+        .img-reveal.visible img { transform: scale(1); opacity: 1; }
+        .line-reveal { width: 0; height: 1px; background: #DDDBD9; transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+        .line-reveal.visible { width: 100%; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-container {
+                padding: 0 40px;
+            }
+
+            .posts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .featured-post {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .featured-image {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cs-inner {
+                padding: 0 20px;
+            }
+
+            main {
+                padding: 40px 0;
+            }
+
+            #contact {
+                padding: 0;
+            }
+
+            .page-header {
+                padding: 0 0 32px;
+            }
+
+            .t-display {
+                font-size: 40px;
+            }
+
+            .page-subtitle {
+                font-size: 16px;
+            }
+
+            .posts-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .featured-section {
+                padding: 40px 0;
+            }
+
+            .posts-section {
+                padding: 40px 0;
+            }
+
+            .featured-post {
+                padding: 24px;
+            }
+
+            .post-card-content {
+                padding: 20px;
+            }
+
+            .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+        }
+    </style>
+    <style>
+        /* ── Newsletter banner ── */
+        .nl-banner  { background: #FBFAF9; border-top: 1px solid #EDEDEB; border-bottom: 1px solid #EDEDEB; }
+        .nl-inner   { max-width: 1440px; margin: 0 auto; padding: 36px 80px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; }
+        .nl-form    { display: flex; gap: 10px; align-items: center; }
+        .nl-input   { flex: 1; padding: 11px 18px; border-radius: 999px; border: 1px solid #DDDBD9; background: #fff; font-family: 'Poppins', sans-serif; font-size: 13px; color: #2B2B2B; outline: none; min-width: 0; }
+        .nl-input::placeholder { color: #AAAAAA; }
+        .nl-btn     { padding: 11px 22px; border-radius: 999px; border: none; background: #E8452A; color: #fff; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: opacity 0.2s; flex-shrink: 0; }
+        .nl-btn:hover { opacity: 0.85; }
+        .nl-btn:disabled { opacity: 0.6; cursor: default; }
+        .nl-msg     { font-family: 'Poppins', sans-serif; font-size: 12px; margin-top: 8px; min-height: 16px; color: #2B2B2B; }
+        @media (max-width: 768px) {
+            .nl-inner { grid-template-columns: 1fr; padding: 32px 20px; gap: 20px; }
+            .nl-form  { flex-direction: column; align-items: flex-start; }
+            .nl-input { width: 100%; }
+            .nl-btn   { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Content -->
+    <main>
+        <div class="cs-inner">
+            <!-- Page Header -->
+            <section class="page-header fade-up">
+                <p class="t-label">Writing</p>
+                <h1 class="t-display">Blog</h1>
+                <p class="page-subtitle">How AI is changing the way I design: tools, vocabulary, and real workflows.</p>
+            </section>
+
+            <!-- Posts List -->
+            <section style="padding-bottom: 80px;">
+
+                <style>
+                    .post-row {
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 32px;
+                        padding: 36px 0;
+                        border-top: 1px solid var(--border);
+                        text-decoration: none;
+                        color: inherit;
+                        transition: opacity 0.2s;
+                    }
+                    .post-row:last-child { border-bottom: 1px solid var(--border); }
+                    .post-row:hover { opacity: 0.75; }
+                    .post-row:hover .post-row-title { color: var(--accent); }
+
+                    .post-thumb {
+                        flex-shrink: 0;
+                        width: 200px;
+                        height: 134px;
+                        border-radius: 12px;
+                        overflow: hidden;
+                        background: #E8E6E4;
+                    }
+                    .post-thumb img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        display: block;
+                    }
+                    .post-thumb-placeholder {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    .post-row-body { flex: 1; min-width: 0; }
+                    .post-row-tag {
+                        display: inline-block;
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 10px;
+                        font-weight: 500;
+                        color: var(--text-2);
+                        letter-spacing: 1.2px;
+                        text-transform: uppercase;
+                        margin-bottom: 10px;
+                    }
+                    .post-row-title {
+                        font-family: 'Bricolage Grotesque', sans-serif;
+                        font-size: 20px;
+                        font-weight: 700;
+                        letter-spacing: -0.5px;
+                        line-height: 1.25;
+                        margin-bottom: 10px;
+                        transition: color 0.2s;
+                    }
+                    .post-row-excerpt {
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 13px;
+                        font-weight: 300;
+                        color: var(--text-2);
+                        line-height: 1.7;
+                        margin-bottom: 16px;
+                    }
+                    .post-row-meta {
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 11px;
+                        font-weight: 300;
+                        color: #AAAAAA;
+                        display: flex;
+                        gap: 16px;
+                    }
+                    @media (max-width: 640px) {
+                        .post-row { flex-direction: column; }
+                        .post-thumb { width: 100%; height: 200px; }
+                    }
+                </style>
+
+                <!-- Post 0 — UX in the AI Era (DRAFT — hidden until ready) -->
+                <!-- DRAFT: unhide by removing display:none when ready to publish -->
+                <div class="post-row fade-up" style="display:none;">
+                    <div class="post-thumb" style="position:relative;">
+                        <img src="images/blog-cover-ai-wireframe.png" alt="UX in the AI Era: What Actually Changed">
+                    </div>
+                    <div class="post-row-body">
+                        <span class="post-row-tag">UX Strategy</span>
+                        <h2 class="post-row-title">UX in the AI Era: What Actually Changed</h2>
+                        <p class="post-row-excerpt">AI didn't just change our tools. It changed the process itself. Here's what UX looks like now.</p>
+                        <div class="post-row-meta">
+                            <span>Mar 28, 2026</span>
+                            <span>8 min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 1 — Mar 17 -->
+                <a href="blog-ai-vocabulary.html" class="post-row fade-up">
+                    <div class="post-thumb">
+                        <img src="images/blog-vocabulary-cover.png" alt="Designer's AI Instruction Vocabulary">
+                    </div>
+                    <div class="post-row-body">
+                        <span class="post-row-tag">AI &amp; Design</span>
+                        <h2 class="post-row-title">Designer's AI Instruction Vocabulary</h2>
+                        <p class="post-row-excerpt">Replace vague descriptions with precise design terms — so AI understands your intent the first time.</p>
+                        <div class="post-row-meta">
+                            <span>Mar 17, 2026</span>
+                            <span>4 min read</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Post 2 — Mar 10 -->
+                <a href="blog-57k-dominos.html" class="post-row fade-up">
+                    <div class="post-thumb">
+                        <img src="images/dominos-offer-1.avif" alt="Domino's $57K article preview">
+                    </div>
+                    <div class="post-row-body">
+                        <span class="post-row-tag">Case Study</span>
+                        <h2 class="post-row-title">How I Increased Domino's Weekly Sales by $57K Through Design</h2>
+                        <p class="post-row-excerpt">A deep dive into the UX decisions that moved the needle on one of Australia's biggest food delivery platforms.</p>
+                        <div class="post-row-meta">
+                            <span>Mar 10, 2026</span>
+                            <span>6 min read</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Post 3 — Mar 10 -->
+                <a href="blog-ai-workflow.html" class="post-row fade-up">
+                    <div class="post-thumb">
+                        <img src="images/blog-ai-workflow-cover.png" alt="My AI-Powered Design Workflow preview">
+                    </div>
+                    <div class="post-row-body">
+                        <span class="post-row-tag">AI &amp; Design</span>
+                        <h2 class="post-row-title">My AI-Powered Design Workflow</h2>
+                        <p class="post-row-excerpt">From raw voice note to final design in 4 steps — the exact AI tools I use every day and how they fit together.</p>
+                        <div class="post-row-meta">
+                            <span>Mar 10, 2026</span>
+                            <span>5 min read</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- DRAFT POSTS — uncomment and add href when article is ready
+
+                <a href="#" class="post-row fade-up">
+                    <div class="post-thumb"><div class="post-thumb-placeholder" style="background: linear-gradient(135deg, #FFF0D6 0%, #FFD8A0 100%);"></div></div>
+                    <div class="post-row-body">
+                        <span class="post-row-tag">Freelance</span>
+                        <h2 class="post-row-title">The Brief That Changed How I Think About Client Work</h2>
+                        <p class="post-row-excerpt">One bad brief taught me more about communication and scope than any course ever could.</p>
+                        <div class="post-row-meta"><span>Jan 28, 2026</span><span>3 min read</span></div>
+                    </div>
+                </a>
+
+                <a href="#" class="post-row fade-up">
+                    <div class="post-thumb"><div class="post-thumb-placeholder" style="background: linear-gradient(135deg, #D6FFE8 0%, #A0E8C0 100%);"></div></div>
+                    <div class="post-row-body">
+                        <span class="post-row-tag">Tools</span>
+                        <h2 class="post-row-title">Figma Variables: A Real-World Guide for Brand Designers</h2>
+                        <p class="post-row-excerpt">How I use Figma Variables to build scalable design systems that non-designers can actually maintain.</p>
+                        <div class="post-row-meta"><span>Jan 14, 2026</span><span>7 min read</span></div>
+                    </div>
+                </a>
+
+                <a href="#" class="post-row fade-up">
+                    <div class="post-thumb"><div class="post-thumb-placeholder" style="background: linear-gradient(135deg, #E8E0FF 0%, #C8B8FF 100%);"></div></div>
+                    <div class="post-row-body">
+                        <span class="post-row-tag">Process</span>
+                        <h2 class="post-row-title">Why Every Designer Should Learn Systems Thinking</h2>
+                        <p class="post-row-excerpt">The skill that separates good designers from great ones — and how I apply it to every project I touch.</p>
+                        <div class="post-row-meta"><span>Feb 24, 2026</span><span>4 min read</span></div>
+                    </div>
+                </a>
+
+                <a href="#" class="post-row fade-up">
+                    <div class="post-thumb"><div class="post-thumb-placeholder" style="background: linear-gradient(135deg, #FFE8E8 0%, #FFB8B8 100%);"></div></div>
+                    <div class="post-row-body">
+                        <span class="post-row-tag">UX Design</span>
+                        <h2 class="post-row-title">Designing for Scale: Lessons from 10 Global Markets</h2>
+                        <p class="post-row-excerpt">What I learned shipping the same design across 10 different markets — and why localisation is always more complex than you think.</p>
+                        <div class="post-row-meta"><span>Dec 30, 2025</span><span>5 min read</span></div>
+                    </div>
+                </a>
+
+                END DRAFTS -->
+
+            </section>
+        </div>
+    </main>
+
+    <!-- Contact + Footer -->
+    <section id="contact" style="background:#2B2B2B;">
+        <div class="cs-inner" style="padding-top: 80px; padding-bottom: 80px;">
+            <div class="contact-grid">
+                <div class="fade-up">
+                    <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(42px,6vw,72px);letter-spacing:-3px;line-height:1.0;color:#fff;">Let's be<br>creative<br>together.</h2>
+                </div>
+                <div class="fade-up">
+                    <form action="https://api.web3forms.com/submit" method="POST" style="display:flex;flex-direction:column;gap:20px;">
+                        <input type="hidden" name="access_key" value="c706f602-bfd6-4810-aa0f-da098552839d" />
+                        <input type="text" name="name" placeholder="Your name" required class="contact-input" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Poppins',sans-serif;font-size:14px;padding:12px 0;width:100%;" />
+                        <input type="email" name="email" placeholder="Your email" required class="contact-input" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Poppins',sans-serif;font-size:14px;padding:12px 0;width:100%;" />
+                        <textarea name="message" placeholder="Message" rows="5" required class="contact-input" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Poppins',sans-serif;font-size:14px;padding:12px 0;width:100%;resize:none;"></textarea>
+                        <button type="submit" style="background:#fff;color:#2B2B2B;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;padding:14px;border-radius:999px;border:none;cursor:pointer;width:100%;margin-top:8px;">Submit ↗︎︎</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer injected by shared-nav.js -->
+
+    <!-- Scroll Animation Script -->
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up, .img-reveal, .line-reveal').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+    <script src="shared-nav.js"></script>
+</body>
+</html>

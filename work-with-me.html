@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Work with Me — Design Subscription Service</title>
+  <link rel="icon" href="favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Design System Variables */
+    :root {
+      --bg-page: #F4F2F1;
+      --bg-card: #FBFAF9;
+      --text-1: #2B2B2B;
+      --text-2: #808080;
+      --border: #DDDBD9;
+      --border-lt: #EDEDEB;
+      --accent: #E8452A;
+      --r-sm: 15px;
+      --r-md: 24px;
+      --r-lg: 32px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-1);
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    /* Typography */
+    .t-display {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 64px);
+      letter-spacing: -2.5px;
+      line-height: 1.2;
+    }
+
+    .t-h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: clamp(26px, 4vw, 36px);
+      letter-spacing: -1.5px;
+      line-height: 1.2;
+    }
+
+    .t-h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: clamp(20px, 3vw, 28px);
+      letter-spacing: -1px;
+      line-height: 1.2;
+    }
+
+    .t-h4 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .t-body-lg {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: #555;
+      line-height: 1.85;
+    }
+
+    .t-body {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    .t-label {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      color: var(--text-2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background-color: rgba(244, 242, 241, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-lt);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--text-1);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .nav-link {
+      position: relative;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      color: #808080;
+      text-decoration: none;
+      letter-spacing: -0.28px;
+      padding: 4px 0;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--text-1); }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #2B2B2B;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: #2B2B2B; }
+    .nav-link.active::after { width: 100%; }
+
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 10px 20px;
+      background: var(--text-1);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .nav-pill:hover {
+      opacity: 0.8;
+    }
+
+    /* Container */
+    .cs-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 80px;
+    }
+
+    main {
+      padding-top: 72px;
+      padding-bottom: 100px;
+      min-height: 100vh;
+    }
+
+    /* Card Styling */
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-md);
+      padding: 40px;
+      margin-bottom: 16px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Fade Up Animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-up.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hero Section */
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 30px;
+    }
+
+    .hero-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .hero-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .availability-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background-color: #E8F5E9;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #2E7D32;
+    }
+
+    .availability-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #4CAF50;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .hero-headline {
+      margin-bottom: 20px;
+      font-size: clamp(32px, 4vw, 42px);
+    }
+
+    .hero-subtext {
+      color: var(--text-2);
+      margin-bottom: 30px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 24px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s;
+    }
+
+    .btn-outline {
+      border: 1px solid var(--text-1);
+      color: var(--text-1);
+      background-color: transparent;
+    }
+
+    .btn-outline:hover {
+      background-color: var(--text-1);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .btn-dark {
+      background-color: var(--text-1);
+      color: white;
+    }
+
+    .btn-dark:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(43, 43, 43, 0.25);
+    }
+
+    /* Recent Works */
+    .recent-works {
+      border-top: 1px solid var(--border-lt);
+      padding-top: 30px;
+      margin-top: 30px;
+    }
+
+    .recent-works-label {
+      display: block;
+      margin-bottom: 16px;
+      font-weight: 600;
+      color: var(--text-1);
+      font-size: 14px;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .work-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .work-image {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      background-color: #f0f0f0;
+    }
+
+    .work-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .work-title {
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text-1);
+    }
+
+    .brands-row {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* Services Grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .service-tile {
+      padding: 24px;
+      background-color: #FAFAF9;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border-lt);
+    }
+
+    .service-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .service-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--text-1);
+    }
+
+    .service-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* About Section */
+    .about-photos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: var(--r-md);
+      overflow: hidden;
+      background-color: #f0f0f0;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-bio {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-2);
+    }
+
+    .about-bio strong {
+      color: var(--text-1);
+      font-weight: 600;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .stat-item {
+      padding: 20px;
+      background-color: #FAFAF9;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border-lt);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 36px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .stat-desc {
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    /* Process Section */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 30px;
+      margin-bottom: 24px;
+    }
+
+    .process-step {
+      text-align: center;
+    }
+
+    .process-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .process-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: var(--text-1);
+    }
+
+    .process-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    .process-arrow {
+      font-size: 20px;
+      color: var(--text-2);
+      margin: 0 -10px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .process-note {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-lt);
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-2);
+      font-weight: 500;
+    }
+
+    /* Pricing Section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 30px;
+    }
+
+    .pricing-card {
+      padding: 32px;
+      background-color: #FAFAF9;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border-lt);
+    }
+
+    .pricing-card.featured {
+      background-color: var(--text-1);
+      color: white;
+      transform: scale(1.02);
+      border-color: var(--text-1);
+    }
+
+    .pricing-card.featured .pricing-plan {
+      color: white;
+    }
+
+    .pricing-card.featured .pricing-price {
+      color: white;
+    }
+
+    .pricing-card.featured .pricing-desc {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .pricing-card.featured .pricing-features {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .pricing-plan {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+
+    .pricing-category {
+      font-size: 12px;
+      color: var(--text-2);
+      margin-bottom: 16px;
+    }
+
+    .pricing-price {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      color: var(--text-1);
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+
+    .pricing-period {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-bottom: 20px;
+    }
+
+    .pricing-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .pricing-button {
+      display: block;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 2;
+    }
+
+    /* Testimonials */
+    .testimonials-list {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .testimonial {
+      display: flex;
+      gap: 16px;
+      padding: 20px;
+      background-color: #FAFAF9;
+      border-radius: var(--r-md);
+      border: 1px solid var(--border-lt);
+    }
+
+    .testimonial-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background-color: #ddd;
+      overflow: hidden;
+    }
+
+    .testimonial-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .testimonial-content {
+      flex: 1;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--text-1);
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .testimonial-title {
+      font-size: 12px;
+      color: var(--text-2);
+      margin-bottom: 8px;
+    }
+
+    .testimonial-text {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* FAQ Section */
+    .faq-list {
+      margin-top: 24px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-lt);
+      padding: 20px 0;
+    }
+
+    .faq-item:first-child {
+      padding-top: 0;
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-1);
+      font-size: 14px;
+      padding: 8px 0;
+      user-select: none;
+    }
+
+    .faq-toggle {
+      flex-shrink: 0;
+      font-size: 20px;
+      transition: transform 0.3s;
+    }
+
+    .faq-toggle.open {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    .faq-answer.open {
+      max-height: 500px;
+      margin-top: 12px;
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      margin-top: 40px;
+      background: linear-gradient(135deg, rgba(232, 69, 42, 0.08) 0%, rgba(232, 69, 42, 0.04) 100%);
+      text-align: center;
+    }
+
+    .cta-headline {
+      margin-bottom: 8px;
+    }
+
+    .cta-subline {
+      font-style: italic;
+      font-family: 'Georgia', serif;
+      font-size: 20px;
+      color: var(--text-2);
+      margin-bottom: 24px;
+    }
+
+
+    /* Contact form */
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; padding-bottom:0px; }
+    .contact-input::placeholder { color:rgba(255,255,255,0.35); }
+    .contact-input:focus { outline:none; border-bottom-color:rgba(255,255,255,0.7) !important; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cs-inner {
+        padding: 0 20px;
+      }
+
+      .nav-inner {
+        padding: 0 20px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+
+      .works-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-photos {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-card.featured {
+        transform: scale(1);
+      }
+
+      .nav-links {
+        gap: 20px;
+        font-size: 13px;
+      }
+
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .btn {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 12px 16px;
+      }
+
+      .nav-inner {
+        width: 100%;
+        flex-direction: column;
+        gap: 12px;
+        padding: 0;
+      }
+
+      .nav-links {
+        width: 100%;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .cs-inner {
+        padding: 0 16px;
+      }
+
+      .card {
+        max-width: 100%;
+        padding: 20px;
+      }
+
+      .works-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .testimonial {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .testimonial-avatar {
+        margin: 0 auto;
+      }
+
+      .hero-top {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .cta-subline {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main Content -->
+  <main>
+    <div class="cs-inner">
+      <!-- SECTION 1: Hero Card -->
+      <section class="card fade-up">
+        <div class="hero-top">
+          <div class="hero-avatar">
+            <img src="images/about-hero.jpg" alt="Bonnie Xu">
+          </div>
+          <div class="availability-badge">
+            <span class="availability-dot"></span>
+            Available Now
+          </div>
+        </div>
+
+        <h1 class="t-display hero-headline">On-demand senior design for growing brands.</h1>
+
+        <p class="hero-subtext">Flat monthly subscription. Unlimited requests. Pause or cancel anytime. Built for founders and marketing teams who need great design, fast.</p>
+
+        <div class="hero-buttons">
+          <a href="#" class="btn btn-outline">Book a Call ↗︎︎</a>
+          <a href="#pricing" class="btn btn-dark">See Pricing ↗︎︎</a>
+        </div>
+
+        <!-- Recent Works -->
+        <div class="recent-works">
+          <span class="recent-works-label">Recent Works</span>
+          <div class="works-grid">
+            <div class="work-item">
+              <div class="work-image">
+                <img src="images/dominos-gamification.gif" alt="Gamification Series">
+              </div>
+              <div class="work-title">Gamification Series — Domino's</div>
+            </div>
+            <div class="work-item">
+              <div class="work-image">
+                <img src="images/dominos-brand.png" alt="Brand & Marketing Design">
+              </div>
+              <div class="work-title">Brand & Marketing Design — Domino's</div>
+            </div>
+            <div class="work-item">
+              <div class="work-image">
+                <img src="images/entain.jpg" alt="Digital & Campaign Design">
+              </div>
+              <div class="work-title">Digital & Campaign Design — Entain</div>
+            </div>
+          </div>
+          <div class="brands-row">
+            <strong>Working experience with global brands:</strong><br>
+            Domino's · Entain · Ray White
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: Services -->
+      <section class="card fade-up">
+        <h2 class="t-h2">Services</h2>
+        <p class="t-body-lg" style="margin-top: 16px; color: var(--text-2);">I offer a range of design services tailored to meet your unique needs and elevate your brand. From crafting compelling visual identities to optimizing user experiences, I'm here to bring your vision to life.</p>
+
+        <div class="services-grid">
+          <div class="service-tile">
+            <div class="service-icon">🎯</div>
+            <div class="service-title">Digital advertising</div>
+            <div class="service-desc">Ad creative that actually converts. Static, animated, and platform-ready for Meta, Google, and beyond.</div>
+          </div>
+          <div class="service-tile">
+            <div class="service-icon">📱</div>
+            <div class="service-title">Social media graphics</div>
+            <div class="service-desc">Consistent, on-brand content your team can post with confidence. No briefing a new designer every week.</div>
+          </div>
+          <div class="service-tile">
+            <div class="service-icon">🖥</div>
+            <div class="service-title">Web design</div>
+            <div class="service-desc">Landing pages and Framer builds designed for conversion, not just aesthetics. From first draft to live in days.</div>
+          </div>
+          <div class="service-tile">
+            <div class="service-icon">✨</div>
+            <div class="service-title">Motion graphics</div>
+            <div class="service-desc">Animated assets that stop the scroll for ads, social, or product demos.</div>
+          </div>
+          <div class="service-tile">
+            <div class="service-icon">📧</div>
+            <div class="service-title">Newsletter design</div>
+            <div class="service-desc">Clean, branded email templates your team can reuse and update without touching the code.</div>
+          </div>
+          <div class="service-tile">
+            <div class="service-icon">🖨</div>
+            <div class="service-title">Print design</div>
+            <div class="service-desc">Brochures, flyers, event materials, all designed to the same standard as your digital presence.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: About -->
+      <section class="card fade-up">
+        <h2 class="t-h2">About</h2>
+        <div class="about-photos">
+          <div class="about-photo">
+            <img src="images/about-hero.jpg" alt="Bonnie Xu">
+          </div>
+          <div class="about-photo">
+            <img src="images/about-work.jpg" alt="Work">
+          </div>
+          <div class="about-photo">
+            <img src="images/about-cat.jpg" alt="Personal">
+          </div>
+        </div>
+        <div class="about-bio">
+          I'm Bonnie Xu, a designer with <strong>5+ years of experience</strong> at global brands including <strong>Domino's</strong> (10 markets) and <strong>Entain</strong>. I specialize in <strong>UI/UX, marketing design, and motion</strong>. As a <strong>systems thinker</strong>, I build reusable components so your brand stays consistent and launches get faster. I've served <strong>15+ businesses</strong> across menus, banners, social media, and websites in hospitality, retail, and tech.
+        </div>
+      </section>
+
+      <!-- SECTION 4: Stats -->
+      <section class="card fade-up">
+        <h2 class="t-h2">Impact</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">5+</div>
+            <div class="stat-label">years of experience</div>
+            <div class="stat-desc">Global Brands</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">$57K</div>
+            <div class="stat-label">Increase weekly sales</div>
+            <div class="stat-desc">Domino's web page redesign</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">3x</div>
+            <div class="stat-label">Engagement lift</div>
+            <div class="stat-desc">Domino's gamification series</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">15+</div>
+            <div class="stat-label">businesses served</div>
+            <div class="stat-desc">spanning hospitality, retail, and tech industries</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: Process -->
+      <section class="card fade-up">
+        <h2 class="t-h2">Process</h2>
+        <div class="process-grid">
+          <div class="process-step">
+            <div class="process-icon">📥</div>
+            <div class="process-title">Subscribe</div>
+            <div class="process-desc">Subscribe to a plan & request as many designs as you'd like.</div>
+          </div>
+          <div style="position: relative;">
+            <div class="process-step">
+              <div class="process-icon">📝</div>
+              <div class="process-title">Request</div>
+              <div class="process-desc">Request whatever you'd like, from mobile apps to logos.</div>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-icon">📦</div>
+            <div class="process-title">Receive</div>
+            <div class="process-desc">Receive your design within two business days on average.</div>
+          </div>
+        </div>
+        <div class="process-note">
+          Fully async — No meetings required. Submit a request anytime, and I'll deliver on schedule. Simple.
+        </div>
+      </section>
+
+      <!-- SECTION 6: Pricing -->
+      <section class="card fade-up" id="pricing">
+        <h2 class="t-h2">Pricing</h2>
+        <div class="pricing-grid">
+          <div class="pricing-card">
+            <div class="pricing-plan">Standard</div>
+            <div class="pricing-category">Graphics</div>
+            <div class="pricing-price">$3,000</div>
+            <div class="pricing-period">per month</div>
+            <div class="pricing-desc">One request at a time. Full unlimited revisions.</div>
+            <button class="btn btn-outline pricing-button">Subscribe</button>
+            <ul class="pricing-features">
+              <li>✓ One request at a time</li>
+              <li>✓ Delivered within 2-3 business days</li>
+              <li>✓ Unlimited requests and revisions</li>
+              <li>✓ Figma source files included</li>
+              <li>✓ Pause or cancel anytime</li>
+            </ul>
+          </div>
+          <div class="pricing-card featured">
+            <div class="pricing-plan">Premium</div>
+            <div class="pricing-category">Graphics + Web</div>
+            <div class="pricing-price">$5,000</div>
+            <div class="pricing-period">per month</div>
+            <div class="pricing-desc">Everything you need to scale your brand.</div>
+            <button class="btn btn-dark pricing-button">Subscribe</button>
+            <ul class="pricing-features">
+              <li>✓ Two requests at a time</li>
+              <li>✓ Delivered within 2-3 business days</li>
+              <li>✓ Unlimited requests and revisions</li>
+              <li>✓ Figma source files included</li>
+              <li>✓ Framer builds included</li>
+              <li>✓ Monthly 30-min strategy call</li>
+              <li>✓ Pause or cancel anytime</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 7: Testimonials -->
+      <section class="card fade-up">
+        <h2 class="t-h2">Testimonials</h2>
+        <div class="testimonials-list" id="testimonials-container">
+          <!-- Testimonials will be rendered by React -->
+        </div>
+      </section>
+
+      <!-- SECTION 8: FAQ -->
+      <section class="card fade-up">
+        <h2 class="t-h2">FAQ</h2>
+        <div class="faq-list" id="faq-container">
+          <!-- FAQ will be rendered by React -->
+        </div>
+      </section>
+
+      <!-- SECTION 9: CTA Banner -->
+      <section class="card cta-banner fade-up">
+        <h2 class="t-h2 cta-headline">Transform Your Brand</h2>
+        <p class="cta-subline">with Professional Design</p>
+        <a href="#" class="btn btn-dark">Book a Call ↗︎︎</a>
+      </section>
+    </div>
+  </main>
+
+  <!-- Contact + Footer -->
+  <section id="contact" style="background:#2B2B2B;">
+    <div style="max-width:1440px;margin:0 auto;padding:80px 80px 80px;">
+      <div class="contact-grid">
+        <div class="fade-up">
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(42px,6vw,72px);letter-spacing:-3px;line-height:1.0;color:#fff;">Let's be<br>creative<br>together.</h2>
+        </div>
+        <div class="fade-up">
+          <form style="display:flex;flex-direction:column;gap:20px;">
+            <input type="text" name="name" placeholder="Your name" class="contact-input" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Poppins',sans-serif;font-size:14px;padding:12px 0;width:100%;" />
+            <input type="email" name="email" placeholder="Your email" required class="contact-input" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Poppins',sans-serif;font-size:14px;padding:12px 0;width:100%;" />
+            <textarea name="message" placeholder="Message" rows="5" required class="contact-input" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Poppins',sans-serif;font-size:14px;padding:12px 0;width:100%;resize:none;"></textarea>
+            <button type="submit" style="background:#fff;color:#2B2B2B;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;padding:14px;border-radius:999px;border:none;cursor:pointer;width:100%;margin-top:8px;">Submit ↗︎︎</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Footer injected by shared-nav.js -->
+
+  <!-- React -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Testimonials & FAQ Component -->
+  <script type="text/babel">
+    const testimonials = [
+      {
+        id: 1,
+        author: "Celene Grantham",
+        title: "Digital CX Design Lead, Domino's",
+        text: "Bonnie excels throughout the entire design process, from initial research and wireframing to prototyping and final delivery. As a senior designer, she works independently and autonomously while maintaining the highest quality standards."
+      },
+      {
+        id: 2,
+        author: "Rachel Khoo",
+        title: "Group Head of Digital Experience",
+        text: "Bonnie brings a unique blend of commercial acumen and creative talent. She designs with both the user experience and the business outcome in mind, consistently delivering work that is innovative and results-driven."
+      },
+      {
+        id: 3,
+        author: "Brenton Queen",
+        title: "Head of Digital Experience Design",
+        text: "Bonnie combines creativity, technical skill, and sharp problem solving ability with a genuine passion for design. Many designers are skilled, and many are enthusiastic, but Bonnie brings together the unique mix of insight, discipline, and vision that makes her a real driver of great work and meaningful outcomes."
+      }
+    ];
+
+    const faqs = [
+      {
+        id: 1,
+        question: "How does the subscription model work?",
+        answer: "You pay a fixed monthly fee and get unlimited design requests. We work on them one by one, ensuring top quality and fast turnaround."
+      },
+      {
+        id: 2,
+        question: "What type of designs do you offer?",
+        answer: "I cover UI/UX, brand identity, social media graphics, eDM design, print materials, motion graphics, and web design."
+      },
+      {
+        id: 3,
+        question: "How fast will I receive my designs?",
+        answer: "Most requests are delivered within 2-3 business days. Complex projects may take longer, but I'll always communicate timelines upfront."
+      },
+      {
+        id: 4,
+        question: "Can I cancel or pause my subscription?",
+        answer: "Yes, absolutely. You can pause or cancel your subscription at any time with no lock-in contracts."
+      },
+      {
+        id: 5,
+        question: "What tools do you use for design?",
+        answer: "Figma for UI/UX and brand work, Adobe Creative Suite for print and motion, and Framer for web builds."
+      }
+    ];
+
+    function Testimonials() {
+      return (
+        <div>
+          {testimonials.map((testimonial) => (
+            <div key={testimonial.id} className="testimonial">
+              <div className="testimonial-avatar">
+                <img src="images/about-hero.jpg" alt={testimonial.author} />
+              </div>
+              <div className="testimonial-content">
+                <div className="testimonial-author">{testimonial.author}</div>
+                <div className="testimonial-title">{testimonial.title}</div>
+                <div className="testimonial-text">"{testimonial.text}"</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    function FAQAccordion() {
+      const [openId, setOpenId] = React.useState(1);
+
+      return (
+        <div>
+          {faqs.map((faq) => (
+            <div key={faq.id} className="faq-item">
+              <div
+                className="faq-question"
+                onClick={() => setOpenId(openId === faq.id ? null : faq.id)}
+              >
+                <span>{faq.question}</span>
+                <span className={`faq-toggle ${openId === faq.id ? 'open' : ''}`}>
+                  ▼
+                </span>
+              </div>
+              <div className={`faq-answer ${openId === faq.id ? 'open' : ''}`}>
+                {faq.answer}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    // Render Testimonials
+    const testimonialsRoot = ReactDOM.createRoot(document.getElementById('testimonials-container'));
+    testimonialsRoot.render(<Testimonials />);
+
+    // Render FAQ
+    const faqRoot = ReactDOM.createRoot(document.getElementById('faq-container'));
+    faqRoot.render(<FAQAccordion />);
+  </script>
+
+  <!-- Fade-up Animation on Scroll -->
+  <script>
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-up').forEach((element) => {
+      observer.observe(element);
+    });
+  </script>
+    <script src="shared-nav.js"></script>
+</body>
+</html>

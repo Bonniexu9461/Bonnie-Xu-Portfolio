@@ -1,0 +1,290 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "$metadata": {
+    "name": "Bonnie Xu Portfolio — Design Tokens",
+    "version": "1.0.0",
+    "author": "Bonnie Xu",
+    "description": "Design tokens for bonniexu.com portfolio website. CSS custom properties as W3C Design Tokens Community Group (DTCG) format."
+  },
+
+  "color": {
+    "$type": "color",
+    "background": {
+      "page": {
+        "$value": "#F4F2F1",
+        "$description": "Main page background — warm off-white",
+        "cssVar": "--bg-page"
+      },
+      "card": {
+        "$value": "#FBFAF9",
+        "$description": "Card / surface background — lighter off-white",
+        "cssVar": "--bg-card"
+      }
+    },
+    "text": {
+      "primary": {
+        "$value": "#2B2B2B",
+        "$description": "Primary text — near-black",
+        "cssVar": "--text-1"
+      },
+      "secondary": {
+        "$value": "#808080",
+        "$description": "Secondary / muted text — mid-grey",
+        "cssVar": "--text-2"
+      },
+      "body": {
+        "$value": "#555555",
+        "$description": "Body paragraph text — used on .t-body-lg and .t-body"
+      }
+    },
+    "border": {
+      "default": {
+        "$value": "#DDDBD9",
+        "$description": "Standard border — warm grey",
+        "cssVar": "--border"
+      },
+      "light": {
+        "$value": "#EDEDEB",
+        "$description": "Light border — for cards and stat chips",
+        "cssVar": "--border-lt"
+      }
+    },
+    "accent": {
+      "$value": "#E8452A",
+      "$description": "Brand accent — orange-red used on stat numbers, section numbers, and CTAs",
+      "cssVar": "--accent"
+    },
+    "placeholder": {
+      "background": {
+        "$value": "#EBEBEA",
+        "$description": "Image placeholder background"
+      },
+      "border": {
+        "$value": "#CCCCCC",
+        "$description": "Image placeholder dashed border"
+      },
+      "text": {
+        "$value": "#999999",
+        "$description": "Image placeholder filename label"
+      },
+      "hint": {
+        "$value": "#BBBBBB",
+        "$description": "Image placeholder hint text"
+      }
+    },
+    "nav": {
+      "background": {
+        "$value": "rgba(244, 242, 241, 0.92)",
+        "$description": "Nav frosted glass background"
+      },
+      "border": {
+        "$value": "rgba(170, 170, 170, 0.2)",
+        "$description": "Nav bottom border — semi-transparent"
+      }
+    },
+    "scrollbar": {
+      "thumb": {
+        "$value": "#AAAAAA",
+        "$description": "Custom scrollbar thumb color"
+      }
+    }
+  },
+
+  "typography": {
+    "fontFamily": {
+      "display": {
+        "$value": "'Bricolage Grotesque', sans-serif",
+        "$description": "Display / heading font — Bricolage Grotesque (Google Fonts). Weights: 300, 400, 600, 700. Optical sizing: 12–96.",
+        "cssVar": "--font-display",
+        "googleFonts": "Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700"
+      },
+      "body": {
+        "$value": "'Poppins', sans-serif",
+        "$description": "Body / UI font — Poppins (Google Fonts). Weights: 300, 400, 500, 600.",
+        "cssVar": "--font-body",
+        "googleFonts": "Poppins:wght@300;400;500;600"
+      }
+    },
+    "scale": {
+      "label": {
+        "$description": "Small uppercase label — used above titles (.t-label)",
+        "fontFamily": "{typography.fontFamily.body}",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "letterSpacing": "2px",
+        "textTransform": "uppercase",
+        "color": "{color.text.secondary}",
+        "cssClass": ".t-label"
+      },
+      "display": {
+        "$description": "Hero / case study title (.t-display)",
+        "fontFamily": "{typography.fontFamily.display}",
+        "fontSize": "clamp(36px, 5vw, 64px)",
+        "fontWeight": "700",
+        "letterSpacing": "-2.5px",
+        "lineHeight": "1.0",
+        "color": "{color.text.primary}",
+        "cssClass": ".t-display"
+      },
+      "h2": {
+        "$description": "Section heading (.t-h2)",
+        "fontFamily": "{typography.fontFamily.display}",
+        "fontSize": "clamp(26px, 3vw, 36px)",
+        "fontWeight": "700",
+        "letterSpacing": "-1.5px",
+        "lineHeight": "1.1",
+        "color": "{color.text.primary}",
+        "cssClass": ".t-h2"
+      },
+      "h3": {
+        "$description": "Sub-section heading (.t-h3)",
+        "fontFamily": "{typography.fontFamily.display}",
+        "fontSize": "clamp(20px, 2vw, 28px)",
+        "fontWeight": "700",
+        "letterSpacing": "-1px",
+        "lineHeight": "1.15",
+        "color": "{color.text.primary}",
+        "cssClass": ".t-h3"
+      },
+      "h4": {
+        "$description": "Small heading (.t-h4)",
+        "fontFamily": "{typography.fontFamily.display}",
+        "fontSize": "18px",
+        "fontWeight": "700",
+        "letterSpacing": "-0.5px",
+        "lineHeight": "1.2",
+        "color": "{color.text.primary}",
+        "cssClass": ".t-h4"
+      },
+      "bodyLg": {
+        "$description": "Large body paragraph (.t-body-lg) — used for intro / overview copy",
+        "fontFamily": "{typography.fontFamily.body}",
+        "fontSize": "16px",
+        "fontWeight": "300",
+        "color": "#555555",
+        "lineHeight": "1.85",
+        "cssClass": ".t-body-lg"
+      },
+      "body": {
+        "$description": "Standard body paragraph (.t-body)",
+        "fontFamily": "{typography.fontFamily.body}",
+        "fontSize": "14px",
+        "fontWeight": "300",
+        "color": "#555555",
+        "lineHeight": "1.8",
+        "cssClass": ".t-body"
+      }
+    }
+  },
+
+  "spacing": {
+    "$type": "dimension",
+    "xs":  { "$value": "8px"  },
+    "sm":  { "$value": "16px" },
+    "md":  { "$value": "24px" },
+    "lg":  { "$value": "32px" },
+    "xl":  { "$value": "48px" },
+    "2xl": { "$value": "64px" },
+    "3xl": { "$value": "80px" },
+    "4xl": { "$value": "96px" },
+    "5xl": { "$value": "120px" },
+    "6xl": { "$value": "160px" }
+  },
+
+  "borderRadius": {
+    "$type": "dimension",
+    "sm": {
+      "$value": "15px",
+      "$description": "Used on image cards, chips, and small elements",
+      "cssVar": "--r-sm"
+    },
+    "md": {
+      "$value": "24px",
+      "$description": "Used on medium cards and containers",
+      "cssVar": "--r-md"
+    },
+    "lg": {
+      "$value": "32px",
+      "$description": "Used on large section cards",
+      "cssVar": "--r-lg"
+    },
+    "pill": {
+      "$value": "999px",
+      "$description": "Fully rounded pill — used on nav CTA buttons"
+    }
+  },
+
+  "shadow": {
+    "card": {
+      "$value": "0px 0px 20px 0px rgba(0, 0, 0, 0.03)",
+      "$description": "Subtle card shadow",
+      "cssVar": "--shadow"
+    }
+  },
+
+  "layout": {
+    "maxWidth": {
+      "$value": "1440px",
+      "$description": "Max content width used in .cs-inner"
+    },
+    "contentPadding": {
+      "desktop": { "$value": "80px", "$description": "Horizontal padding on desktop" },
+      "mobile":  { "$value": "20px", "$description": "Horizontal padding on mobile (≤768px)" }
+    },
+    "navHeight": {
+      "$value": "72px",
+      "$description": "Fixed nav bar height"
+    },
+    "widSectionGrid": {
+      "leftColumn": { "$value": "220px", "$description": "Left numbered column in .wid-section" },
+      "gap":        { "$value": "64px",  "$description": "Gap between columns in .wid-section" }
+    }
+  },
+
+  "animation": {
+    "fadeUp": {
+      "duration": { "$value": "0.65s" },
+      "easing":   { "$value": "ease" },
+      "translateY": { "$value": "20px", "$description": "Initial Y offset before fade-in" }
+    }
+  },
+
+  "component": {
+    "statChip": {
+      "$description": "Stat / metric chip — shows a large number with a description label",
+      "background": "{color.background.card}",
+      "border": "1px solid {color.border.light}",
+      "borderRadius": "{borderRadius.sm}",
+      "padding": "16px 20px",
+      "numFontSize": "26px",
+      "numFontWeight": "700",
+      "numLetterSpacing": "-1px",
+      "numColor": "{color.accent}",
+      "descFontSize": "11px",
+      "descFontWeight": "300",
+      "descColor": "{color.text.secondary}"
+    },
+    "resultChip": {
+      "$description": "Dark impact/result chip",
+      "background": "{color.text.primary}",
+      "borderRadius": "{borderRadius.sm}",
+      "padding": "20px 24px"
+    },
+    "imgPlaceholder": {
+      "$description": "Shown while images load or if image is missing",
+      "background": "{color.placeholder.background}",
+      "borderRadius": "{borderRadius.sm}",
+      "border": "1.5px dashed {color.placeholder.border}",
+      "padding": "32px",
+      "iconOpacity": "0.35"
+    },
+    "widNum": {
+      "$description": "Section number label (01, 02, etc.) in .wid-section left column",
+      "fontSize": "11px",
+      "fontWeight": "600",
+      "color": "{color.accent}",
+      "letterSpacing": "1px",
+      "marginBottom": "8px"
+    }
+  }
+}

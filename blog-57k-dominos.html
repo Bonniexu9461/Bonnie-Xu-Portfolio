@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How I Increased Domino's Weekly Sales by $57K Through Design — Bonnie Xu</title>
+  <meta name="description" content="A deep dive into the UX decisions that moved the needle — redesigning Domino's offer page to increase weekly sales by $57K through data-driven design." />
+  <meta property="og:title" content="How I Increased Domino's Weekly Sales by $57K Through Design" />
+  <meta property="og:description" content="A deep dive into the UX decisions that moved the needle on one of Australia's biggest food delivery platforms." />
+  <meta property="og:image" content="images/dominos-offer-1.avif" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --accent:    #E8452A;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --r-sm: 15px; --r-md: 24px; --r-lg: 32px;
+    }
+
+    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-1); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .t-label { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; }
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 64px); letter-spacing: -2.5px; line-height: 1.05; color: var(--text-1); }
+    .t-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3vw, 36px); letter-spacing: -1.5px; line-height: 1.1; color: var(--text-1); }
+    .t-body-lg { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; }
+    .t-body { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    .page-wrap { padding-top: 72px; }
+    .cs-inner { max-width: 1440px; margin: 0 auto; padding: 0 80px; }
+
+    .article-header { padding: 80px 0 48px; }
+    .article-header .t-label { margin-bottom: 20px; display: block; }
+    .article-subtitle { font-family: var(--font-display); font-weight: 300; font-size: clamp(18px, 2vw, 22px); color: var(--text-2); margin-top: 20px; margin-bottom: 36px; max-width: 760px; line-height: 1.5; }
+    .article-meta-row { display: flex; align-items: center; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .meta-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-1); }
+    .meta-sep { width: 1px; height: 16px; background: var(--border); }
+    .meta-info { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); }
+    .meta-tag { font-family: var(--font-body); font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid var(--accent); border-radius: 999px; padding: 3px 10px; }
+
+    .article-hero { width: 100%; aspect-ratio: 16 / 7; border-radius: var(--r-lg); overflow: hidden; background: var(--border-lt); margin: 40px 0 64px; }
+    .article-hero img { width: 100%; height: 100%; object-fit: cover; }
+
+    .article-layout { display: grid; grid-template-columns: 1fr 280px; gap: 80px; align-items: start; padding-bottom: 120px; }
+    .article-body { grid-column: 1; grid-row: 1; min-width: 0; }
+    .article-sidebar { grid-column: 2; grid-row: 1; position: sticky; top: 96px; }
+    /* Mobile-only elements — hidden on desktop */
+    .mobile-only { display: none; }
+    .inline-toc { display: none; background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 24px 28px; }
+    .article-body p { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; margin-bottom: 28px; }
+    .article-body h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 32px); letter-spacing: -1.2px; line-height: 1.1; color: var(--text-1); margin: 56px 0 20px; }
+    .article-body h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(18px, 2vw, 22px); letter-spacing: -0.8px; line-height: 1.15; color: var(--text-1); margin: 40px 0 16px; }
+    .article-body ul, .article-body ol { margin-left: 24px; margin-bottom: 28px; }
+    .article-body li { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; margin-bottom: 12px; }
+    .article-body blockquote { border-left: 3px solid var(--accent); padding: 4px 0 4px 28px; margin: 36px 0; }
+    .article-body blockquote p { font-family: var(--font-display); font-size: clamp(18px, 2vw, 22px); font-weight: 300; color: var(--text-1); line-height: 1.5; margin-bottom: 8px; }
+    .article-body blockquote .q-attr { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-2); margin-bottom: 0; }
+    .article-body .article-image { width: 100%; border-radius: var(--r-sm); overflow: hidden; margin: 40px 0; }
+    .article-body .article-image img { width: 100%; display: block; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+
+    .stat-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 32px 0 40px; }
+    .stat-chip { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-sm); padding: 16px 20px; display: flex; flex-direction: column; gap: 4px; }
+    .stat-num { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: -1px; color: var(--accent); }
+    .stat-desc { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+
+    .article-sidebar { position: sticky; top: 96px; }
+    .sidebar-card { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 28px 24px; margin-bottom: 24px; }
+    .sidebar-card-title { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .toc-list li a { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); line-height: 1.4; transition: color 0.2s; display: block; }
+    .toc-list li a:hover { color: var(--text-1); }
+    .related-card { display: flex; flex-direction: column; gap: 8px; padding: 14px 0; border-bottom: 1px solid var(--border-lt); text-decoration: none; transition: opacity 0.2s; }
+    .related-card:last-child { border-bottom: none; }
+    .related-card:hover { opacity: 0.7; }
+    .related-tag { font-family: var(--font-body); font-size: 10px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; }
+    .related-title { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px; line-height: 1.3; }
+    .related-meta { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+
+    .author-bio { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-lg); padding: 40px; display: flex; gap: 28px; align-items: flex-start; margin: 64px 0; }
+    .author-bio-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-bio-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-bio-content { flex: 1; }
+    .author-bio-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 4px; }
+    .author-bio-role { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .author-bio-text { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    .article-nav { padding: 48px 0 80px; border-top: 1px solid var(--border); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--text-1); color: #fff; font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 14px 28px; border-radius: 999px; transition: opacity 0.2s; display: inline-flex; align-items: center; }
+    .btn-primary:hover { opacity: 0.75; }
+    .btn-outline { background: transparent; color: var(--text-2); font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 14px 28px; border-radius: 999px; border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; display: inline-flex; align-items: center; }
+    .btn-outline:hover { border-color: var(--text-2); color: var(--text-1); }
+
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .img-reveal { overflow: hidden; }
+    .img-reveal img { transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease; transform: scale(1.08); opacity: 0; }
+    .img-reveal.visible img { transform: scale(1); opacity: 1; }
+    .line-reveal { width: 0; height: 1px; background: var(--border); transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+    .line-reveal.visible { width: 100%; }
+
+    @media (max-width: 1024px) {
+      .article-layout { display: flex; flex-direction: column; align-items: stretch; gap: 40px; padding-bottom: 80px; }
+      .article-sidebar { display: none; }
+      .mobile-only { display: block; }
+      .inline-toc { display: block; }
+    }
+    @media (max-width: 768px) {
+      .cs-inner { padding: 0 20px; }
+      .article-header { padding: 48px 0 32px; }
+      .article-hero { aspect-ratio: 16 / 9; margin: 24px 0 40px; }
+      .author-bio { flex-direction: column; gap: 20px; padding: 28px; }
+    }
+    @media (max-width: 640px) { .inline-toc .toc-list { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    <div class="cs-inner">
+
+      <header class="article-header fade-up">
+        <span class="t-label">Case Study · UX Design</span>
+        <h1 class="t-display" style="margin-top: 0; margin-bottom: 0; max-width: 900px;">
+          How I Increased Domino's Weekly Sales by $57K Through Design
+        </h1>
+        <p class="article-subtitle">
+          Making it easy for customers was worth an extra $57K a week. Here's exactly what we changed, and why it worked.
+        </p>
+        <div class="article-meta-row">
+          <div class="meta-author">
+            <div class="author-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div><div class="author-name">Bonnie Xu</div></div>
+          </div>
+          <div class="meta-sep"></div>
+          <span class="meta-info">Mar 10, 2026</span>
+          <div class="meta-sep"></div>
+          <span class="meta-info">6 min read</span>
+          <div class="meta-sep"></div>
+          <span class="meta-tag">Case Study</span>
+        </div>
+      </header>
+
+      <div class="article-hero fade-up">
+        <img src="images/dominos-offer-1.avif" alt="Domino's Offer Page Redesign" onerror="this.style.display='none'" />
+      </div>
+
+      <div class="article-layout">
+
+        <!-- Mobile-only: Inline TOC -->
+        <div class="inline-toc mobile-only fade-up">
+          <p class="sidebar-card-title">In this article</p>
+          <ol class="toc-list">
+            <li><a href="#section-1">The Problem</a></li>
+            <li><a href="#section-2">Three Changes</a></li>
+            <li><a href="#section-2a">1. Show Value First</a></li>
+            <li><a href="#section-2b">2. Clean the Clutter</a></li>
+            <li><a href="#section-2c">3. Clarity Over Colour</a></li>
+            <li><a href="#section-3">The Numbers</a></li>
+            <li><a href="#section-4">The Principle</a></li>
+          </ol>
+        </div>
+
+        <article class="article-body fade-up">
+
+          <p>
+            One of the biggest lessons I learned while leading web UI at Domino's wasn't actually about design. It was about human psychology. Every extra step you put in front of a customer has a literal price tag, and we found out exactly how much ours was costing.
+          </p>
+
+          <h2 id="section-1">The Problem: A Page That Was Working Against Us</h2>
+
+          <p>
+            Domino's had rebranded, but only the homepage reflected the new identity. The Offers page, one of the highest-traffic pages on the site, still ran on legacy IA. When I dug into the analytics, the numbers were hard to ignore.
+          </p>
+
+          <p>
+            67% of users were abandoning the Offers page before they ever saw a single deal. Not because the deals were bad. Not because the design was ugly. They were leaving because of a <strong>location gate</strong> — a data entry step that required your address before showing you anything of value. We were asking people to give before we gave.
+          </p>
+
+          <p>
+            Heatmap analysis showed a second problem: CTAs weren't clearly prioritised, so users who did push through the gate weren't converting at the rate we expected. And in user testing, 5 out of 8 participants misclassified delivery vs pickup offers, differentiated by colour alone with no labels.
+          </p>
+
+          <h2 id="section-2">Three Changes That Moved the Needle</h2>
+
+          <h3 id="section-2a">1. Show Value First</h3>
+          <p>
+            We removed the location gate from the top of the page entirely. National offers (the deals that apply everywhere, no address required) were surfaced immediately when users landed. Local, store-specific offers sat below, gated behind location input only where genuinely necessary.
+          </p>
+          <p>
+            The logic was simple: lead with what you can offer right now. Don't make someone prove they're a worthy customer before you show them the menu.
+          </p>
+
+          <h3 id="section-2b">2. Clean the Clutter</h3>
+          <p>
+            We restructured the information architecture so users didn't need to navigate away or click through redirects to browse deals. Everything surfaced in a clean, scannable in-page layout. Fewer decisions, fewer steps, faster path to "add to cart."
+          </p>
+
+          <h3 id="section-2c">3. Clarity Over Colour</h3>
+          <p>
+            Delivery vs pickup offers were redesigned with clear, explicit labels, not just different background colours. This seems minor, but for new users unfamiliar with the brand conventions, it eliminated a significant source of confusion. When people understand what they're clicking, they click.
+          </p>
+
+          <hr class="article-divider" />
+
+          <h2 id="section-3">What the Numbers Said</h2>
+
+          <p>
+            We validated through A/B testing in the Netherlands before rolling out to Australia and beyond. The results confirmed what the research suggested.
+          </p>
+
+          <div class="stat-row">
+            <div class="stat-chip"><span class="stat-num">+$57K</span><span class="stat-desc">Weekly sales uplift at launch</span></div>
+            <div class="stat-chip"><span class="stat-num">+3.52%</span><span class="stat-desc">Progression · Netherlands A/B</span></div>
+            <div class="stat-chip"><span class="stat-num">+0.80%</span><span class="stat-desc">Conversion · Netherlands A/B</span></div>
+            <div class="stat-chip"><span class="stat-num">+24%</span><span class="stat-desc">Desktop progression · Australia</span></div>
+            <div class="stat-chip"><span class="stat-num">10</span><span class="stat-desc">Markets adopted globally</span></div>
+          </div>
+
+          <blockquote>
+            <p>"Bonnie's UI designs have been successfully deployed across our website in 10 countries. Most notably, when her redesigned offers page went live, it generated an additional $57K in weekly sales, results we simply couldn't have achieved without her expertise."</p>
+            <p class="q-attr">— Celene Grantham, Digital CX Design Lead, Domino's</p>
+          </blockquote>
+
+          <div class="article-image">
+            <img src="images/dominos-offer-2.avif" alt="Domino's Offer Page — After Redesign" onerror="this.style.display='none'" />
+          </div>
+
+          <h2 id="section-4">The Principle Behind It</h2>
+
+          <p>
+            I call it "Value First" design. Your website, or any digital product, should never be a barrier. It shouldn't ask users to work before they understand why it's worth their time. It should lead with what it offers, and earn the right to ask for information in return.
+          </p>
+
+          <p>
+            This principle scales beyond e-commerce. Every form that demands details before showing a preview, every paywall that blocks before explaining value, every onboarding flow that gates features before users have felt the product. These are all location gates in disguise.
+          </p>
+
+          <p>
+            The most important question you can ask when reviewing any user journey is: <em>What is this screen asking the user to give, and what have we given them first?</em>
+          </p>
+
+          <div class="author-bio fade-up">
+            <div class="author-bio-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div class="author-bio-content">
+              <div class="author-bio-name">Bonnie Xu</div>
+              <div class="author-bio-role">Product &amp; UX Designer</div>
+              <p class="author-bio-text">
+                Bonnie is a product and UX designer with experience at Domino's, Entain, and Ray White. She writes about design systems, UX craft, and the business of design.
+              </p>
+            </div>
+          </div>
+
+        </article>
+
+        <!-- Mobile-only: More from Bonnie -->
+        <div class="sidebar-card mobile-only fade-up">
+          <p class="sidebar-card-title">More from Bonnie</p>
+          <a href="blog-ai-workflow.html" class="related-card">
+            <span class="related-tag">AI &amp; Design</span>
+            <span class="related-title">My AI-Powered Design Workflow</span>
+            <span class="related-meta">Mar 10, 2026 · 5 min</span>
+          </a>
+          <a href="projects/dominos-core-website-redesign.html" class="related-card">
+            <span class="related-tag">Case Study</span>
+            <span class="related-title">Full Case Study: Domino's Product &amp; UX Design</span>
+            <span class="related-meta">View on portfolio</span>
+          </a>
+        </div>
+
+        <!-- Desktop sidebar -->
+        <aside class="article-sidebar">
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">In this article</p>
+            <ol class="toc-list">
+              <li><a href="#section-1">The Problem</a></li>
+              <li><a href="#section-2">Three Changes</a></li>
+              <li><a href="#section-2a">1. Show Value First</a></li>
+              <li><a href="#section-2b">2. Clean the Clutter</a></li>
+              <li><a href="#section-2c">3. Clarity Over Colour</a></li>
+              <li><a href="#section-3">The Numbers</a></li>
+              <li><a href="#section-4">The Principle</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">More from Bonnie</p>
+            <a href="blog-ai-workflow.html" class="related-card">
+              <span class="related-tag">AI &amp; Design</span>
+              <span class="related-title">My AI-Powered Design Workflow</span>
+              <span class="related-meta">Mar 10, 2026 · 5 min</span>
+            </a>
+            <a href="projects/dominos-core-website-redesign.html" class="related-card">
+              <span class="related-tag">Case Study</span>
+              <span class="related-title">Full Case Study: Domino's Product &amp; UX Design</span>
+              <span class="related-meta">View on portfolio</span>
+            </a>
+          </div>
+        </aside>
+
+      </div>
+
+      <div class="article-nav fade-up">
+        <a href="blog.html" class="btn-outline">←︎ Back to Blog</a>
+        <a href="blog-ai-workflow.html" class="btn-primary" style="margin-left: auto;">Next blog →︎</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }), { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.fade-up, .img-reveal, .line-reveal').forEach(el => obs.observe(el));
+
+    // TOC active state
+    const sections = document.querySelectorAll('h2[id], h3[id]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const tocObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => tocObs.observe(s));
+  </script>
+
+  <script src="shared-nav.js"></script>
+
+</body>
+</html>

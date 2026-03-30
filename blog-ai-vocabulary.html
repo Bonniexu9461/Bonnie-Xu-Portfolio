@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Designer's AI Instruction Vocabulary — Bonnie Xu</title>
+  <meta name="description" content="Replace vague design descriptions with precise terms so AI understands your intent the first time. A comprehensive vocabulary guide for UI/UX designers working with AI." />
+  <meta property="og:title" content="Designer's AI Instruction Vocabulary — Bonnie Xu" />
+  <meta property="og:description" content="Replace vague descriptions with precise design terms, so AI understands your intent the first time." />
+  <meta property="og:image" content="images/blog-vocabulary-cover.png" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --accent:    #E8452A;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --font-mono:    'Courier New', monospace;
+      --r-sm: 15px; --r-md: 24px; --r-lg: 32px;
+    }
+
+    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-1); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .page-wrap { padding-top: 72px; }
+    .cs-inner { max-width: 1440px; margin: 0 auto; padding: 0 80px; }
+
+    /* Article header */
+    .article-header { padding: 80px 0 48px; }
+    .article-header .t-label { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; display: block; }
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 64px); letter-spacing: -2.5px; line-height: 1.05; color: var(--text-1); }
+    .article-subtitle { font-family: var(--font-display); font-weight: 300; font-size: clamp(18px, 2vw, 22px); color: var(--text-2); margin-top: 20px; margin-bottom: 36px; max-width: 760px; line-height: 1.5; }
+    .article-meta-row { display: flex; align-items: center; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .meta-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-1); }
+    .meta-sep { width: 1px; height: 16px; background: var(--border); }
+    .meta-info { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); }
+    .meta-tag { font-family: var(--font-body); font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid var(--accent); border-radius: 999px; padding: 3px 10px; }
+
+    /* Article layout */
+    .article-layout { display: grid; grid-template-columns: 1fr 280px; gap: 80px; align-items: start; padding-bottom: 80px; }
+    .article-body { grid-column: 1; grid-row: 1; min-width: 0; }
+    .article-sidebar { grid-column: 2; grid-row: 1; }
+    /* Mobile-only elements — hidden on desktop */
+    .mobile-only { display: none; }
+    .inline-toc { display: none; background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 24px 28px; }
+    .related-card { display: flex; flex-direction: column; gap: 8px; padding: 14px 0; border-bottom: 1px solid var(--border-lt); text-decoration: none; transition: opacity 0.2s; }
+    .related-card:last-child { border-bottom: none; }
+    .related-card:hover { opacity: 0.7; }
+    .related-tag { font-family: var(--font-body); font-size: 10px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; }
+    .related-title { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px; line-height: 1.3; }
+    .related-meta { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+    .article-body p { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; margin-bottom: 28px; }
+    .article-body h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 32px); letter-spacing: -1.2px; line-height: 1.1; color: var(--text-1); margin: 56px 0 20px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+
+    /* Tip box */
+    .tip-box { background: #FEF0EC; border-left: 3px solid var(--accent); border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 18px 22px; font-family: var(--font-body); font-size: 14px; font-weight: 300; color: var(--text-1); line-height: 1.7; margin-bottom: 40px; }
+    .tip-box strong { font-weight: 600; }
+
+    /* ─── Visual Reference Section ─── */
+    .visual-ref { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-lg); overflow: hidden; margin-bottom: 48px; }
+    .visual-ref-header { padding: 20px 28px; border-bottom: 1px solid var(--border-lt); display: flex; align-items: center; gap: 10px; }
+    .visual-ref-title { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* Tabs */
+    .ref-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border-lt); overflow-x: auto; scrollbar-width: none; }
+    .ref-tabs::-webkit-scrollbar { display: none; }
+    .ref-tab { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); padding: 12px 20px; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; background: none; border-top: none; border-left: none; border-right: none; }
+    .ref-tab:hover { color: var(--text-1); }
+    .ref-tab.active { color: var(--text-1); border-bottom-color: var(--text-1); }
+
+    .ref-panel { display: none; padding: 28px; }
+    .ref-panel.active { display: block; }
+
+    /* Font size demo */
+    .fontsize-demo { display: flex; flex-direction: column; gap: 12px; }
+    .fontsize-row { display: flex; align-items: baseline; gap: 16px; }
+    .fontsize-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); width: 36px; flex-shrink: 0; }
+    .fontsize-bar { height: 2px; background: var(--border-lt); flex-shrink: 0; }
+
+    /* Font weight demo */
+    .fontweight-demo { display: flex; flex-direction: column; gap: 14px; }
+    .fontweight-row { display: flex; align-items: center; gap: 16px; }
+    .fontweight-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); width: 36px; flex-shrink: 0; }
+
+    /* Line height demo */
+    .lineheight-demo { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+    .lh-card { background: var(--bg-page); border-radius: var(--r-sm); padding: 16px; }
+    .lh-label { font-family: var(--font-mono); font-size: 11px; color: var(--accent); margin-bottom: 10px; }
+    .lh-text { font-size: 12px; font-weight: 300; color: #555; }
+
+    /* Border radius demo */
+    .radius-demo { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+    .radius-swatch { width: 64px; height: 64px; background: var(--text-1); display: flex; align-items: center; justify-content: center; }
+    .radius-swatch span { font-family: var(--font-mono); font-size: 10px; color: rgba(255,255,255,0.7); }
+    .radius-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .radius-item-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+
+    /* Spacing demo */
+    .spacing-demo { display: flex; flex-direction: column; gap: 10px; }
+    .spacing-row { display: flex; align-items: center; gap: 12px; }
+    .spacing-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); width: 36px; flex-shrink: 0; }
+    .spacing-bar { height: 20px; background: var(--text-1); border-radius: 3px; opacity: 0.15; }
+    .spacing-bar-accent { background: var(--accent); opacity: 1; border-radius: 3px; height: 20px; }
+
+    /* Opacity demo */
+    .opacity-demo { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+    .opacity-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .opacity-swatch { width: 56px; height: 56px; border-radius: var(--r-sm); background: var(--accent); }
+    .opacity-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-2); }
+
+    /* Breakpoints demo */
+    .breakpoint-demo { display: flex; flex-direction: column; gap: 10px; }
+    .bp-row { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--bg-page); border-radius: 10px; }
+    .bp-icon { font-size: 16px; width: 28px; text-align: center; flex-shrink: 0; }
+    .bp-device { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-1); width: 80px; flex-shrink: 0; }
+    .bp-range { font-family: var(--font-mono); font-size: 11px; color: var(--accent); flex: 1; }
+    .bp-note { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+
+    /* Section header */
+    .section-head { display: flex; align-items: center; gap: 12px; margin: 56px 0 24px; }
+    .section-icon { width: 32px; height: 32px; background: var(--text-1); color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-family: var(--font-display); font-weight: 700; flex-shrink: 0; }
+    .section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(20px, 2.5vw, 26px); letter-spacing: -0.8px; color: var(--text-1); }
+
+    /* Vocabulary table */
+    .vocab-table { width: 100%; border-collapse: collapse; background: var(--bg-card); border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border-lt); margin-bottom: 8px; }
+    .vocab-table thead tr { background: var(--text-1); }
+    .vocab-table thead th { padding: 12px 16px; text-align: left; font-family: var(--font-body); font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+    .vocab-table tbody tr { border-bottom: 1px solid var(--border-lt); transition: background 0.15s; }
+    .vocab-table tbody tr:last-child { border-bottom: none; }
+    .vocab-table tbody tr:hover { background: #F7F5F3; }
+    .vocab-table td { padding: 16px; vertical-align: top; }
+    .col-plain { width: 28%; font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); font-style: italic; line-height: 1.5; }
+    .col-arrow { width: 4%; color: var(--accent); font-weight: 600; font-size: 16px; padding-left: 0; padding-right: 0; }
+    .col-term { width: 28%; }
+    .col-example { width: 40%; }
+
+    .v-tag { display: inline-block; background: #FEF0EC; color: var(--accent); font-family: var(--font-body); font-size: 11px; font-weight: 500; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.3px; }
+    .code { font-family: var(--font-mono); font-size: 12px; background: #EEECEA; color: var(--text-1); padding: 4px 8px; border-radius: 6px; display: inline-block; margin-top: 2px; }
+    .hint-text { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-2); margin-top: 5px; line-height: 1.5; }
+
+    /* Best practice note */
+    .best-practice { background: #F0F6FF; border-left: 3px solid #4A90D9; border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 14px 18px; font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-1); margin: 16px 0 8px; line-height: 1.7; }
+    .best-practice strong { font-weight: 600; color: #2A6AAD; }
+
+    /* Prompt block */
+    .prompt-block { background: var(--text-1); color: #E8E4DC; border-radius: var(--r-md); padding: 28px 32px; font-family: var(--font-mono); font-size: 13px; line-height: 1.9; margin-top: 16px; }
+    .prompt-block .highlight { color: #F4A87C; }
+    .prompt-block .bracket { color: #8B9E6F; }
+
+    /* Sidebar */
+    .article-sidebar { position: sticky; top: 96px; }
+    .sidebar-card { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 28px 24px; margin-bottom: 24px; }
+    .sidebar-card-title { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .toc-list li a { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); line-height: 1.4; transition: color 0.2s; display: block; }
+    .toc-list li a:hover { color: var(--text-1); }
+
+    /* Author bio */
+    .author-bio { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-lg); padding: 40px; display: flex; gap: 28px; align-items: flex-start; margin: 48px 0 0; }
+    .author-bio-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-bio-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-bio-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 4px; }
+    .author-bio-role { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .author-bio-text { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    /* Bottom nav */
+    .article-nav { padding: 48px 0 80px; border-top: 1px solid var(--border); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--text-1); color: #fff; font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 14px 28px; border-radius: 999px; transition: opacity 0.2s; display: inline-flex; align-items: center; }
+    .btn-primary:hover { opacity: 0.75; }
+    .btn-outline { background: transparent; color: var(--text-2); font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 14px 28px; border-radius: 999px; border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; display: inline-flex; align-items: center; }
+    .btn-outline:hover { border-color: var(--text-2); color: var(--text-1); }
+
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .img-reveal { overflow: hidden; }
+    .img-reveal img { transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease; transform: scale(1.08); opacity: 0; }
+    .img-reveal.visible img { transform: scale(1); opacity: 1; }
+    .line-reveal { width: 0; height: 1px; background: var(--border); transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+    .line-reveal.visible { width: 100%; }
+
+    @media (max-width: 1024px) {
+      .article-layout { display: flex; flex-direction: column; align-items: stretch; gap: 40px; padding-bottom: 80px; }
+      .article-sidebar { display: none; }
+      .mobile-only { display: block; }
+      .inline-toc { display: block; }
+    }
+    @media (max-width: 768px) {
+      .cs-inner { padding: 0 20px; } .article-header { padding: 48px 0 32px; }
+      .author-bio { flex-direction: column; gap: 20px; padding: 28px; } .vocab-table { font-size: 12px; }
+    }
+    @media (max-width: 640px) { .inline-toc .toc-list { grid-template-columns: 1fr; } }
+    @media (max-width: 480px) { .vocab-table thead { display: none; } .vocab-table td { display: block; width: 100% !important; } .col-arrow { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    <div class="cs-inner">
+
+      <header class="article-header fade-up">
+        <span class="t-label">AI &amp; Design</span>
+        <h1 class="t-display" style="max-width: 900px;">Designer's AI<br>Instruction Vocabulary</h1>
+        <p class="article-subtitle">Replace vague descriptions with precise design terms, so AI understands your intent the first time.</p>
+        <div class="article-meta-row">
+          <div class="meta-author">
+            <div class="author-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div><div class="author-name">Bonnie Xu</div></div>
+          </div>
+          <div class="meta-sep"></div>
+          <span class="meta-info">Mar 17, 2026</span>
+          <div class="meta-sep"></div>
+          <span class="meta-info">6 min read</span>
+          <div class="meta-sep"></div>
+          <span class="meta-tag">AI &amp; Design</span>
+        </div>
+      </header>
+
+      <!-- Hero cover -->
+      <div class="fade-up" style="width:100%; border-radius: var(--r-lg); overflow:hidden; margin:0 0 48px; background:var(--border-lt);">
+        <img src="images/blog-vocabulary-cover.png" alt="Designer's AI Instruction Vocabulary" style="width:100%; display:block;" onerror="this.style.display='none';" />
+      </div>
+
+      <div class="article-layout">
+
+        <!-- Mobile-only: Inline TOC -->
+        <div class="inline-toc mobile-only fade-up">
+          <div class="sidebar-card-title">In this post</div>
+          <ul class="toc-list">
+            <li><a href="#typography">Typography</a></li>
+            <li><a href="#spacing">Spacing &amp; Layout</a></li>
+            <li><a href="#responsive">Responsive Design</a></li>
+            <li><a href="#visual-style">Visual Style</a></li>
+            <li><a href="#states">States &amp; Interactions</a></li>
+            <li><a href="#motion">Motion &amp; Transitions</a></li>
+            <li><a href="#position">Position &amp; Layering</a></li>
+            <li><a href="#components">Component Names</a></li>
+            <li><a href="#prompt-template">Prompt Template</a></li>
+          </ul>
+        </div>
+
+        <article class="article-body fade-up">
+
+          <p>One of the most frustrating things about working with AI is getting results that are almost right, but not quite. Most of the time, the problem isn't the AI. It's the instruction.</p>
+          <p>When we say "make the text bigger" or "add some space", we're asking AI to guess what we mean. When we say <em>font-size: 48px</em> or <em>padding-bottom: 80px</em>, there's no guessing. Use this as your cheat sheet.</p>
+
+          <div class="tip-box">
+            <strong>The formula that works:</strong> Attach a screenshot →︎ point to the exact element →︎ use the terms from this guide →︎ tell AI what NOT to change. One clear instruction beats three vague ones.
+          </div>
+
+          <!-- ─── Visual Reference ─── -->
+          <div class="visual-ref">
+            <div class="visual-ref-header">
+              <span class="visual-ref-title">Visual Values Reference</span>
+              <span style="font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-2); margin-left: 8px;">— see each value in action</span>
+            </div>
+            <div class="ref-tabs" id="refTabs">
+              <button class="ref-tab active" data-panel="fs">Font Size</button>
+              <button class="ref-tab" data-panel="fw">Font Weight</button>
+              <button class="ref-tab" data-panel="lh">Line Height</button>
+              <button class="ref-tab" data-panel="sp">Spacing</button>
+              <button class="ref-tab" data-panel="br">Border Radius</button>
+              <button class="ref-tab" data-panel="op">Opacity</button>
+              <button class="ref-tab" data-panel="bp">Breakpoints</button>
+            </div>
+
+            <!-- Font Size -->
+            <div class="ref-panel active" id="panel-fs">
+              <div class="fontsize-demo">
+                <div class="fontsize-row"><span class="fontsize-label">12px</span><span style="font-size:12px; font-family: var(--font-body); color: var(--text-1);">The quick brown fox — caption, label</span></div>
+                <div class="fontsize-row"><span class="fontsize-label">14px</span><span style="font-size:14px; font-family: var(--font-body); color: var(--text-1);">The quick brown fox — small body, metadata</span></div>
+                <div class="fontsize-row"><span class="fontsize-label">16px</span><span style="font-size:16px; font-family: var(--font-body); color: var(--text-1);">The quick brown fox — body text (base)</span></div>
+                <div class="fontsize-row"><span class="fontsize-label">18px</span><span style="font-size:18px; font-family: var(--font-body); color: var(--text-1);">The quick brown fox — lead / intro</span></div>
+                <div class="fontsize-row"><span class="fontsize-label">24px</span><span style="font-size:24px; font-family: var(--font-display); color: var(--text-1); letter-spacing: -0.5px;">The quick brown fox — H4</span></div>
+                <div class="fontsize-row"><span class="fontsize-label">32px</span><span style="font-size:32px; font-family: var(--font-display); font-weight:700; color: var(--text-1); letter-spacing: -1px;">Quick fox — H3</span></div>
+                <div class="fontsize-row"><span class="fontsize-label">48px</span><span style="font-size:48px; font-family: var(--font-display); font-weight:700; color: var(--text-1); letter-spacing: -2px; line-height:1;">Quick fox — H2</span></div>
+                <div class="fontsize-row"><span class="fontsize-label">72px</span><span style="font-size:72px; font-family: var(--font-display); font-weight:700; color: var(--text-1); letter-spacing: -3px; line-height:1;">Fox — H1</span></div>
+              </div>
+            </div>
+
+            <!-- Font Weight -->
+            <div class="ref-panel" id="panel-fw">
+              <div class="fontweight-demo">
+                <div class="fontweight-row"><span class="fontweight-label">300</span><span style="font-size:20px; font-weight:300; font-family: var(--font-body); color: var(--text-1);">The quick brown fox jumps — Light</span></div>
+                <div class="fontweight-row"><span class="fontweight-label">400</span><span style="font-size:20px; font-weight:400; font-family: var(--font-body); color: var(--text-1);">The quick brown fox jumps — Regular</span></div>
+                <div class="fontweight-row"><span class="fontweight-label">500</span><span style="font-size:20px; font-weight:500; font-family: var(--font-body); color: var(--text-1);">The quick brown fox jumps — Medium</span></div>
+                <div class="fontweight-row"><span class="fontweight-label">600</span><span style="font-size:20px; font-weight:600; font-family: var(--font-body); color: var(--text-1);">The quick brown fox jumps — Semibold</span></div>
+                <div class="fontweight-row"><span class="fontweight-label">700</span><span style="font-size:20px; font-weight:700; font-family: var(--font-body); color: var(--text-1);">The quick brown fox jumps — Bold</span></div>
+              </div>
+              <p style="font-size:12px; color: var(--text-2); margin-top: 20px; font-weight:300;">Body text uses 300–400. Navigation / labels use 500. Headings use 600–700.</p>
+            </div>
+
+            <!-- Line Height -->
+            <div class="ref-panel" id="panel-lh">
+              <div class="lineheight-demo">
+                <div class="lh-card">
+                  <div class="lh-label">1.2 — Headings</div>
+                  <div class="lh-text" style="line-height:1.2;">Design is the silent ambassador of your brand. Every pixel communicates intent.</div>
+                </div>
+                <div class="lh-card">
+                  <div class="lh-label">1.4 — Tight body</div>
+                  <div class="lh-text" style="line-height:1.4;">Design is the silent ambassador of your brand. Every pixel communicates intent.</div>
+                </div>
+                <div class="lh-card">
+                  <div class="lh-label">1.6 — Body text ✓</div>
+                  <div class="lh-text" style="line-height:1.6;">Design is the silent ambassador of your brand. Every pixel communicates intent.</div>
+                </div>
+                <div class="lh-card">
+                  <div class="lh-label">1.85 — Readable</div>
+                  <div class="lh-text" style="line-height:1.85;">Design is the silent ambassador of your brand. Every pixel communicates intent.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Spacing -->
+            <div class="ref-panel" id="panel-sp">
+              <div class="spacing-demo">
+                <div class="spacing-row"><span class="spacing-label">4px</span><div class="spacing-bar-accent" style="width:4px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Icon gap, tight label spacing</span></div>
+                <div class="spacing-row"><span class="spacing-label">8px</span><div class="spacing-bar-accent" style="width:8px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Between inline elements</span></div>
+                <div class="spacing-row"><span class="spacing-label">12px</span><div class="spacing-bar-accent" style="width:12px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Tag padding, small gaps</span></div>
+                <div class="spacing-row"><span class="spacing-label">16px</span><div class="spacing-bar-accent" style="width:16px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Standard gap between elements</span></div>
+                <div class="spacing-row"><span class="spacing-label">24px</span><div class="spacing-bar-accent" style="width:24px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Card padding, component gap</span></div>
+                <div class="spacing-row"><span class="spacing-label">32px</span><div class="spacing-bar-accent" style="width:32px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Section inner padding</span></div>
+                <div class="spacing-row"><span class="spacing-label">48px</span><div class="spacing-bar-accent" style="width:48px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Between content blocks</span></div>
+                <div class="spacing-row"><span class="spacing-label">64px</span><div class="spacing-bar-accent" style="width:64px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Page section padding</span></div>
+                <div class="spacing-row"><span class="spacing-label">80px</span><div class="spacing-bar-accent" style="width:80px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Large section vertical rhythm</span></div>
+                <div class="spacing-row"><span class="spacing-label">96px</span><div class="spacing-bar-accent" style="width:96px;"></div><span style="font-size:11px; color:var(--text-2); font-family: var(--font-body);">Hero / page-level spacing</span></div>
+              </div>
+            </div>
+
+            <!-- Border Radius -->
+            <div class="ref-panel" id="panel-br">
+              <div class="radius-demo">
+                <div class="radius-item"><div class="radius-swatch" style="border-radius:0;"><span>0</span></div><span class="radius-item-label">0 — Sharp</span></div>
+                <div class="radius-item"><div class="radius-swatch" style="border-radius:4px;"><span>4</span></div><span class="radius-item-label">4px</span></div>
+                <div class="radius-item"><div class="radius-swatch" style="border-radius:8px;"><span>8</span></div><span class="radius-item-label">8px</span></div>
+                <div class="radius-item"><div class="radius-swatch" style="border-radius:12px;"><span>12</span></div><span class="radius-item-label">12px — Tags</span></div>
+                <div class="radius-item"><div class="radius-swatch" style="border-radius:16px;"><span>16</span></div><span class="radius-item-label">16px — Cards</span></div>
+                <div class="radius-item"><div class="radius-swatch" style="border-radius:24px;"><span>24</span></div><span class="radius-item-label">24px — Panels</span></div>
+                <div class="radius-item"><div class="radius-swatch" style="border-radius:9999px; width:80px; height:40px;"><span></span></div><span class="radius-item-label">9999px — Pill</span></div>
+              </div>
+            </div>
+
+            <!-- Opacity -->
+            <div class="ref-panel" id="panel-op">
+              <div class="opacity-demo">
+                <div class="opacity-item"><div class="opacity-swatch" style="opacity:0.1;"></div><span class="opacity-label">10%</span></div>
+                <div class="opacity-item"><div class="opacity-swatch" style="opacity:0.2;"></div><span class="opacity-label">20%</span></div>
+                <div class="opacity-item"><div class="opacity-swatch" style="opacity:0.4;"></div><span class="opacity-label">40%</span></div>
+                <div class="opacity-item"><div class="opacity-swatch" style="opacity:0.6;"></div><span class="opacity-label">60%</span></div>
+                <div class="opacity-item"><div class="opacity-swatch" style="opacity:0.8;"></div><span class="opacity-label">80%</span></div>
+                <div class="opacity-item"><div class="opacity-swatch" style="opacity:1;"></div><span class="opacity-label">100%</span></div>
+              </div>
+              <p style="font-size:12px; color: var(--text-2); margin-top:20px; font-weight:300;">Use opacity for disabled states (40–60%), overlay backgrounds (10–20%), or hover effects (80%).</p>
+            </div>
+
+            <!-- Breakpoints -->
+            <div class="ref-panel" id="panel-bp">
+              <div class="breakpoint-demo">
+                <div class="bp-row"><span class="bp-icon">📱</span><span class="bp-device">Mobile S</span><span class="bp-range">max-width: 320px</span><span class="bp-note">Smallest phones — test this edge case</span></div>
+                <div class="bp-row"><span class="bp-icon">📱</span><span class="bp-device">Mobile</span><span class="bp-range">max-width: 480px</span><span class="bp-note">Hide non-essential nav items, stack columns</span></div>
+                <div class="bp-row"><span class="bp-icon">📟</span><span class="bp-device">Tablet</span><span class="bp-range">max-width: 768px</span><span class="bp-note">Most common responsive breakpoint</span></div>
+                <div class="bp-row"><span class="bp-icon">💻</span><span class="bp-device">Laptop</span><span class="bp-range">max-width: 1024px</span><span class="bp-note">Collapse sidebars, reduce columns</span></div>
+                <div class="bp-row"><span class="bp-icon">🖥</span><span class="bp-device">Desktop</span><span class="bp-range">max-width: 1280px</span><span class="bp-note">Standard full-width layout</span></div>
+                <div class="bp-row"><span class="bp-icon">🖥</span><span class="bp-device">Wide</span><span class="bp-range">max-width: 1440px</span><span class="bp-note">Container max-width — content stops expanding</span></div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="article-divider">
+
+          <!-- Typography -->
+          <div id="typography" class="section-head">
+            <div class="section-icon">T</div>
+            <span class="section-title">Typography</span>
+          </div>
+          <table class="vocab-table">
+            <thead><tr><th>Instead of saying…</th><th></th><th>Use this term</th><th>Prompt you can use</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="col-plain">"The heading is too big"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">font-size</span></td>
+                <td class="col-example"><span class="code">Reduce the H1 font-size to 48px — it's too large on desktop</span><div class="hint-text">Always give a specific px value — don't make AI guess</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The font looks too thin / too heavy"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">font-weight</span></td>
+                <td class="col-example"><span class="code">The heading font-weight is too light — change it to 600 (semibold)</span><div class="hint-text">300=light · 400=regular · 600=semibold · 700=bold</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The lines are too close together"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">line-height</span></td>
+                <td class="col-example"><span class="code">The body text feels cramped — increase the line-height to 1.6 so it's easier to read</span><div class="hint-text">Body text: 1.5–1.7 · Headings: 1.1–1.3</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The letters feel too spaced out / cramped"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">letter-spacing</span></td>
+                <td class="col-example"><span class="code">The heading letters feel too spread out — tighten the letter-spacing to -0.02em</span><div class="hint-text">Negative values = tighter. Use on large headings only</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"This text is hard to read"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">font-size + color</span></td>
+                <td class="col-example"><span class="code">The body text is hard to read — increase the font-size to 16px and darken the colour to #333333</span><div class="hint-text">Fix both size and contrast at the same time</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Align this text"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">text-align</span></td>
+                <td class="col-example"><span class="code">Left-align the body text — it's currently centred and hard to scan</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Make the font scale with the screen"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">clamp()</span></td>
+                <td class="col-example"><span class="code">Use clamp() on the H1 so it scales with the screen — minimum 28px on mobile, maximum 60px on desktop</span><div class="hint-text">clamp(min, fluid, max) — no breakpoints needed</div></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr class="article-divider">
+
+          <!-- Spacing & Layout -->
+          <div id="spacing" class="section-head">
+            <div class="section-icon">↔</div>
+            <span class="section-title">Spacing &amp; Layout</span>
+          </div>
+          <table class="vocab-table">
+            <thead><tr><th>Instead of saying…</th><th></th><th>Use this term</th><th>Prompt you can use</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="col-plain">"These two elements are too close"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">margin / gap</span></td>
+                <td class="col-example"><span class="code">The cards are too close together — increase the gap to 24px between them</span><div class="hint-text">gap = space between children · margin = space outside element</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The content is too close to the edge"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">padding</span></td>
+                <td class="col-example"><span class="code">The text inside the card is too close to the edge — add 24px padding on all sides</span><div class="hint-text">padding = space inside the element</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"This section feels cramped top and bottom"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">padding-top / padding-bottom</span></td>
+                <td class="col-example"><span class="code">This section feels too tight — add 80px padding-top and padding-bottom to give it more breathing room</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The content area is too wide"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">max-width</span></td>
+                <td class="col-example"><span class="code">The content stretches too wide on large screens — set max-width to 1200px and centre it</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Put these cards in a row"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">flexbox</span></td>
+                <td class="col-example"><span class="code">Lay the cards out in a flex row with a 24px gap — make them wrap to a new line on mobile</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Image on the left, text on the right"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">2-column grid</span></td>
+                <td class="col-example"><span class="code">Use a 2-column grid — image takes up the left half, text on the right, 48px gap between them</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The image should stay square / a fixed ratio"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">aspect-ratio</span></td>
+                <td class="col-example"><span class="code">Lock the image to a square using aspect-ratio: 1/1 so it doesn't distort when the content changes</span><div class="hint-text">16/9 for landscape · 4/3 for cards · 1/1 for square</div></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr class="article-divider">
+
+          <!-- Responsive Design -->
+          <div id="responsive" class="section-head">
+            <div class="section-icon">↕</div>
+            <span class="section-title">Responsive Design</span>
+          </div>
+          <div class="best-practice"><strong>Mobile-first best practice:</strong> Write your base styles for mobile, then use <em>min-width</em> media queries to add complexity as the screen grows. This is cleaner and performs better than overriding desktop styles for mobile.</div>
+          <table class="vocab-table">
+            <thead><tr><th>Instead of saying…</th><th></th><th>Use this term</th><th>Prompt you can use</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="col-plain">"Make it work on mobile"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">media query</span></td>
+                <td class="col-example"><span class="code">Add a media query for screens below 768px — at that breakpoint, reduce the font size and stack the columns vertically</span><div class="hint-text">768px = tablet · 480px = mobile</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Stack it vertically on mobile"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">flex-direction: column</span></td>
+                <td class="col-example"><span class="code">On mobile (below 768px), switch the row layout to a column so each card stacks vertically</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The font size should adapt to screen size"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">clamp() / vw units</span></td>
+                <td class="col-example"><span class="code">Make the heading font-size fluid using clamp — 28px minimum on small screens, 60px maximum on desktop, scaling smoothly between</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Cards should auto-fit the row"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">auto-fill / auto-fit</span></td>
+                <td class="col-example"><span class="code">Set the card grid to auto-fit so cards reflow automatically — each card should be at least 280px wide and fill the remaining row space</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Images should fill their container"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">width: 100% + object-fit</span></td>
+                <td class="col-example"><span class="code">Make the image fill its container without stretching — set width to 100% and use object-fit: cover</span><div class="hint-text">Pair with a fixed height or aspect-ratio to avoid distortion</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The padding should be smaller on mobile"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">responsive padding</span></td>
+                <td class="col-example"><span class="code">The section padding is too large on mobile — use clamp() so it's 20px on small screens and scales up to 80px on desktop</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr class="article-divider">
+
+          <!-- Visual Style -->
+          <div id="visual-style" class="section-head">
+            <div class="section-icon">◑</div>
+            <span class="section-title">Visual Style</span>
+          </div>
+          <table class="vocab-table">
+            <thead><tr><th>Instead of saying…</th><th></th><th>Use this term</th><th>Prompt you can use</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="col-plain">"The corners are too sharp"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">border-radius</span></td>
+                <td class="col-example"><span class="code">The card corners are too sharp — round them with a border-radius of 12px</span><div class="hint-text">0=sharp · 8–16=soft cards · 9999px=pill button</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Add a border"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">border</span></td>
+                <td class="col-example"><span class="code">Add a subtle border to the card — 1px solid, light grey (#E0E0E0)</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Add a shadow"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">box-shadow</span></td>
+                <td class="col-example"><span class="code">Add a soft box-shadow to the card so it lifts off the background slightly — keep it subtle</span><div class="hint-text">Subtle: small blur, low opacity · Heavy: large spread, higher opacity</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"This colour is too dark / too light"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">opacity / hex colour</span></td>
+                <td class="col-example"><span class="code">The secondary text is too dark — lighten it to #666666 or reduce its opacity to 60%</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Add a gradient background"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">linear-gradient</span></td>
+                <td class="col-example"><span class="code">Replace the flat background with a soft diagonal linear-gradient — light lavender to light blue, top-left to bottom-right</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The image is cropped weirdly"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">object-fit / object-position</span></td>
+                <td class="col-example"><span class="code">The image is cropping wrong — set object-fit to cover and object-position to center top so the face stays visible</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr class="article-divider">
+
+          <!-- States & Interactions -->
+          <div id="states" class="section-head">
+            <div class="section-icon">◎</div>
+            <span class="section-title">States &amp; Interactions</span>
+          </div>
+          <table class="vocab-table">
+            <thead><tr><th>Instead of saying…</th><th></th><th>Use this term</th><th>Prompt you can use</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="col-plain">"When I hover over the button"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">:hover</span></td>
+                <td class="col-example"><span class="code">On :hover, reduce the button opacity to 0.8 — add a 0.2s transition so it fades smoothly</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"When it's clicked / selected"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">:active / .active class</span></td>
+                <td class="col-example"><span class="code">When the button is pressed (:active), scale it down slightly to give a physical click feel</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"When tabbing through with keyboard"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">:focus-visible</span></td>
+                <td class="col-example"><span class="code">Add a visible focus ring on :focus-visible for keyboard users — a 2px blue outline with a small offset</span><div class="hint-text">Never remove focus styles without a visible replacement</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Make the button look inactive / unavailable"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">:disabled</span></td>
+                <td class="col-example"><span class="code">Style the :disabled button so it's clearly unavailable — reduce opacity to 40% and change the cursor to not-allowed</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Show a loading spinner state"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">loading state</span></td>
+                <td class="col-example"><span class="code">When the form is submitting, add a loading state to the button — show a spinner, replace the label text, and disable clicks</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Highlight the current page in the nav"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">active state / aria-current</span></td>
+                <td class="col-example"><span class="code">Add an active state to the nav link for the current page — darker colour and a 2px underline</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr class="article-divider">
+
+          <!-- Motion & Transitions -->
+          <div id="motion" class="section-head">
+            <div class="section-icon">→︎</div>
+            <span class="section-title">Motion &amp; Transitions</span>
+          </div>
+          <div class="best-practice"><strong>Responsive motion best practice:</strong> Always wrap animations in <em>@media (prefers-reduced-motion: no-preference)</em> so users who have motion sensitivity aren't affected.</div>
+          <table class="vocab-table">
+            <thead><tr><th>Instead of saying…</th><th></th><th>Use this term</th><th>Prompt you can use</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="col-plain">"Add a smooth transition when hovering"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">transition</span></td>
+                <td class="col-example"><span class="code">Add a transition to the button so the opacity change on hover feels smooth — 0.2s is enough</span><div class="hint-text">Always specify: property, duration, and easing</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Make it fade in when the page loads"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">@keyframes / animation</span></td>
+                <td class="col-example"><span class="code">Animate the hero section to fade in when the page loads — use a CSS animation, 0.5s duration, ease timing</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Move it / slide it / scale it"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">transform</span></td>
+                <td class="col-example"><span class="code">On hover, use transform to lift the card up 4px — don't use top or margin, it'll cause jank</span><div class="hint-text">transform = GPU-accelerated, no layout reflow</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The animation feels too fast / too slow"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">duration</span></td>
+                <td class="col-example"><span class="code">The hover animation feels too quick — slow the transition duration to 0.3s</span><div class="hint-text">Micro-interactions: 100–200ms · Page transitions: 300–500ms</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The animation feels mechanical / robotic"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">easing / cubic-bezier</span></td>
+                <td class="col-example"><span class="code">The card hover feels stiff — change the easing to ease-out so the motion feels more natural</span><div class="hint-text">ease-out = decelerates into resting · linear = robotic</div></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr class="article-divider">
+
+          <!-- Position & Layering -->
+          <div id="position" class="section-head">
+            <div class="section-icon">⊡</div>
+            <span class="section-title">Position &amp; Layering</span>
+          </div>
+          <table class="vocab-table">
+            <thead><tr><th>Instead of saying…</th><th></th><th>Use this term</th><th>Prompt you can use</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="col-plain">"The nav should stay at the top when scrolling"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">position: fixed</span></td>
+                <td class="col-example"><span class="code">Make the navbar fixed at the top so it stays visible while scrolling — make sure it has a high z-index so nothing overlaps it</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The sidebar should stick while I scroll"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">position: sticky</span></td>
+                <td class="col-example"><span class="code">Make the sidebar sticky so it follows the user as they scroll — it should stop 96px from the top to clear the fixed nav</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"Place this badge in the top-right corner of the card"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">position: absolute</span></td>
+                <td class="col-example"><span class="code">Position the "New" badge in the top-right corner of the card absolutely — 12px from the top, 12px from the right. Make sure the card has position: relative</span></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The modal / overlay should sit on top of everything"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">z-index</span></td>
+                <td class="col-example"><span class="code">The modal is appearing behind the nav — give it a higher z-index so it sits on top of everything on the page</span><div class="hint-text">Nav: 100 · Dropdown: 200 · Modal: 900 · Toast: 1000</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The content overflows / gets cut off"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">overflow</span></td>
+                <td class="col-example"><span class="code">The long text is spilling outside the card — add overflow: hidden to clip it, or overflow: auto to add a scrollbar only when needed</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr class="article-divider">
+
+          <!-- Component Names -->
+          <div id="components" class="section-head">
+            <div class="section-icon">□</div>
+            <span class="section-title">Component Names</span>
+          </div>
+          <table class="vocab-table">
+            <thead><tr><th>You might say…</th><th></th><th>Correct term</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="col-plain">"The big area at the top of the homepage"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">Hero section</span></td>
+                <td class="col-example"><div class="hint-text">Headline + subheading + CTA button</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The project thumbnail cards"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">Project card / Case study card</span></td>
+                <td class="col-example"><div class="hint-text">Cover image + title + tags</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The bar at the top with the links"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">Navbar / Navigation bar</span></td>
+                <td class="col-example"><div class="hint-text">position: fixed = stays visible while scrolling</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"That little label / badge thing"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">Badge / Tag / Chip</span></td>
+                <td class="col-example"><div class="hint-text">Small rounded pill showing category or status</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The main button"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">CTA button / Primary button</span></td>
+                <td class="col-example"><div class="hint-text">Call to action — primary interaction trigger</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The popup / dialog"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">Modal / Dialog</span></td>
+                <td class="col-example"><div class="hint-text">Needs: backdrop overlay + z-index + focus trap + close button</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The sliding panel from the side"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">Drawer / Sidebar</span></td>
+                <td class="col-example"><div class="hint-text">Common pattern for mobile navigation</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The notification that pops up briefly"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">Toast / Snackbar</span></td>
+                <td class="col-example"><div class="hint-text">Auto-dismisses after 3–5 seconds · position: fixed bottom-right</div></td>
+              </tr>
+              <tr>
+                <td class="col-plain">"The line between sections"</td>
+                <td class="col-arrow">→︎</td>
+                <td class="col-term"><span class="v-tag">Divider</span></td>
+                <td class="col-example"><div class="hint-text">border-bottom: 1px solid #EEEEEE</div></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <hr class="article-divider">
+
+          <!-- Prompt Template -->
+          <div id="prompt-template" class="section-head">
+            <div class="section-icon">✦</div>
+            <span class="section-title">The Prompt Template That Works</span>
+          </div>
+          <p>Screenshot + this structure = AI gets it right the first time.</p>
+          <div class="prompt-block">
+            <span class="bracket">[Attach screenshot]</span><br><br>
+            In the <span class="highlight">Hero section</span>, the heading is too large and the spacing feels cramped.<br><br>
+            Please make these changes only:<br>
+            — Reduce <span class="highlight">H1 font-size to 52px</span>, weight <span class="highlight">600</span>, line-height <span class="highlight">1.2</span><br>
+            — Increase <span class="highlight">padding-bottom on the hero to 80px</span><br>
+            — Add <span class="highlight">gap: 16px</span> between the subtitle and CTA button<br>
+            — On mobile <span class="highlight">(max-width: 768px)</span>, reduce H1 to <span class="highlight">32px</span> and padding to <span class="highlight">40px</span><br><br>
+            <span class="bracket">Keep all other styles unchanged.</span>
+          </div>
+
+          <!-- Author bio -->
+          <div class="author-bio">
+            <div class="author-bio-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div>
+              <div class="author-bio-name">Bonnie Xu</div>
+              <div class="author-bio-role">Product &amp; UX Designer</div>
+              <p class="author-bio-text">Designing digital products at global scale. Currently focused on the intersection of AI and design craft.</p>
+            </div>
+          </div>
+
+        </article>
+
+        <!-- Mobile-only: More from Bonnie -->
+        <div class="sidebar-card mobile-only fade-up">
+          <div class="sidebar-card-title">More from Bonnie</div>
+          <a href="blog-57k-dominos.html" class="related-card">
+            <span class="related-tag">Case Study</span>
+            <span class="related-title">How I Increased Domino's Weekly Sales by $57K Through Design</span>
+            <span class="related-meta">Mar 10, 2026 · 6 min</span>
+          </a>
+          <a href="blog-ai-workflow.html" class="related-card">
+            <span class="related-tag">AI &amp; Design</span>
+            <span class="related-title">My AI-Powered Design Workflow</span>
+            <span class="related-meta">Mar 10, 2026 · 5 min</span>
+          </a>
+        </div>
+
+        <!-- Desktop sidebar -->
+        <aside class="article-sidebar fade-up">
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">In this post</div>
+            <ul class="toc-list">
+              <li><a href="#typography">Typography</a></li>
+              <li><a href="#spacing">Spacing &amp; Layout</a></li>
+              <li><a href="#responsive">Responsive Design</a></li>
+              <li><a href="#visual-style">Visual Style</a></li>
+              <li><a href="#states">States &amp; Interactions</a></li>
+              <li><a href="#motion">Motion &amp; Transitions</a></li>
+              <li><a href="#position">Position &amp; Layering</a></li>
+              <li><a href="#components">Component Names</a></li>
+              <li><a href="#prompt-template">Prompt Template</a></li>
+            </ul>
+          </div>
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">Key principle</div>
+            <p style="font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); line-height: 1.7;">Screenshot + precise terms = accurate AI instructions every time.</p>
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- Bottom nav -->
+      <div class="article-nav fade-up">
+        <a href="blog-ai-workflow.html" class="btn-outline">←︎ Previous blog</a>
+        <a href="blog.html" class="btn-primary" style="margin-left: auto;">Back to Blog</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Tabs
+    document.querySelectorAll('.ref-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.ref-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.ref-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+      });
+    });
+
+    // Fade-up on scroll — premium observer
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.fade-up, .img-reveal, .line-reveal').forEach(el => obs.observe(el));
+  </script>
+
+  <script src="shared-nav.js"></script>
+
+</body>
+</html>

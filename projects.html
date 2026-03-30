@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Bonnie Xu</title>
+  <meta name="description" content="Selected work by Bonnie Xu — product design, UX research, branding, and campaign design at Domino's, Entain, Ray White, and freelance clients." />
+  <meta property="og:title" content="Projects — Bonnie Xu" />
+  <meta property="og:description" content="Selected work by Bonnie Xu — product design, UX research, branding, and campaign design." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-page: #F4F2F1;
+      --bg-card: #FBFAF9;
+      --text-1: #2B2B2B;
+      --text-2: #808080;
+      --border: #DDDBD9;
+      --border-lt: #EDEDEB;
+      --accent: #E8452A;
+      --r-sm: 15px;
+      --r-md: 24px;
+      --r-lg: 32px;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body: 'Poppins', sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: var(--font-body);
+      background-color: var(--bg-page);
+      color: var(--text-1);
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      background: rgba(244, 242, 241, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(170, 170, 170, 0.2);
+    }
+
+    .nav-link {
+      position: relative;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #808080;
+      text-decoration: none;
+      letter-spacing: -0.28px;
+      padding: 4px 0;
+      transition: color 0.2s;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #2B2B2B;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active {
+      color: #2B2B2B;
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+
+    /* Main content */
+    main {
+      margin-top: 72px;
+      padding: 80px 80px;
+      max-width: 1440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .page-header {
+      margin-bottom: 0px;
+    }
+
+    .page-label {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-2);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -2.5px;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .page-header::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+
+    /* Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 0px;
+    }
+
+    @media (max-width: 1024px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+      }
+    }
+
+
+    @media (max-width: 640px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      main {
+        padding: 40px 20px;
+      }
+
+      .page-title {
+        font-size: 40px;
+      }
+
+      #contact .page-wrap {
+        padding: 60px 20px 60px 20px !important;
+      }
+    }
+
+    /* Shared contact input styling */
+    .contact-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      padding: 12px 0;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    .contact-input:focus {
+      outline: none;
+      border-color: #fff;
+    }
+    .contact-input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Project Card */
+    .project-card {
+      cursor: pointer;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+      background: var(--bg-card);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10);
+      border-color: var(--border);
+    }
+
+    .project-card .project-image {
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .project-card:hover .project-image {
+      transform: scale(1.03);
+    }
+
+    .project-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      overflow: hidden;
+    }
+
+    .project-info {
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .project-company {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-1);
+    }
+
+    .project-title {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-2);
+      line-height: 1.4;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .project-tag {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-2);
+      background: rgba(43, 43, 43, 0.04);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-sm);
+      padding: 4px 8px;
+    }
+
+    /* Fade-up animation — premium easing */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0) !important;
+    }
+
+    /* Stagger children in grid */
+    .stagger > .fade-up:nth-child(1) { transition-delay: 0s; }
+    .stagger > .fade-up:nth-child(2) { transition-delay: 0.07s; }
+    .stagger > .fade-up:nth-child(3) { transition-delay: 0.14s; }
+    .stagger > .fade-up:nth-child(4) { transition-delay: 0.21s; }
+    .stagger > .fade-up:nth-child(5) { transition-delay: 0.28s; }
+    .stagger > .fade-up:nth-child(6) { transition-delay: 0.35s; }
+
+    /* Image reveal on cards */
+    .img-reveal { overflow: hidden; }
+    .img-reveal img {
+      transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease;
+      transform: scale(1.08); opacity: 0;
+    }
+    .img-reveal.visible img { transform: scale(1); opacity: 1; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <!-- ↓ Single source of truth for Navbar, Footer, Avatar, Tag, useScrollSpy -->
+  <script src="shared-components.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+    const { Navbar, Footer, NewsletterBanner } = window;
+
+    const projects = [
+      {
+        id: 1,
+        company: "Domino's",
+        title: "Product & UX Design",
+        href: "projects/dominos-core-website-redesign.html",
+        image: "images/dominos-web.png",
+        tags: ["Product Design", "UX"]
+      },
+      {
+        id: 2,
+        company: "Domino's",
+        title: "Gamification Series",
+        href: "projects/dominos-gamification-series.html",
+        image: "images/dominos-gamification.gif",
+        tags: ["CRM", "Interaction Design"]
+      },
+      {
+        id: 3,
+        company: "Domino's",
+        title: "Brand & Marketing Design",
+        href: "projects/dominos-brand-marketing-design.html",
+        image: "images/dominos-brand.png",
+        tags: ["Branding", "Social", "Print"]
+      },
+      {
+        id: 4,
+        company: "Entain",
+        title: "Digital & Campaign Design",
+        href: "projects/entain-digital-campaign-design.html",
+        image: "images/entain.jpg",
+        tags: ["eDM", "Branding", "Campaign"]
+      },
+      {
+        id: 5,
+        company: "Ray White",
+        title: "Social & Print Design",
+        href: "projects/raywhite-brand-marketing-design.html",
+        image: "images/raywhite.png",
+        tags: ["Social Media", "Print", "Branding"]
+      },
+      {
+        id: 6,
+        company: "Freelance",
+        title: "Website Design",
+        href: "projects/freelance-website-design.html",
+        image: "images/freelance.png",
+        tags: ["Web Design", "UI/UX"]
+      }
+    ];
+
+    function ProjectCard({ project }) {
+      const [isVisible, setIsVisible] = useState(false);
+      const cardRef = useRef(null);
+
+      useEffect(() => {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setIsVisible(true);
+              observer.disconnect();
+            }
+          },
+          { threshold: 0.1 }
+        );
+
+        if (cardRef.current) {
+          observer.observe(cardRef.current);
+        }
+
+        return () => observer.disconnect();
+      }, []);
+
+      return (
+        <a
+          href={project.href}
+          className={`project-card fade-up ${isVisible ? 'visible' : ''}`}
+          ref={cardRef}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <img src={project.image} alt={project.title} className="project-image" />
+          <div className="project-info">
+            <div className="project-company">{project.company}</div>
+            <div className="project-title">{project.title}</div>
+            <div className="project-tags">
+              {project.tags.map((tag, idx) => (
+                <span key={idx} className="project-tag">{tag}</span>
+              ))}
+            </div>
+          </div>
+        </a>
+      );
+    }
+
+    function App() {
+      useEffect(() => {
+        const obs = new IntersectionObserver(
+          entries => entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+          }),
+          { threshold: 0.06, rootMargin: '0px 0px -60px 0px' }
+        );
+        document.querySelectorAll('.fade-up:not(.project-card)').forEach(el => obs.observe(el));
+        return () => obs.disconnect();
+      }, []);
+
+      return (
+        <>
+          <Navbar />
+
+          <main>
+            <div className="page-header">
+              <div className="page-label">All Work · 6 Projects</div>
+              <h1 className="page-title">Projects</h1>
+            </div>
+
+            <div className="projects-grid stagger">
+              {projects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </div>
+          </main>
+
+          <section id="contact" style={{ background: '#2B2B2B' }}>
+            <div className="page-wrap" style={{ padding: '80px 80px 80px 80px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '80px', paddingBottom: '80px' }}>
+                <div className="fade-up">
+                  <h2 style={{
+                    fontFamily: 'var(--font-display)', fontWeight: 700,
+                    fontSize: 'clamp(42px,6vw,72px)', letterSpacing: '-3px',
+                    lineHeight: 1.0, color: '#fff',
+                  }}>Let's be<br />creative<br />together.</h2>
+                </div>
+                <div className="fade-up">
+                  <form 
+                    action="https://api.web3forms.com/submit" 
+                    method="POST" 
+                    style={{ display: 'flex', flexDirection: 'column', gap: 20 }}
+                  >
+                    <input type="hidden" name="access_key" value="c706f602-bfd6-4810-aa0f-da098552839d" />
+                    <input type="text" name="name" placeholder="Your name" className="contact-input" required />
+                    <input type="email" name="email" placeholder="Your email" required className="contact-input" />
+                    <textarea name="message" placeholder="Message" rows={5} required className="contact-input" style={{ resize: 'none' }} />
+                    <button type="submit" style={{
+                      background: '#fff', color: '#2B2B2B', fontFamily: 'var(--font-body)',
+                      fontSize: 14, fontWeight: 500, padding: '14px', borderRadius: 999,
+                      border: 'none', cursor: 'pointer', width: '100%', marginTop: 8,
+                    }}>Submit ↗︎︎</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <NewsletterBanner />
+          <Footer />
+        </>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>

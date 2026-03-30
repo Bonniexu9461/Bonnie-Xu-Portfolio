@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Can Generate the Wireframe. It Can't Replace the Question. — Bonnie Xu</title>
+  <meta name="description" content="UX strategy isn't getting simpler in the AI era. It's getting more important. Here's what's actually changing, and what isn't." />
+  <meta property="og:title" content="AI Can Generate the Wireframe. It Can't Replace the Question. — Bonnie Xu" />
+  <meta property="og:description" content="UX strategy isn't getting simpler in the AI era. It's getting more important. Here's what's actually changing, and what isn't." />
+  <meta property="og:image" content="images/blog-cover-ai-wireframe.png" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --accent:    #E8452A;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --r-sm: 15px; --r-md: 24px; --r-lg: 32px;
+    }
+
+    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-1); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .t-label { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; }
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 64px); letter-spacing: -2.5px; line-height: 1.05; color: var(--text-1); }
+    .t-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3vw, 36px); letter-spacing: -1.5px; line-height: 1.1; color: var(--text-1); }
+    .t-body-lg { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; }
+
+    .page-wrap { padding-top: 72px; }
+    .cs-inner { max-width: 1440px; margin: 0 auto; padding: 0 80px; }
+
+    .article-header { padding: 80px 0 48px; }
+    .article-header .t-label { margin-bottom: 20px; display: block; }
+    .article-subtitle { font-family: var(--font-display); font-weight: 300; font-size: clamp(18px, 2vw, 22px); color: var(--text-2); margin-top: 20px; margin-bottom: 36px; max-width: 760px; line-height: 1.5; }
+    .article-meta-row { display: flex; align-items: center; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .meta-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-1); }
+    .meta-sep { width: 1px; height: 16px; background: var(--border); }
+    .meta-info { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); }
+    .meta-tag { font-family: var(--font-body); font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid var(--accent); border-radius: 999px; padding: 3px 10px; }
+
+    .article-layout { display: grid; grid-template-columns: 1fr 280px; gap: 80px; align-items: start; padding-bottom: 120px; }
+    .article-body { grid-column: 1; grid-row: 1; min-width: 0; }
+    .article-sidebar { grid-column: 2; grid-row: 1; position: sticky; top: 96px; }
+    /* Mobile-only elements — hidden on desktop */
+    .mobile-only { display: none; }
+    .inline-toc { display: none; background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 24px 28px; }
+    .article-body p { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; margin-bottom: 28px; }
+    .article-body h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 32px); letter-spacing: -1.2px; line-height: 1.1; color: var(--text-1); margin: 56px 0 20px; }
+    .article-body h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(18px, 2vw, 22px); letter-spacing: -0.8px; line-height: 1.15; color: var(--text-1); margin: 40px 0 16px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+
+    /* Pull quote */
+    .article-body blockquote { border-left: 3px solid var(--text-1); padding: 4px 0 4px 28px; margin: 40px 0; }
+    .article-body blockquote p { font-family: var(--font-display); font-size: clamp(20px, 2.5vw, 28px); font-weight: 600; letter-spacing: -0.8px; line-height: 1.3; color: var(--text-1); margin-bottom: 0; }
+
+    /* Callout box */
+    .callout { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-sm); padding: 24px 28px; margin: 32px 0; }
+    .callout-label { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+    .callout p { margin-bottom: 0 !important; font-size: 15px !important; color: var(--text-1) !important; }
+
+    /* Process steps */
+    .process-steps { display: flex; flex-direction: column; gap: 0; margin: 32px 0; border: 1px solid var(--border-lt); border-radius: var(--r-md); overflow: hidden; }
+    .process-step { display: flex; align-items: flex-start; gap: 20px; padding: 20px 24px; background: var(--bg-card); border-bottom: 1px solid var(--border-lt); }
+    .process-step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; min-width: 28px; padding-top: 2px; }
+    .step-content-label { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: var(--text-1); margin-bottom: 4px; }
+    .step-content-desc { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); line-height: 1.6; }
+
+    /* Shift cards */
+    .shift-card { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 28px 32px; margin: 32px 0; }
+    .shift-label { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+    .shift-headline { font-family: var(--font-display); font-weight: 700; font-size: clamp(18px, 2vw, 22px); letter-spacing: -0.8px; color: var(--text-1); margin-bottom: 16px; }
+    .shift-arrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-2); margin-bottom: 16px; }
+    .shift-arrow span { color: var(--accent); font-size: 18px; }
+    .shift-card p { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: #555; line-height: 1.8; margin-bottom: 0; }
+
+    .hero-image { width: 100%; border-radius: var(--r-lg); overflow: hidden; margin: 0 0 48px; background: var(--border-lt); min-height: 200px; display: flex; align-items: center; justify-content: center; }
+    .hero-image img { width: 100%; display: block; max-height: 560px; object-fit: cover; }
+
+    .article-sidebar { position: sticky; top: 96px; }
+    .sidebar-card { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 28px 24px; margin-bottom: 24px; }
+    .sidebar-card-title { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .toc-list li a { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); line-height: 1.4; transition: color 0.2s; display: block; }
+    .toc-list li a:hover, .toc-list li a.active { color: var(--text-1); }
+
+    .author-bio { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-lg); padding: 40px; display: flex; gap: 28px; align-items: flex-start; margin: 64px 0; }
+    .author-bio-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-bio-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-bio-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 4px; }
+    .author-bio-role { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .author-bio-text { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    .article-nav { padding: 48px 0 80px; border-top: 1px solid var(--border); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--text-1); color: #fff; font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 14px 28px; border-radius: 999px; transition: opacity 0.2s; display: inline-flex; align-items: center; }
+    .btn-primary:hover { opacity: 0.75; }
+    .btn-outline { background: transparent; color: var(--text-2); font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 14px 28px; border-radius: 999px; border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; display: inline-flex; align-items: center; }
+    .btn-outline:hover { border-color: var(--text-2); color: var(--text-1); }
+
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .img-reveal { overflow: hidden; }
+    .img-reveal img { transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease; transform: scale(1.08); opacity: 0; }
+    .img-reveal.visible img { transform: scale(1); opacity: 1; }
+
+    .related-card { display: flex; flex-direction: column; gap: 8px; padding: 14px 0; border-bottom: 1px solid var(--border-lt); text-decoration: none; transition: opacity 0.2s; }
+    .related-card:last-child { border-bottom: none; }
+    .related-card:hover { opacity: 0.7; }
+    .related-tag { font-family: var(--font-body); font-size: 10px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; }
+    .related-title { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px; line-height: 1.3; }
+    .related-meta { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+    @media (max-width: 1024px) {
+      .article-layout { display: flex; flex-direction: column; align-items: stretch; gap: 40px; padding-bottom: 80px; }
+      .article-sidebar { display: none; }
+      .mobile-only { display: block; }
+      .inline-toc { display: block; }
+    }
+    @media (max-width: 768px) {
+      .cs-inner { padding: 0 20px; }
+      .article-header { padding: 48px 0 32px; }
+      .hero-image { border-radius: var(--r-md); }
+      .author-bio { flex-direction: column; gap: 20px; padding: 28px; }
+    }
+    @media (max-width: 640px) { .inline-toc .toc-list { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    <div class="cs-inner">
+
+      <header class="article-header fade-up">
+        <span class="t-label">UX Strategy</span>
+        <h1 class="t-display" style="margin-top: 0; margin-bottom: 0; max-width: 900px;">
+          UX in the AI Era: What Actually Changed
+        </h1>
+        <p class="article-subtitle">
+          AI didn't just change our tools. It changed the process itself. Here's what UX looks like now.
+        </p>
+        <div class="article-meta-row">
+          <div class="meta-author">
+            <div class="author-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div><div class="author-name">Bonnie Xu</div></div>
+          </div>
+          <div class="meta-sep"></div>
+          <span class="meta-info">Mar 28, 2026</span>
+          <div class="meta-sep"></div>
+          <span class="meta-info">8 min read</span>
+          <div class="meta-sep"></div>
+          <span class="meta-tag">UX Strategy</span>
+        </div>
+      </header>
+
+      <div class="hero-image fade-up">
+        <img src="images/blog-cover-ai-wireframe.png" alt="AI Can Generate the Wireframe. It Can't Replace the Question." onerror="this.style.display='none'; this.parentElement.style.minHeight='320px'; this.parentElement.style.background='#E8E6E4';" />
+      </div>
+
+      <div class="article-layout">
+
+        <!-- Mobile-only: Inline TOC -->
+        <div class="inline-toc mobile-only fade-up">
+          <p class="sidebar-card-title">In this article</p>
+          <ul class="toc-list">
+            <li><a href="#question">UX is the question</a></li>
+            <li><a href="#process">The traditional process</a></li>
+            <li><a href="#shifts">Three things AI changed</a></li>
+            <li><a href="#frameworks">Frameworks that matter more</a></li>
+            <li><a href="#closing">Where this leaves us</a></li>
+          </ul>
+        </div>
+
+        <article class="article-body fade-up">
+
+          <p>The most common thing I hear from designers right now is some version of "AI will replace us." The second most common is "AI is just a tool." Both miss what's actually happening.</p>
+
+          <p>What's actually happening is more interesting, and more demanding, than either of those takes.</p>
+
+          <p>AI is compressing execution. The answer is getting easier to generate. But the question? The question is getting harder than ever to ask well. And in design, the question is everything.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="question">UX is the question. UI is the answer.</h2>
+
+          <p>When a global fintech company decided to redesign their onboarding flow, the UI decisions seemed obvious: cleaner forms, less friction, better visual hierarchy. They could generate a dozen clean versions of a new screen in an afternoon.</p>
+
+          <p>But that wasn't the problem. The real problem was upstream: <em>what were users actually trying to accomplish in those first 10 minutes?</em> Were they trying to feel safe handing over personal information to a new app? Were they looking for proof it would work before committing? Or were they just trying to reach the dashboard as fast as possible?</p>
+
+          <p>Those three interpretations lead to completely different onboarding flows. Same technology. Same design resources. Completely different product. One of them was right. Two were expensive mistakes.</p>
+
+          <blockquote>
+            <p>UX is the work of asking the right question. UI is the craft of answering it well.</p>
+          </blockquote>
+
+          <p>AI has become extraordinarily good at answering. It can generate layouts, suggest copy, produce component variations, and prototype interactions faster than any individual designer. But it cannot ask the question. It doesn't know what job the user is hiring this product to do. It doesn't know what they're afraid of, what they've tried before, or what would make them trust you enough to keep going.</p>
+
+          <p>That's not a limitation AI will solve next year. It's the human part of the work, and it's the part that's now the entire job.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="process">The traditional process, and why scale still demands it</h2>
+
+          <p>There's a process most design programmes teach. You've probably seen it on a slide somewhere:</p>
+
+          <p style="text-align: center; font-family: var(--font-display); font-weight: 600; font-size: 15px; letter-spacing: -0.3px; color: var(--text-2); margin: 32px 0;">Discover → Define → Ideate → Prototype → Test → Build → Measure</p>
+
+          <p>It looks clean. In practice, at any meaningful scale, it looks more like this:</p>
+
+          <div class="process-steps">
+            <div class="process-step">
+              <div class="step-num">01</div>
+              <div>
+                <div class="step-content-label">Research</div>
+                <div class="step-content-desc">User interviews, competitive analysis, analytics review, support ticket synthesis</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">02</div>
+              <div>
+                <div class="step-content-label">Synthesis</div>
+                <div class="step-content-desc">Affinity mapping, user flows, Jobs to Be Done framing. Turning raw data into a clear problem.</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">03</div>
+              <div>
+                <div class="step-content-label">Flows</div>
+                <div class="step-content-desc">Journey maps, task flows, information architecture. The skeleton before the skin.</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">04</div>
+              <div>
+                <div class="step-content-label">Wireframes</div>
+                <div class="step-content-desc">Low-fidelity structure and content hierarchy. Decisions before polish.</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">05</div>
+              <div>
+                <div class="step-content-label">Prototype</div>
+                <div class="step-content-desc">Clickable mid/hi-fi. Testable, not theoretical.</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">06</div>
+              <div>
+                <div class="step-content-label">Test</div>
+                <div class="step-content-desc">Usability testing, A/B where possible, qualitative feedback loops</div>
+              </div>
+            </div>
+            <div class="process-step">
+              <div class="step-num">07</div>
+              <div>
+                <div class="step-content-label">Handoff</div>
+                <div class="step-content-desc">Specs, design system documentation, engineering collaboration. Design doesn't end at Figma.</div>
+              </div>
+            </div>
+            <div class="process-step" style="border-bottom: none;">
+              <div class="step-num">08</div>
+              <div>
+                <div class="step-content-label">Measure</div>
+                <div class="step-content-desc">Did it actually move the metric? Loop back. This is the step most teams skip.</div>
+              </div>
+            </div>
+          </div>
+
+          <p>Skipping any of these steps at scale has a real price tag. A major retail platform once shipped a checkout redesign that tested beautifully in one market, only to discover it broke trust in three others, because the research was too thin, the synthesis missed cultural nuance around payment security, and the measure step came too late to catch it early.</p>
+
+          <p>The process isn't bureaucracy. At scale, it's the difference between shipping the right thing and shipping the wrong thing at high quality.</p>
+
+          <div class="callout">
+            <div class="callout-label">The honest modern version</div>
+            <p>Steps 1–3 are compressing; AI helps synthesise faster. Steps 4–5 are increasingly code-first. Testing happens on real builds earlier. Steps 7–8 are continuous, not a handoff moment. The structure is the same. The speed is different.</p>
+          </div>
+
+          <hr class="article-divider">
+
+          <h2 id="shifts">Three things AI actually changed</h2>
+
+          <p>Here's the honest version: not the hype, not the fear.</p>
+
+          <div class="shift-card">
+            <div class="shift-label">Shift 01</div>
+            <div class="shift-headline">From deliverables to decisions</div>
+            <div class="shift-arrow">Produce the artefact <span>→</span> Be the person who shapes the thinking</div>
+            <p>The old job: wireframe, spec, present, hand over. The new job: help the team make better decisions faster. AI can generate the wireframe. What it cannot do is tell you which direction is right for this user, this context, this constraint. The designer's value is increasingly in the reasoning — can you articulate why this over that? Can you connect a design decision to a measurable outcome? Can you keep the team focused on the right problem when execution pressure pushes toward the obvious one?</p>
+          </div>
+
+          <div class="shift-card">
+            <div class="shift-label">Shift 02</div>
+            <div class="shift-headline">From gates to guardrails</div>
+            <div class="shift-arrow">Nothing ships without approval <span>→</span> Everything ships within a quality framework</div>
+            <p>UX used to work as a gate — nothing ships until design approves it. That model worked when shipping was slow. Now, engineering can ship before design is "done." The designer's job shifts: instead of reviewing everything, you build the guardrails. Design systems, documented principles, component libraries, accessibility standards — so when things ship fast, they ship within a quality framework. A well-built design system is UX strategy made permanent. It encodes your decisions about hierarchy and interaction patterns so the whole team builds consistently, even without you in the room.</p>
+          </div>
+
+          <div class="shift-card">
+            <div class="shift-label">Shift 03</div>
+            <div class="shift-headline">From research-then-design to learn-as-you-ship</div>
+            <div class="shift-arrow">Understand everything first <span>→</span> Define what you need to learn, then ship to learn it</div>
+            <p>The traditional model: do the research, then design. The emerging model: launch early with a research mindset, instrument everything, and learn from real behaviour rather than simulated behaviour. This isn't about cutting corners. For products with inherently variable outputs — anything using AI on the backend, anything in a rapidly shifting market — you can't predict all states before launch. The smart UX move is to define what you need to learn, design the smallest version that teaches you that, and iterate from real signal.</p>
+          </div>
+
+          <hr class="article-divider">
+
+          <h2 id="frameworks">The frameworks that matter more now, not less</h2>
+
+          <p>Some things haven't become less important. They've become the entire differentiator.</p>
+
+          <h3>Jobs to Be Done</h3>
+          <p>People don't use products. They hire them to solve something. A productivity app isn't used for task management. It's hired to make someone feel like they have control over their week. That reframe changes everything you design for. With AI making execution cheap, understanding the job better than anyone else is the only sustainable competitive advantage.</p>
+
+          <h3>North Star Metric</h3>
+          <p>Every design decision needs to connect to one outcome the product is optimising for. "Successful first use within 10 minutes." "Daily active engagement after 30 days." Without a North Star, teams optimise for different things and accumulate design debt invisibly. With one, everyone can make consistent decisions without a designer in every meeting.</p>
+
+          <h3>Hypothesis-driven design</h3>
+          <p>Instead of designing what you think is right, frame decisions as testable bets. <em>"We believe that showing progress during a multi-step form will reduce abandonment by making users feel in control — we'll measure drop-off at each step before and after."</em> This makes your design decisions defensible, and makes the measure step automatic rather than an afterthought.</p>
+
+          <hr class="article-divider">
+
+          <h2 id="closing">Where this leaves us</h2>
+
+          <p>UX isn't dying in the AI era. It's becoming the differentiator, precisely because execution is becoming commoditised.</p>
+
+          <p>For most of design history, the bottleneck was making the thing. Now that making the thing is getting faster and cheaper, the bottleneck shifts: it's the quality of the question, the depth of the insight, the clarity of the strategy.</p>
+
+          <p>AI can generate a wireframe in 30 seconds. It cannot sit with a confused user and understand why they keep abandoning a form they say they want to complete. It cannot notice that the flow that works for one user profile creates anxiety for another in a different context. It cannot decide that one metric matters more than another for this product, at this stage, for this team.</p>
+
+          <blockquote>
+            <p>The UX designer's job isn't to compete with AI on output. It's to remain the person asking the question that shapes everything that comes after.</p>
+          </blockquote>
+
+          <p>And right now, that question is more important than it has ever been.</p>
+
+          <!-- Author bio -->
+          <div class="author-bio">
+            <div class="author-bio-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div class="author-bio-content">
+              <div class="author-bio-name">Bonnie Xu</div>
+              <div class="author-bio-role">Product &amp; UX Designer</div>
+              <p class="author-bio-text">Designing digital products at global scale. Thinking out loud about UX strategy, AI, and the craft of design.</p>
+            </div>
+          </div>
+
+        </article>
+
+        <!-- Mobile-only: More from Bonnie -->
+        <div class="sidebar-card mobile-only fade-up">
+          <div class="sidebar-card-title">More from Bonnie</div>
+          <a href="blog-57k-dominos.html" class="related-card">
+            <span class="related-tag">Case Study</span>
+            <span class="related-title">How I Increased Domino's Weekly Sales by $57K Through Design</span>
+            <span class="related-meta">Mar 10, 2026 · 6 min</span>
+          </a>
+          <a href="blog-ai-workflow.html" class="related-card">
+            <span class="related-tag">AI &amp; Design</span>
+            <span class="related-title">My AI-Powered Design Workflow</span>
+            <span class="related-meta">Mar 10, 2026 · 5 min</span>
+          </a>
+        </div>
+
+        <!-- Desktop sidebar -->
+        <aside class="article-sidebar">
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">In this article</div>
+            <ul class="toc-list">
+              <li><a href="#question">UX is the question</a></li>
+              <li><a href="#process">The traditional process</a></li>
+              <li><a href="#shifts">Three things AI changed</a></li>
+              <li><a href="#frameworks">Frameworks that matter more</a></li>
+              <li><a href="#closing">Where this leaves us</a></li>
+            </ul>
+          </div>
+          <div class="sidebar-card">
+            <div class="sidebar-card-title">More from Bonnie</div>
+            <a href="blog-57k-dominos.html" class="related-card">
+              <span class="related-tag">Case Study</span>
+              <span class="related-title">How I Increased Domino's Weekly Sales by $57K Through Design</span>
+              <span class="related-meta">Mar 10, 2026 · 6 min</span>
+            </a>
+            <a href="blog-ai-workflow.html" class="related-card">
+              <span class="related-tag">AI &amp; Design</span>
+              <span class="related-title">My AI-Powered Design Workflow</span>
+              <span class="related-meta">Mar 10, 2026 · 5 min</span>
+            </a>
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- Bottom nav -->
+      <div class="article-nav fade-up">
+        <a href="blog-ai-vocabulary.html" class="btn-outline">←︎ Previous post</a>
+        <a href="blog.html" class="btn-primary" style="margin-left: auto;">View all posts →︎</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.fade-up, .img-reveal').forEach(el => obs.observe(el));
+
+    // Active TOC highlight on scroll
+    const sections = document.querySelectorAll('h2[id]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const scrollSpy = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          tocLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`.toc-list a[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => scrollSpy.observe(s));
+  </script>
+
+  <script src="shared-nav.js"></script>
+
+</body>
+</html>

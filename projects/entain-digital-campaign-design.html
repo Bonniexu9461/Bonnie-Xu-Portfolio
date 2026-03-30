@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital & Campaign Design — Entain | Bonnie Xu</title>
+  <link rel="icon" href="../favicon.svg" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script src="../shared-components.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background: #F4F2F1; color: #2B2B2B; overflow-x: hidden; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --accent:    #E8452A;
+      --shadow:    0px 0px 20px 0px rgba(0,0,0,0.03);
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --r-sm: 15px; --r-md: 24px; --r-lg: 32px;
+    }
+
+    .cs-inner { max-width: 1440px; margin: 0 auto; width: 100%; padding: 0 80px; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .img-reveal { overflow: hidden; }
+    .img-reveal img { transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease; transform: scale(1.08); opacity: 0; }
+    .img-reveal.visible img { transform: scale(1); opacity: 1; }
+
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:1px; background:#2B2B2B; transition: width 0.3s ease; }
+    .nav-link:hover::after { width:100%; }
+
+    .t-label   { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; }
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 64px); letter-spacing: -2.5px; line-height: 1.0; color: var(--text-1); }
+    .t-h2      { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3vw, 36px); letter-spacing: -1.5px; line-height: 1.1; color: var(--text-1); }
+    .t-h3      { font-family: var(--font-display); font-weight: 700; font-size: clamp(20px, 2vw, 28px); letter-spacing: -1px; line-height: 1.15; color: var(--text-1); }
+    .t-h4      { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; line-height: 1.2; color: var(--text-1); }
+    .t-body-lg { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; }
+    .t-body    { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    .img-placeholder { width: 100%; background: #EBEBEA; border-radius: var(--r-sm); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 32px; border: 1.5px dashed #CCCCCC; }
+    .img-placeholder .ph-name { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #999; letter-spacing: 0.5px; }
+    .img-placeholder .ph-hint { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: #BBBBBB; text-align: center; }
+
+    .wid-section { display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: start; }
+    .wid-num { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; }
+
+    .stat-chip { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-sm); padding: 16px 20px; display: flex; flex-direction: column; gap: 4px; }
+    .stat-num  { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: -1px; color: var(--accent); }
+    .stat-desc { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+
+    .result-chip { background: var(--text-1); border-radius: var(--r-sm); padding: 20px 24px; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; padding-bottom: 80px; }
+    .contact-input::placeholder { color: rgba(255,255,255,0.35); }
+    .contact-input:focus { outline: none; border-bottom-color: rgba(255,255,255,0.7) !important; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; } }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-page); }
+    ::-webkit-scrollbar-thumb { background: #AAAAAA; border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .cs-inner { padding: 0 20px; }
+      .wid-section { grid-template-columns: 1fr; gap: 20px; }
+      .two-col { grid-template-columns: 1fr; }
+      .cs-meta { flex-direction: column !important; gap: 24px !important; }
+      .cs-meta-grid { grid-template-columns: 1fr 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
+const { Navbar, Footer } = window;
+
+const IMG = (name) => `../images/${name}`;
+
+function Img({ filename, height = 320, hint = '' }) {
+  const [ok, setOk] = useState(false);
+  const [err, setErr] = useState(false);
+  const src = IMG(filename);
+  return err ? (
+    <div className="img-placeholder" style={{ minHeight: height }}>
+      <span style={{ fontSize: 22, opacity: 0.35 }}>🖼</span>
+      <div className="ph-name">{filename}</div>
+      {hint && <div className="ph-hint">{hint}</div>}
+    </div>
+  ) : (
+    <div style={{ borderRadius: 15, overflow: 'hidden', background: '#EBEBEA', minHeight: ok ? 0 : height }}>
+      {!ok && (
+        <div className="img-placeholder" style={{ minHeight: height }}>
+          <span style={{ fontSize: 22, opacity: 0.35 }}>🖼</span>
+          <div className="ph-name">{filename}</div>
+          {hint && <div className="ph-hint">{hint}</div>}
+        </div>
+      )}
+      <img src={src} alt={filename} onLoad={() => setOk(true)} onError={() => setErr(true)}
+        style={{ width: '100%', display: ok ? 'block' : 'none', objectFit: 'cover' }} />
+    </div>
+  );
+}
+
+function Label({ children }) {
+  return <p className="t-label" style={{ marginBottom: 14 }}>{children}</p>;
+}
+
+function Divider() {
+  return <hr style={{ border: 'none', borderTop: '1px solid var(--border)', margin: '0' }} />;
+}
+
+
+function CaseStudy() {
+  return (
+    <main style={{ paddingTop: 72 }}>
+      <div className="cs-inner">
+
+        {/* ── HEADER ── */}
+        <section style={{ padding: '72px 0 56px' }}>
+          <div className="fade-up">
+            <Label>Case Study · Entain</Label>
+            <h1 className="t-display" style={{ marginBottom: 10 }}>Digital &amp; Campaign Design</h1>
+            <p style={{ fontFamily: 'var(--font-display)', fontWeight: 300, fontSize: 'clamp(18px, 2.5vw, 28px)', color: 'var(--text-2)', letterSpacing: '-0.5px', marginBottom: 40 }}>Multi-brand design system for Entain's portfolio of gaming brands</p>
+          </div>
+
+          <div className="fade-up cs-meta" style={{ display: 'flex', gap: 48, paddingTop: 32, borderTop: '1px solid var(--border)', flexWrap: 'wrap' }}>
+            <div style={{ flex: 2, minWidth: 280 }}>
+              <Label>Project Overview</Label>
+              <p className="t-body-lg">Multi-brand design system work for Entain's portfolio brands. Created brand identities, marketing templates, and presentation systems enabling consistent execution across teams while maintaining distinct brand personalities. Established guidelines and documentation supporting rapid campaign deployment across multiple channels and markets.</p>
+            </div>
+            <div className="cs-meta-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px 32px', flex: 1, minWidth: 240 }}>
+              <div><Label>Tools</Label><p className="t-body">Adobe Illustrator · Photoshop<br/>InDesign · After Effects<br/>Google Web Designer</p></div>
+              <div><Label>Role</Label><p className="t-body">Digital Designer</p></div>
+              <div><Label>Timeline</Label><p className="t-body">Jun 2022 – Jan 2024</p></div>
+              <div><Label>Brands</Label><p className="t-body">4+ gaming brands</p></div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── HERO IMAGE ── */}
+        <div className="fade-up" style={{ marginBottom: 80 }}>
+          <Img filename="entain.jpg" height={480} hint="Hero — Puntathon brand campaign with horse racing" />
+        </div>
+
+        <Divider />
+
+        {/* ── CHALLENGES ── */}
+        <section style={{ padding: '80px 0' }}>
+          <div className="fade-up" style={{ marginBottom: 32 }}>
+            <Label>The Problem</Label>
+            <h2 className="t-h2" style={{ marginBottom: 24 }}>Challenge</h2>
+            <p className="t-body-lg" style={{ marginBottom: 16, maxWidth: 800 }}>Entain operates multiple gaming brands, each requiring consistent brand expression while maintaining individual identity. The design team needed to deliver assets quickly across multiple channels—social media, email campaigns, app stores, and internal presentations—while ensuring brand compliance and visual quality.</p>
+          </div>
+        </section>
+
+        <Divider />
+
+        {/* ── WHAT I DID ── */}
+        <section style={{ padding: '80px 0' }}>
+          <div className="fade-up" style={{ marginBottom: 64 }}>
+            <Label>Process</Label>
+            <h2 className="t-h2">What I did</h2>
+          </div>
+
+          {/* 01 Logo Design Collection */}
+          <div className="fade-up" style={{ paddingTop: 56, paddingBottom: 64 }}>
+            <div className="wid-section">
+              <div>
+                <div className="wid-num">01</div>
+                <h3 className="t-h3">Logo Design Collection</h3>
+              </div>
+              <div>
+                <p className="t-body-lg" style={{ marginBottom: 32 }}>Designed logo systems for Entain's portfolio brands and initiatives. Work included primary logos, variations, and brand marks for EnTrain, Puntathon, and Entain Community. Each logo system included multiple lockups for different applications and usage guidelines.</p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <Img filename="entain-01-logo-collection.webp" height={280} hint="Logo collection — EnTrain, Puntathon, Community ΣEntain" />
+                  <Img filename="entain-01-logo-system.webp" height={280} hint="EnTrain logo system — horizontal, vertical, tagline variations" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 02 Marketing Design */}
+          <div className="fade-up" style={{ borderTop: '1px solid var(--border)', paddingTop: 56, paddingBottom: 64 }}>
+            <div className="wid-section">
+              <div>
+                <div className="wid-num">02</div>
+                <h3 className="t-h3">Marketing Design</h3>
+              </div>
+              <div>
+                <p className="t-body-lg" style={{ marginBottom: 18 }}>Created digital marketing assets across social media, email, and app stores for Neds. Designed Instagram and Facebook ad campaigns, app store preview graphics, digital banners for web, and EDM (email) templates.</p>
+                <p className="t-body-lg" style={{ marginBottom: 32 }}>Every asset upheld brand consistency while being tailored to platform-specific demands and conversion objectives, contributing to product launches, seasonal campaigns, and continuous promotional efforts.</p>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <Img filename="entain-02-social.webp" height={280} hint="Social media — Instagram posts, app store review, digital banners" />
+                  <Img filename="entain-02-edm.webp" height={280} hint="Electronic Direct Mail (EDM) — Neds NRL, State of Origin, Spring Carnival campaigns" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 03 Branded Presentation Templates */}
+          <div className="fade-up" style={{ borderTop: '1px solid var(--border)', paddingTop: 56, paddingBottom: 64 }}>
+            <div className="wid-section">
+              <div>
+                <div className="wid-num">03</div>
+                <h3 className="t-h3">Branded Presentation Templates</h3>
+              </div>
+              <div>
+                <p className="t-body-lg" style={{ marginBottom: 32 }}>Designed presentation template systems for internal use, including master slide layouts, data visualisation styles, and the Neds brand book showcasing brand personality and visual guidelines.</p>
+
+                <Img filename="entain-03-presentations.avif" height={400} hint="Branded presentation design — Neds weekly pulse and brand templates" />
+              </div>
+            </div>
+          </div>
+
+          {/* 04 Animation & Motion Design */}
+          <div className="fade-up" style={{ borderTop: '1px solid var(--border)', paddingTop: 56, paddingBottom: 64 }}>
+            <div className="wid-section">
+              <div>
+                <div className="wid-num">04</div>
+                <h3 className="t-h3">Animation &amp; Motion Design</h3>
+              </div>
+              <div>
+                <p className="t-body-lg" style={{ marginBottom: 32 }}>Produced motion graphics for Neds' digital campaigns and offline charging stations at racecourses. Work included animated promotional content, social media assets, and video ads.</p>
+
+                <div className="two-col">
+                  <Img filename="entain-04-animation-1.gif" height={280} hint="Neds animated campaign — Sign in and Score up to $100 bonus bets" />
+                  <div style={{ aspectRatio: '1/1', overflow: 'hidden', borderRadius: 15 }}>
+                    <Img filename="entain-04-animation-2.gif" height={280} hint="Neds animated ad — phone at racecourse with 0% loading motion" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <Divider />
+
+        {/* ── IMPACT ── */}
+        <section style={{ padding: '80px 0' }}>
+          <div className="fade-up" style={{ marginBottom: 32 }}>
+            <Label>Outcome</Label>
+            <h2 className="t-h2" style={{ marginBottom: 32 }}>Impact</h2>
+          </div>
+
+          <div className="fade-up" style={{ background: 'var(--bg-card)', border: '1px solid var(--border-lt)', borderRadius: 'var(--r-sm)', padding: '32px 40px' }}>
+            <p className="t-body-lg">The design systems supported rapid campaign deployment across multiple brands and markets. Marketing assets maintained brand consistency while meeting platform-specific requirements for social media, email, and app stores. The presentation template system reduced deck creation time for internal teams while ensuring brand compliance. Logo systems provided clear brand identity across Entain's portfolio, supporting brand recognition and consistency across digital and physical touchpoints.</p>
+          </div>
+        </section>
+
+        {/* ── NEXT PROJECT ── */}
+        <div className="fade-up" style={{ borderTop: '1px solid var(--border)', paddingTop: 56, paddingBottom: 80, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 24 }}>
+          <div>
+            <p className="t-label" style={{ marginBottom: 8 }}>Up next</p>
+            <h3 className="t-h3" style={{ marginBottom: 0 }}>Social &amp; Print Design — Ray White</h3>
+          </div>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <a href="raywhite-brand-marketing-design.html" style={{ background: 'var(--text-1)', color: '#fff', textDecoration: 'none', padding: '14px 28px', borderRadius: 100, fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500 }}>View next ↗︎︎</a>
+            <a href="../portfolio.html#work" style={{ background: 'transparent', color: 'var(--text-1)', textDecoration: 'none', padding: '14px 28px', borderRadius: 100, fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500, border: '1px solid var(--border)' }}>Back to all work</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  );
+}
+
+function App() {
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.06 }
+    );
+    document.querySelectorAll('.fade-up, .img-reveal, .line-reveal').forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div>
+      <Navbar />
+      <CaseStudy />
+      <Footer />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>

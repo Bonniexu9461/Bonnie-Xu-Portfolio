@@ -1,0 +1,2023 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bonnie Xu — Product & UX Designer</title>
+    <meta
+      name="description"
+      content="Product & UX Designer shaping digital experiences at global scale. Portfolio featuring work at Domino's, Entain, Ray White, and freelance web design."
+    />
+    <link rel="canonical" href="https://bonniexu.com/" />
+    <meta property="og:title" content="Bonnie Xu — Product & UX Designer" />
+    <meta
+      property="og:description"
+      content="Product & UX Designer shaping digital experiences at global scale. Portfolio featuring work at Domino's, Entain, Ray White, and freelance web design."
+    />
+    <meta property="og:image" content="https://bonniexu.com/images/hero-photo.jpg" />
+    <meta property="og:url" content="https://bonniexu.com/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://bonniexu.com/images/hero-photo.jpg" />
+    <link rel="icon" href="favicon.svg" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+    <!-- ↓ Single source of truth for Navbar, Footer, Avatar, Tag, useScrollSpy -->
+    <script src="shared-components.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f4f2f1;
+        color: #2b2b2b;
+        overflow-x: hidden;
+      }
+
+      :root {
+        --font-display: "Bricolage Grotesque", sans-serif;
+        --font-body: "Poppins", sans-serif;
+        --radius-md: 24px;
+        --shadow-card: 0px 0px 20px 0px rgba(0, 0, 0, 0.06);
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(32px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes ticker {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* ── Premium animation system ── */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Staggered children */
+      .stagger > .fade-up:nth-child(1) {
+        transition-delay: 0s;
+      }
+      .stagger > .fade-up:nth-child(2) {
+        transition-delay: 0.08s;
+      }
+      .stagger > .fade-up:nth-child(3) {
+        transition-delay: 0.16s;
+      }
+      .stagger > .fade-up:nth-child(4) {
+        transition-delay: 0.24s;
+      }
+      .stagger > .fade-up:nth-child(5) {
+        transition-delay: 0.32s;
+      }
+      .stagger > .fade-up:nth-child(6) {
+        transition-delay: 0.4s;
+      }
+
+      /* Smooth image reveal */
+      .img-reveal {
+        overflow: hidden;
+      }
+      .img-reveal img {
+        transition:
+          transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 0.8s ease;
+        transform: scale(1.08);
+        opacity: 0;
+      }
+      .img-reveal.visible img {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      /* Section divider line animation */
+      .line-reveal {
+        width: 0;
+        height: 1px;
+        background: #dddbd9;
+        transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .line-reveal.visible {
+        width: 100%;
+      }
+
+      .ticker-track {
+        display: flex;
+        animation: ticker 30s linear infinite;
+        width: max-content;
+      }
+      .ticker-track:hover {
+        animation-play-state: paused;
+      }
+
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: #2b2b2b;
+        transition: width 0.3s ease;
+      }
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 100%;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f4f2f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #aaaaaa;
+        border-radius: 3px;
+      }
+
+      .mobile-menu {
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+      .mobile-menu.open {
+        transform: translateX(0);
+      }
+
+      .btn-primary {
+        transition:
+          background 0.3s ease,
+          transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: #1a1a1a !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(43, 43, 43, 0.15);
+      }
+      .btn-outline {
+        transition:
+          background 0.3s ease,
+          color 0.3s ease,
+          border-color 0.3s ease,
+          transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .btn-outline:hover {
+        background: #2b2b2b !important;
+        color: #fff !important;
+        transform: translateY(-2px);
+      }
+
+      .testimonial-card {
+        transition:
+          transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.4s ease;
+      }
+      .testimonial-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.07);
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #2b2b2b !important;
+      }
+
+      section {
+        padding: 80px 80px;
+      }
+      /* Contact uses cs-inner for its own padding — strip the global section rule entirely */
+      #contact {
+        padding: 0 !important;
+      }
+      .page-wrap {
+        max-width: 1440px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .nav-inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        padding: 0 80px;
+      }
+      .hero-inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        width: 100%;
+        padding: 0 80px;
+      }
+      .cs-inner {
+        max-width: 1440px;
+        margin: 0 auto;
+        width: 100%;
+        padding: 0 80px;
+      }
+
+      /* Work image card */
+      .work-img-card {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        aspect-ratio: 16/9;
+        background: #1a1a1a;
+        transition:
+          transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .work-img-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+      }
+      .work-img-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .work-img-card:hover img {
+        transform: scale(1.04);
+      }
+      .work-img-card .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 30%,
+          rgba(0, 0, 0, 0.75) 100%
+        );
+        pointer-events: none;
+      }
+      .work-img-card .card-footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 14px 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+      .work-img-card .card-title {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 15px;
+        color: #fff;
+        letter-spacing: -0.3px;
+        line-height: 1.2;
+        margin-bottom: 3px;
+      }
+      .work-img-card .card-tags {
+        font-family: var(--font-body);
+        font-size: 10px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 0.2px;
+      }
+      .work-img-card .arrow-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 13px;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(4px);
+        transition:
+          background 0.2s ease,
+          border-color 0.2s ease;
+      }
+      .work-img-card:hover .arrow-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.8);
+      }
+
+      /* Hero split */
+      .hero-right {
+        flex: 0 0 44%;
+      }
+      .hero-gradient {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent 50%, rgba(244,242,241,0.55) 65%, #F4F2F1 100%);
+        pointer-events: none;
+      }
+      @media (max-width: 768px) {
+        .hero-right {
+          display: none !important;
+        }
+        .hero-gradient {
+          background: linear-gradient(to bottom, transparent 45%, rgba(244,242,241,0.7) 65%, #F4F2F1 85%) !important;
+        }
+      }
+
+      /* Avatar */
+      .avatar-photo {
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center top;
+        flex-shrink: 0;
+        border: 1.5px solid #f4f2f1;
+      }
+
+      /* Contact form */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 80px;
+        align-items: start;
+      }
+      .contact-input::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+      }
+      .contact-input:focus {
+        outline: none;
+        border-bottom-color: rgba(255, 255, 255, 0.7) !important;
+      }
+
+      @media (max-width: 768px) {
+        section {
+          padding: 60px 20px;
+        }
+        .hero-inner {
+          padding: 0 20px !important;
+        }
+        .cs-inner {
+          padding: 0 20px !important;
+        }
+        .hero-name {
+          font-size: clamp(48px, 12vw, 120px) !important;
+        }
+        .hero-photo {
+          width: 160px;
+          height: 200px;
+        }
+        .hero-top {
+          flex-direction: column !important;
+          align-items: flex-start !important;
+        }
+        .work-accordion {
+          flex-direction: column !important;
+        }
+        .work-accordion-left {
+          flex: unset !important;
+          width: 100% !important;
+          border-right: none !important;
+          border-bottom: 1px solid #ededeb !important;
+        }
+        .testimonials-grid {
+          grid-template-columns: 1fr !important;
+          gap: 0 !important;
+        }
+        .contact-grid {
+          grid-template-columns: 1fr !important;
+          gap: 48px !important;
+        }
+        .contact-row {
+          flex-direction: column !important;
+        }
+        .blog-grid {
+          grid-template-columns: 1fr !important;
+        }
+        /* On mobile, cs-inner inside #contact already handles its own 20px padding */
+        #contact .cs-inner {
+          padding-top: 60px !important;
+          padding-bottom: 60px !important;
+        }
+        .nav-inner {
+          padding: 0 20px !important;
+        }
+        .project-card {
+          flex-direction: column !important;
+          min-height: unset !important;
+        }
+        .project-card-img {
+          min-height: 220px !important;
+          flex: unset !important;
+        }
+        .hamburger {
+          display: block !important;
+        }
+      }
+      @media (max-width: 480px) {
+        section {
+          padding: 48px 16px;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const { useState, useEffect } = React;
+      const { Navbar, Footer, NewsletterBanner, Avatar, Tag } = window;
+
+      /* ─── DATA ─────────────────────────────────────────── */
+      // NAV_ITEMS, Navbar, Footer, Avatar, Tag, useScrollSpy are in shared-components.js
+
+      const TICKER_ITEMS = [
+        "Website UI",
+        "A/B Testing",
+        "UX Research",
+        "Product Design",
+        "Interaction Design",
+        "UX/UI",
+        "Animation",
+        "Branding",
+        "Social Design",
+        "EDM Design",
+        "Print Design",
+        "Visual Design",
+      ];
+
+      const PROJECTS = [
+        {
+          id: "dominos",
+          company: "Domino's",
+          role: "UI/UX Designer",
+          period: "Jan 2024 – Oct 2025",
+          description:
+            "Product & UX at global scale: core page redesigns, modular component systems, and CRM gamification templates rolled out across multiple markets.",
+          tags: ["Product Design", "UX Research", "CRM", "Gamification"],
+          works: [
+            {
+              title: "Product & UX Design",
+              tags: "product design, ux",
+              img: "images/dominos-web.png",
+              caseStudy: "projects/dominos-core-website-redesign.html",
+            },
+            {
+              title: "Gamification Series",
+              tags: "crm, interaction design",
+              img: "images/dominos-gamification.gif",
+              caseStudy: "projects/dominos-gamification-series.html",
+            },
+            {
+              title: "Brand & Marketing Design",
+              tags: "branding, social, print",
+              img: "images/dominos-brand.png",
+              caseStudy: "projects/dominos-brand-marketing-design.html",
+            },
+          ],
+          color: "#E8452A",
+        },
+        {
+          id: "entain",
+          company: "Entain",
+          role: "Digital Designer",
+          period: "Jun 2022 – Jan 2024",
+          description:
+            "Digital and campaign design: eDM systems, logos, and campaign assets across multiple global brands.",
+          tags: ["Digital Design", "eDM", "Branding", "Campaign"],
+          works: [
+            {
+              title: "Digital & Campaign Design",
+              tags: "edm, branding, campaign",
+              img: "images/entain.jpg",
+              caseStudy: "projects/entain-digital-campaign-design.html",
+            },
+          ],
+          color: "#1A1A2E",
+        },
+        {
+          id: "raywhite",
+          company: "Ray White",
+          role: "Graphic Designer",
+          period: "Sep 2021 – Jun 2022",
+          description:
+            "Early brand and marketing work: social, print, and visual design for the real estate group.",
+          tags: ["Social Design", "Print Design", "Visual Design", "Branding"],
+          works: [
+            {
+              title: "Social & Print Design",
+              tags: "social media, print, branding",
+              img: "images/raywhite.png",
+              caseStudy: "projects/raywhite-brand-marketing-design.html",
+            },
+          ],
+          color: "#D4A017",
+        },
+        {
+          id: "freelance",
+          company: "Freelance",
+          role: "Web Designer",
+          period: "Oct 2019 – Present",
+          description:
+            "Website design for Digital Accelerator clients: responsive, brand-driven websites built end to end.",
+          tags: ["Web Design", "UX/UI", "Responsive Design", "Visual Design"],
+          works: [
+            {
+              title: "Freelance Websites",
+              tags: "web design, ui/ux",
+              img: "images/freelance.png",
+              caseStudy: "projects/freelance-website-design.html",
+            },
+          ],
+          color: "#2B7A4B",
+        },
+      ];
+
+      const TESTIMONIALS = [
+        {
+          quote:
+            "I had the pleasure of having Bonnie as part of my team during her time as a UI/UX Designer at Domino's, where she was instrumental in creating marketing assets and templates and developing our suite of CRM gamification templates. These were rolled out across multiple markets and had a significant impact on both engagement and overall conversion rates.",
+          name: "Rachel Khoo",
+          title: "Group Head of Digital Experience",
+          company: "Domino's",
+          photo: "images/Rachel.jpeg",
+          initials: "RK",
+          color: "#E8452A",
+        },
+        {
+          quote:
+            "Throughout my career, I've worked with many bright and capable designers, but only a few truly stand out as exceptional. Bonnie is one of those rare talents. She combines creativity, technical skill, and sharp problem solving ability with a genuine passion for design.",
+          name: "Brenton Queen",
+          title: "Head of Digital Experience Design",
+          company: "Domino's",
+          photo: "images/Brenton.jpeg",
+          initials: "BQ",
+          color: "#2B2B2B",
+        },
+        {
+          quote:
+            "Bonnie displays all the skills that an employer craves: self-starting, troubleshooting, problem solving, creative thinking and the desire to improve their skillset.\n\nBonnie's work was recognised at the final exhibition in 2021 gaining a TAFE Queensland Portfolio Award.",
+          name: "David Toleman",
+          title: "Lecturer – Diploma of Graphic Design",
+          company: "TAFE Queensland",
+          photo: "images/David.jpeg",
+          initials: "DT",
+          color: "#555555",
+        },
+        {
+          quote:
+            "Bonnie excels throughout the entire design process, from initial research and wireframing to prototyping and final delivery.\n\nHer proactive approach to staying current with AI integration and emerging technologies keeps our team at the forefront of digital design innovation.",
+          name: "Celene Grantham",
+          title: "Digital CX Design Lead",
+          company: "Domino's",
+          photo: "images/Celene.jpeg",
+          initials: "CG",
+          color: "#808080",
+        },
+      ];
+
+      // ↑ Navbar, Footer, Avatar, Tag, useScrollSpy, NAV_ITEMS → shared-components.js
+
+      /* ─── HERO ─────────────────────────────────────────── */
+      function Hero() {
+        return (
+          <>
+            <section
+              id="hero"
+              style={{
+                minHeight: "100vh",
+                position: "relative",
+                overflow: "hidden",
+                background: "#F4F2F1",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              {/* Full-bleed background photo */}
+              <img
+                src="images/hero-photo.jpg"
+                alt="Bonnie Xu"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "50% 30%",
+                  display: "block",
+                }}
+              />
+
+              {/* Bottom gradient so text is always readable, fades to page bg */}
+              <div className="hero-gradient" />
+
+              {/* Single centered overlay — matches nav + sections alignment */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  zIndex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  pointerEvents: "none",
+                }}
+              >
+                <div
+                  className="hero-inner"
+                  style={{ flex: 1, display: "flex", flexDirection: "column" }}
+                >
+                  {/* Top label */}
+                  <div
+                    style={{
+                      marginTop: 96,
+                      animation: "fadeUp 0.7s 0.1s ease both",
+                      pointerEvents: "auto",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: 12,
+                        fontWeight: 500,
+                        color: "#2B2B2B",
+                        letterSpacing: "2px",
+                        textTransform: "uppercase",
+                        opacity: 0.6,
+                      }}
+                    >
+                      Portfolio · 2026
+                    </span>
+                  </div>
+
+                  {/* Spacer pushes bottom content down */}
+                  <div style={{ flex: 1 }} />
+
+                  {/* Bottom: name left, bio+CTA right */}
+                  <div
+                    style={{
+                      paddingBottom: 64,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-end",
+                      flexWrap: "wrap",
+                      gap: 32,
+                      pointerEvents: "auto",
+                    }}
+                  >
+                    <h1
+                      className="hero-name"
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 700,
+                        fontSize: "clamp(64px, 10vw, 140px)",
+                        lineHeight: 0.88,
+                        letterSpacing: "-4px",
+                        color: "#2B2B2B",
+                        animation: "fadeUp 0.9s 0.15s ease both",
+                      }}
+                    >
+                      Bonnie
+                      <br />
+                      Xu
+                    </h1>
+
+                    <div
+                      style={{
+                        maxWidth: 360,
+                        animation: "fadeUp 0.9s 0.25s ease both",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontSize: 12,
+                          fontWeight: 600,
+                          color: "#555",
+                          letterSpacing: "1.5px",
+                          textTransform: "uppercase",
+                          marginBottom: 10,
+                        }}
+                      >
+                        Product & UX Designer
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontSize: 14,
+                          fontWeight: 300,
+                          color: "#555",
+                          lineHeight: 1.8,
+                          marginBottom: 24,
+                        }}
+                      >
+                        I design products that move numbers. $57K/week at
+                        Domino's, rolled out across 10 markets. Now I'm
+                        exploring how AI changes the way designers work.
+                      </p>
+                      <div
+                        style={{ display: "flex", gap: 12, flexWrap: "wrap" }}
+                      >
+                        <button
+                          onClick={() =>
+                            document
+                              .getElementById("work")
+                              ?.scrollIntoView({ behavior: "smooth" })
+                          }
+                          className="btn-primary"
+                          style={{
+                            background: "#2B2B2B",
+                            color: "#fff",
+                            border: "none",
+                            cursor: "pointer",
+                            padding: "13px 28px",
+                            borderRadius: 100,
+                            fontFamily: "var(--font-body)",
+                            fontSize: 13,
+                            fontWeight: 500,
+                          }}
+                        >
+                          View work ↗︎︎
+                        </button>
+                        <button
+                          onClick={() =>
+                            document
+                              .getElementById("contact")
+                              ?.scrollIntoView({ behavior: "smooth" })
+                          }
+                          className="btn-outline"
+                          style={{
+                            background: "transparent",
+                            color: "#2B2B2B",
+                            border: "1px solid rgba(43,43,43,0.4)",
+                            cursor: "pointer",
+                            padding: "13px 28px",
+                            borderRadius: 100,
+                            fontFamily: "var(--font-body)",
+                            fontSize: 13,
+                            fontWeight: 500,
+                          }}
+                        >
+                          Get in touch
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Ticker strip */}
+            <div
+              id="about"
+              style={{
+                overflow: "hidden",
+                borderTop: "1px solid rgba(170,170,170,0.3)",
+                borderBottom: "1px solid rgba(170,170,170,0.3)",
+                padding: "14px 0",
+                background: "rgba(251,250,249,0.6)",
+              }}
+            >
+              <div className="ticker-track">
+                {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
+                  <span
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      whiteSpace: "nowrap",
+                      fontFamily: "var(--font-body)",
+                      fontSize: 12,
+                      fontWeight: 500,
+                      color: "#808080",
+                      letterSpacing: "2px",
+                      textTransform: "uppercase",
+                      padding: "0 24px",
+                    }}
+                  >
+                    {item}
+                    <span
+                      style={{
+                        display: "inline-block",
+                        width: 4,
+                        height: 4,
+                        borderRadius: "50%",
+                        background: "#AAAAAA",
+                        margin: "0 24px",
+                      }}
+                    />
+                  </span>
+                ))}
+              </div>
+            </div>
+          </>
+        );
+      }
+
+      /* ─── PROJECT CARD ──────────────────────────────────── */
+      function ProjectCard({ project, index }) {
+        const [activeWorkIdx, setActiveWorkIdx] = useState(0);
+        const currentWork = project.works[activeWorkIdx];
+        const cardRef = React.useRef(null);
+
+        useEffect(() => {
+          const el = cardRef.current;
+          if (!el) return;
+          const obs = new IntersectionObserver(
+            ([entry]) => {
+              if (entry.isIntersecting) {
+                el.style.transitionDelay = `${index * 0.1}s`;
+                el.classList.add("visible");
+                obs.unobserve(el);
+              }
+            },
+            { threshold: 0.08, rootMargin: "0px 0px -60px 0px" },
+          );
+          obs.observe(el);
+          return () => obs.disconnect();
+        }, []);
+
+        return (
+          <div
+            ref={cardRef}
+            className="fade-up project-card"
+            style={{
+              background: "#FBFAF9",
+              borderRadius: "var(--radius-md)",
+              boxShadow: "var(--shadow-card)",
+              overflow: "hidden",
+              display: "flex",
+              minHeight: 340,
+            }}
+          >
+            {/* ── LEFT: info panel ── */}
+            <div
+              style={{
+                flex: "0 0 300px",
+                minWidth: 260,
+                padding: "36px 32px",
+                display: "flex",
+                flexDirection: "column",
+                borderRight: "1px solid #EDEDEB",
+              }}
+            >
+              {/* Number */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginBottom: 16,
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: "#2B2B2B",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div style={{ height: 1, flex: 1, background: "#EDEDEB" }} />
+              </div>
+
+              {/* Company name */}
+              <h3
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: 26,
+                  letterSpacing: "-1px",
+                  color: "#2B2B2B",
+                  lineHeight: 1.1,
+                  marginBottom: 4,
+                }}
+              >
+                {project.company}
+              </h3>
+              {/* Period + Role */}
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 11,
+                  color: "#AAAAAA",
+                  fontWeight: 300,
+                  marginBottom: 4,
+                }}
+              >
+                {project.period}
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 10,
+                  fontWeight: 500,
+                  color: "#AAAAAA",
+                  letterSpacing: "1.2px",
+                  textTransform: "uppercase",
+                  marginBottom: 16,
+                }}
+              >
+                {project.role}
+              </p>
+
+              {/* Description */}
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 12,
+                  fontWeight: 300,
+                  color: "#555",
+                  lineHeight: 1.8,
+                  marginBottom: 20,
+                  flex: 1,
+                }}
+              >
+                {project.description}
+              </p>
+
+              {/* Work buttons */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 6,
+                  marginBottom: 20,
+                }}
+              >
+                {project.works.map((w, i) => {
+                  const isActive = activeWorkIdx === i;
+                  return (
+                    <button
+                      key={i}
+                      onClick={() => setActiveWorkIdx(i)}
+                      style={{
+                        all: "unset",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: 8,
+                        padding: "10px 12px",
+                        borderRadius: 10,
+                        background: isActive
+                          ? "rgba(43,43,43,0.06)"
+                          : "transparent",
+                        border: `1px solid ${isActive ? "rgba(43,43,43,0.25)" : "#EDEDEB"}`,
+                        transition: "all 0.18s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isActive) {
+                          e.currentTarget.style.background = "#F4F2F1";
+                          e.currentTarget.style.borderColor = "#DDDDDD";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isActive) {
+                          e.currentTarget.style.background = "transparent";
+                          e.currentTarget.style.borderColor = "#EDEDEB";
+                        }
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 8,
+                          minWidth: 0,
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: "50%",
+                            background: isActive ? "#2B2B2B" : "#CCCCCC",
+                            flexShrink: 0,
+                            transition: "background 0.18s",
+                          }}
+                        />
+                        <div style={{ minWidth: 0 }}>
+                          <span
+                            style={{
+                              fontFamily: "var(--font-body)",
+                              fontSize: 12,
+                              fontWeight: isActive ? 600 : 400,
+                              color: isActive ? "#2B2B2B" : "#555",
+                              letterSpacing: "-0.2px",
+                              display: "block",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {w.title}
+                          </span>
+                          <span
+                            style={{
+                              fontFamily: "var(--font-body)",
+                              fontSize: 10,
+                              fontWeight: 300,
+                              color: "#AAAAAA",
+                              letterSpacing: "-0.1px",
+                            }}
+                          >
+                            {w.tags}
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          width: 22,
+                          height: 22,
+                          borderRadius: "50%",
+                          flexShrink: 0,
+                          background: isActive ? "#2B2B2B" : "transparent",
+                          border: `1px solid ${isActive ? "#2B2B2B" : "#DDDDDD"}`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: 10,
+                          color: isActive ? "#fff" : "#AAAAAA",
+                          transition: "all 0.18s ease",
+                        }}
+                      >
+                        ↗︎︎
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Skill tags */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                {project.tags.map((t) => (
+                  <Tag key={t} label={t} />
+                ))}
+              </div>
+            </div>
+
+            {/* ── RIGHT: image fills full height ── */}
+            <div
+              className="project-card-img"
+              style={{
+                flex: 1,
+                position: "relative",
+                background: "#1a1a1a",
+                overflow: "hidden",
+                minHeight: 280,
+                cursor: currentWork.caseStudy ? "pointer" : "default",
+              }}
+              onClick={() => {
+                if (currentWork.caseStudy) {
+                  window.location.href = currentWork.caseStudy;
+                }
+              }}
+            >
+              <img
+                key={project.id + activeWorkIdx}
+                src={currentWork.img}
+                alt={currentWork.title}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  display: "block",
+                  position: "absolute",
+                  inset: 0,
+                  transition: "opacity 0.3s ease",
+                }}
+              />
+              {/* Gradient overlay */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background:
+                    "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.65) 100%)",
+                }}
+              />
+              {/* Work title on image */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  padding: "20px 24px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                }}
+              >
+                <div>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 700,
+                      fontSize: 16,
+                      color: "#fff",
+                      letterSpacing: "-0.3px",
+                      marginBottom: 3,
+                    }}
+                  >
+                    {currentWork.title}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: 10,
+                      color: "rgba(255,255,255,0.6)",
+                    }}
+                  >
+                    {currentWork.tags}
+                  </p>
+                </div>
+                {currentWork.caseStudy ? (
+                  <a
+                    href={currentWork.caseStudy}
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: "50%",
+                      border: "1.5px solid rgba(255,255,255,0.55)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#fff",
+                      fontSize: 14,
+                      background: "rgba(0,0,0,0.2)",
+                      backdropFilter: "blur(6px)",
+                      flexShrink: 0,
+                      textDecoration: "none",
+                    }}
+                  >
+                    ↗︎︎
+                  </a>
+                ) : (
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: "50%",
+                      border: "1.5px solid rgba(255,255,255,0.55)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#fff",
+                      fontSize: 14,
+                      background: "rgba(0,0,0,0.2)",
+                      backdropFilter: "blur(6px)",
+                      flexShrink: 0,
+                    }}
+                  >
+                    ↗︎︎
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      /* ─── WORK SECTION ──────────────────────────────────── */
+      function Work() {
+        useEffect(() => {
+          // Observe non-project-card fade-ups
+          const obs = new IntersectionObserver(
+            (entries) =>
+              entries.forEach((e) => {
+                if (e.isIntersecting) {
+                  e.target.classList.add("visible");
+                  obs.unobserve(e.target);
+                }
+              }),
+            { threshold: 0.06, rootMargin: "0px 0px -60px 0px" },
+          );
+          document
+            .querySelectorAll(".fade-up:not(.project-card)")
+            .forEach((el) => obs.observe(el));
+
+          return () => {
+            obs.disconnect();
+          };
+        }, []);
+
+        return (
+          <section id="work">
+            <div className="fade-up" style={{ marginBottom: 40 }}>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "#808080",
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                  marginBottom: 12,
+                }}
+              >
+                Experience
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "clamp(36px, 5vw, 60px)",
+                  letterSpacing: "-2.4px",
+                  lineHeight: 1.1,
+                }}
+              >
+                Selected Work
+              </h2>
+            </div>
+            <div id="cards-stack" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+              {PROJECTS.map((p, i) => (
+                <ProjectCard key={p.id} project={p} index={i} />
+              ))}
+            </div>
+          </section>
+        );
+      }
+
+      /* ─── TESTIMONIALS ──────────────────────────────────── */
+      function Testimonials() {
+        return (
+          <section id="testimonials">
+            <div className="fade-up" style={{ marginBottom: 64 }}>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "#808080",
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                  marginBottom: 16,
+                }}
+              >
+                Kind words
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "clamp(36px, 4vw, 56px)",
+                  letterSpacing: "-2px",
+                  lineHeight: 1.1,
+                }}
+              >
+                Testimonials
+              </h2>
+            </div>
+            <div
+              className="testimonials-grid"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "0 48px",
+              }}
+            >
+              {TESTIMONIALS.map((t, i) => (
+                <div
+                  key={i}
+                  className="fade-up"
+                  style={{
+                    borderTop: "1px solid #DDDBD9",
+                    paddingTop: 32,
+                    paddingBottom: 40,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 20,
+                  }}
+                >
+                  <div
+                    style={{
+                      fontFamily: "Georgia, serif",
+                      fontSize: 40,
+                      color: "#DDDBD9",
+                      lineHeight: 1,
+                    }}
+                  >
+                    "
+                  </div>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: 13,
+                      fontWeight: 300,
+                      color: "#444",
+                      lineHeight: 1.85,
+                      flex: 1,
+                      whiteSpace: "pre-line",
+                    }}
+                  >
+                    {t.quote}
+                  </p>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 12,
+                      alignItems: "center",
+                      marginTop: 8,
+                    }}
+                  >
+                    <Avatar
+                      initials={t.initials}
+                      color={t.color}
+                      size={44}
+                      photo={t.photo}
+                    />
+                    <div>
+                      <p
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontWeight: 600,
+                          fontSize: 13,
+                          color: "#2B2B2B",
+                          marginBottom: 2,
+                        }}
+                      >
+                        {t.name}
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontWeight: 300,
+                          fontSize: 11,
+                          color: "#808080",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        {t.title} · {t.company}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      }
+
+      /* ─── SERVICES ──────────────────────────────────────── */
+      function Services() {
+        const services = [
+          {
+            num: "01",
+            title: "Product & UX",
+            desc: "For teams building digital products, from early discovery through to a polished, validated experience.",
+            items: [
+              "End-to-End Product Design",
+              "User Research & Usability Testing",
+              "Prototyping & Interaction Design",
+              "Design Systems & Component Libraries",
+              "UX Audits & Redesigns",
+            ],
+          },
+          {
+            num: "02",
+            title: "Brand & Identity",
+            desc: "For businesses that need a clear, ownable visual identity, built to scale across every touchpoint.",
+            items: [
+              "Logo & Visual Identity",
+              "Brand Strategy & Positioning",
+              "Brand Guidelines & Style Guides",
+              "Art Direction",
+              "Motion & Animation",
+            ],
+          },
+          {
+            num: "03",
+            title: "Creative & Campaign",
+            desc: "For brands that need high-quality creative output, from awareness campaigns to always-on content.",
+            items: [
+              "Campaign Concept & Design",
+              "Web & Landing Page Design",
+              "Social Media & EDM Templates",
+              "Digital Advertising Assets",
+              "Print & Out-of-Home",
+            ],
+          },
+        ];
+
+        const sectionRef = React.useRef(null);
+        const cardRefs = React.useRef([]);
+        const [scales, setScales] = React.useState([1, 1, 1]);
+
+        // Slightly scale down cards that have been covered (disabled per request)
+        useEffect(() => {
+          function onScroll() {
+            if (!sectionRef.current) return;
+            // Kept scales at 1 to prevent shrinking
+            setScales([1, 1, 1]);
+          }
+          window.addEventListener("scroll", onScroll, { passive: true });
+          return () => window.removeEventListener("scroll", onScroll);
+        }, []);
+
+        return (
+          <section id="services" ref={sectionRef}>
+            <div className="fade-up" style={{ marginBottom: 64 }}>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "#808080",
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                  marginBottom: 16,
+                }}
+              >
+                What I do
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "clamp(36px, 4vw, 56px)",
+                  letterSpacing: "-2px",
+                  lineHeight: 1.1,
+                }}
+              >
+                Services
+              </h2>
+            </div>
+
+            {/* Sticky stack — each card slides up and covers the previous */}
+            <div style={{ position: "relative" }}>
+              {services.map((svc, i) => (
+                <div
+                  key={i}
+                  style={{
+                    position: "sticky",
+                    top: 72,
+                    zIndex: i + 1,
+                    background:
+                      "#F4F2F1" /* opaque wrapper so each card fully seals over the one below */,
+                  }}
+                >
+                  <div
+                    ref={(el) => (cardRefs.current[i] = el)}
+                    style={{
+                      background: "#F4F2F1",
+                      padding: "48px 0 56px",
+                      display: "flex",
+                      gap: "clamp(24px, 4vw, 72px)",
+                      alignItems: "flex-start",
+                      borderTop: "1px solid #DDDBD9",
+                      transform: `scale(${scales[i]})`,
+                      transformOrigin: "top center",
+                      transition: "transform 0.15s ease",
+                    }}
+                  >
+                    {/* Big outlined number */}
+                    <div
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 700,
+                        fontSize: "clamp(72px, 9vw, 128px)",
+                        lineHeight: 0.9,
+                        color: "transparent",
+                        WebkitTextStroke: "1.5px #2B2B2B",
+                        flex: "0 0 auto",
+                        width: "clamp(80px, 10vw, 140px)",
+                        userSelect: "none",
+                        letterSpacing: "-4px",
+                      }}
+                    >
+                      {svc.num}
+                    </div>
+
+                    {/* Content */}
+                    <div style={{ flex: 1 }}>
+                      <h3
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontWeight: 700,
+                          fontSize: "clamp(26px, 3vw, 42px)",
+                          letterSpacing: "-1.5px",
+                          lineHeight: 1.1,
+                          marginBottom: 14,
+                        }}
+                      >
+                        {svc.title}
+                      </h3>
+                      <p
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontSize: 14,
+                          fontWeight: 300,
+                          color: "#666",
+                          lineHeight: 1.8,
+                          marginBottom: 32,
+                          maxWidth: 520,
+                        }}
+                      >
+                        {svc.desc}
+                      </p>
+
+                      {/* Service item rows */}
+                      <div>
+                        {svc.items.map((item, j) => (
+                          <div
+                            key={j}
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                              borderTop: "1px solid #EDEDEB",
+                              padding: "15px 0",
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontFamily: "var(--font-body)",
+                                fontSize: 14,
+                                fontWeight: 500,
+                                color: "#2B2B2B",
+                              }}
+                            >
+                              {item}
+                            </span>
+                            <span
+                              style={{
+                                fontFamily: "var(--font-display)",
+                                fontSize: 12,
+                                fontWeight: 600,
+                                color: "#AAAAAA",
+                                letterSpacing: "0.5px",
+                              }}
+                            >
+                              0{j + 1}
+                            </span>
+                          </div>
+                        ))}
+                        <div style={{ borderTop: "1px solid #EDEDEB" }} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      }
+
+      /* ─── BLOG PREVIEWS ─────────────────────────────────── */
+      const BLOG_POSTS = [
+        {
+          title: "How I Increased Domino's Weekly Sales by $57K Through Design",
+          category: "Case Study",
+          date: "Mar 10, 2026",
+          read: "6 min read",
+          excerpt:
+            "A deep dive into the UX decisions that moved the needle on one of Australia's biggest food delivery platforms.",
+          img: "images/dominos-offer-1.avif",
+          href: "blog-57k-dominos.html",
+        },
+        {
+          title: "My AI-Powered Design Workflow",
+          category: "AI & Design",
+          date: "Mar 10, 2026",
+          read: "5 min read",
+          excerpt:
+            "From raw voice note to final design in 4 steps: the exact AI tools I use every day and how they fit together.",
+          img: "images/blog-ai-workflow-cover.png",
+          href: "blog-ai-workflow.html",
+        },
+        {
+          title: "Designer's AI Instruction Vocabulary",
+          category: "AI & Design",
+          date: "Mar 17, 2026",
+          read: "4 min read",
+          excerpt:
+            "Replace vague descriptions with precise design terms, so AI understands your intent the first time.",
+          img: "images/blog-vocabulary-cover.png",
+          href: "blog-ai-vocabulary.html",
+        },
+      ];
+
+      /* ── Draft posts — uncomment each object and move into BLOG_POSTS when the article is ready ──
+  {
+    title: 'Why Every Designer Should Learn Systems Thinking',
+    category: 'Process',
+    date: 'Feb 24, 2026',
+    read: '4 min read',
+    excerpt: 'The skill that separates good designers from great ones — and how I apply it to every project I touch.',
+    img: 'images/blog-02.jpg',
+    href: '#',
+  },
+  {
+    title: 'The Brief That Changed How I Think About Client Work',
+    category: 'Freelance',
+    date: 'Jan 28, 2026',
+    read: '3 min read',
+    excerpt: 'One bad brief taught me more about communication and scope than any course ever could.',
+    img: null,
+    href: '#',
+  },
+  {
+    title: 'Figma Variables: A Real-World Guide for Brand Designers',
+    category: 'Tools',
+    date: 'Jan 14, 2026',
+    read: '5 min read',
+    excerpt: 'How I use Figma Variables to build scalable design systems that non-designers can actually maintain.',
+    img: null,
+    href: '#',
+  },
+── End drafts ── */
+
+      function BlogPreviews() {
+        return (
+          <section id="blog">
+            <div className="fade-up" style={{ marginBottom: 40 }}>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: 12,
+                  fontWeight: 500,
+                  color: "#808080",
+                  letterSpacing: "2px",
+                  textTransform: "uppercase",
+                  marginBottom: 12,
+                }}
+              >
+                Writing
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                  flexWrap: "wrap",
+                  gap: 16,
+                }}
+              >
+                <h2
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "clamp(36px, 5vw, 60px)",
+                    letterSpacing: "-2.4px",
+                    lineHeight: 1.1,
+                  }}
+                >
+                  From the Blog
+                </h2>
+                <a
+                  href="blog.html"
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: 13,
+                    fontWeight: 500,
+                    color: "#808080",
+                    textDecoration: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    transition: "color 0.2s",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#2B2B2B")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#808080")
+                  }
+                >
+                  View all posts ↗︎︎
+                </a>
+              </div>
+            </div>
+            <div
+              className="stagger blog-grid"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 1fr)",
+                gap: 20,
+              }}
+            >
+              {BLOG_POSTS.map((post, i) => (
+                <a
+                  key={i}
+                  href={post.href}
+                  className="fade-up"
+                  style={{
+                    background: "#FBFAF9",
+                    borderRadius: 20,
+                    overflow: "hidden",
+                    border: "1px solid #EDEDEB",
+                    textDecoration: "none",
+                    color: "inherit",
+                    display: "flex",
+                    flexDirection: "column",
+                    transition:
+                      "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1)",
+                    boxShadow: "0px 0px 20px 0px rgba(0,0,0,0.03)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-5px)";
+                    e.currentTarget.style.boxShadow =
+                      "0 16px 40px rgba(0,0,0,0.08)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "none";
+                    e.currentTarget.style.boxShadow =
+                      "0px 0px 20px 0px rgba(0,0,0,0.03)";
+                  }}
+                >
+                  {/* Cover image */}
+                  <div
+                    style={{
+                      aspectRatio: "16/9",
+                      background: "#EBEBEA",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <img
+                      src={post.img}
+                      alt={post.title}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block",
+                        transition: "transform 0.4s ease",
+                      }}
+                      onError={(e) => {
+                        e.target.parentNode.style.background = "#EBEBEA";
+                        e.target.style.display = "none";
+                      }}
+                    />
+                  </div>
+                  {/* Content */}
+                  <div
+                    style={{
+                      padding: "20px 22px",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                      flex: 1,
+                    }}
+                  >
+                    <span
+                      style={{
+                        display: "inline-block",
+                        padding: "3px 10px",
+                        borderRadius: 100,
+                        border: "1px solid #AAAAAA",
+                        fontSize: 10,
+                        fontWeight: 500,
+                        color: "#555",
+                        fontFamily: "var(--font-body)",
+                        letterSpacing: "0.3px",
+                        alignSelf: "flex-start",
+                      }}
+                    >
+                      {post.category}
+                    </span>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 700,
+                        fontSize: 16,
+                        letterSpacing: "-0.4px",
+                        lineHeight: 1.3,
+                        color: "#2B2B2B",
+                        flex: 1,
+                      }}
+                    >
+                      {post.title}
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontSize: 12,
+                        fontWeight: 300,
+                        color: "#808080",
+                        lineHeight: 1.7,
+                      }}
+                    >
+                      {post.excerpt}
+                    </p>
+                    <div
+                      style={{
+                        borderTop: "1px solid #EDEDEB",
+                        paddingTop: 12,
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontSize: 11,
+                          fontWeight: 300,
+                          color: "#AAAAAA",
+                        }}
+                      >
+                        {post.date}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontSize: 11,
+                          fontWeight: 300,
+                          color: "#AAAAAA",
+                        }}
+                      >
+                        {post.read}
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        );
+      }
+
+      /* ─── CONTACT ───────────────────────────────────────── */
+      function Contact() {
+        const inputStyle = {
+          background: "transparent",
+          border: "none",
+          borderBottom: "1px solid rgba(255,255,255,0.25)",
+          color: "#fff",
+          fontFamily: "var(--font-body)",
+          fontSize: 14,
+          padding: "12px 0",
+          width: "100%",
+        };
+        return (
+          <section id="contact" style={{ background: "#2B2B2B" }}>
+            <div
+              className="cs-inner"
+              style={{ paddingTop: 80, paddingBottom: 80 }}
+            >
+              <div className="contact-grid">
+                {/* Left heading */}
+                <div className="fade-up">
+                  <h2
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 700,
+                      fontSize: "clamp(42px,6vw,72px)",
+                      letterSpacing: "-3px",
+                      lineHeight: 1.0,
+                      color: "#fff",
+                    }}
+                  >
+                    Let's be
+                    <br />
+                    creative
+                    <br />
+                    together.
+                  </h2>
+                </div>
+                {/* Right form */}
+                <div className="fade-up">
+                  <form
+                    action="https://api.web3forms.com/submit"
+                    method="POST"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 20,
+                    }}
+                  >
+                    <input type="hidden" name="access_key" value="c706f602-bfd6-4810-aa0f-da098552839d" />
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Your name"
+                      required
+                      style={inputStyle}
+                      className="contact-input"
+                    />
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Your email"
+                      required
+                      style={inputStyle}
+                      className="contact-input"
+                    />
+                    <textarea
+                      name="message"
+                      placeholder="Message"
+                      rows={5}
+                      required
+                      style={{ ...inputStyle, resize: "none" }}
+                      className="contact-input"
+                    />
+                    <button
+                      type="submit"
+                      style={{
+                        background: "#fff",
+                        color: "#2B2B2B",
+                        fontFamily: "var(--font-body)",
+                        fontSize: 14,
+                        fontWeight: 500,
+                        padding: "14px",
+                        borderRadius: 999,
+                        border: "none",
+                        cursor: "pointer",
+                        width: "100%",
+                        marginTop: 8,
+                        transition: "opacity 0.2s",
+                      }}
+                      onMouseEnter={(e) => (e.target.style.opacity = "0.85")}
+                      onMouseLeave={(e) => (e.target.style.opacity = "1")}
+                    >
+                      Submit ↗︎︎
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      }
+
+      // Footer → shared-components.js
+
+      /* ─── APP ───────────────────────────────────────────── */
+      function App() {
+        useEffect(() => {
+          // ProjectCard elements manage their own staggered observers
+          const obs = new IntersectionObserver(
+            (entries) =>
+              entries.forEach((e) => {
+                if (e.isIntersecting) {
+                  e.target.classList.add("visible");
+                  obs.unobserve(e.target);
+                }
+              }),
+            { threshold: 0.06, rootMargin: "0px 0px -60px 0px" },
+          );
+          document
+            .querySelectorAll(
+              ".fade-up:not(.project-card), .img-reveal, .line-reveal",
+            )
+            .forEach((el) => obs.observe(el));
+          return () => obs.disconnect();
+        }, []);
+        return (
+          <div>
+            <Navbar />
+            <Hero />
+            <main className="page-wrap">
+              <Work />
+              <Services />
+              <Testimonials />
+              <BlogPreviews />
+            </main>
+            <NewsletterBanner />
+            <Contact />
+            <Footer />
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>

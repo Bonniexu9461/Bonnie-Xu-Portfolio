@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Bonnie Xu</title>
+  <link rel="icon" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --accent:    #E8452A;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --shadow:    0px 0px 20px 0px rgba(0,0,0,0.03);
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --r-sm: 15px;
+      --r-md: 24px;
+      --r-lg: 32px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-page);
+      color: var(--text-1);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ── Typography ── */
+    .t-label {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .t-display {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 64px);
+      letter-spacing: -2.5px;
+      line-height: 1.05;
+      color: var(--text-1);
+    }
+    .t-h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(26px, 3vw, 36px);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      color: var(--text-1);
+    }
+    .t-h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(20px, 2vw, 28px);
+      letter-spacing: -1px;
+      line-height: 1.15;
+      color: var(--text-1);
+    }
+    .t-body-lg {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      color: #555;
+      line-height: 1.85;
+    }
+    .t-body {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 300;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      background: rgba(244,242,241,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(170,170,170,0.2);
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-brand {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--text-1);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .nav-link {
+      position: relative;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: #808080;
+      letter-spacing: -0.28px;
+      padding: 4px 0;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text-1); }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--text-1);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link.active { color: var(--text-1); }
+    .nav-link.active::after { width: 100%; }
+    .nav-cta {
+      background: var(--text-1);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 999px;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.8; }
+
+    /* ── Layout ── */
+    .page-wrap { padding-top: 72px; }
+    .cs-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 80px;
+    }
+
+    /* ── Article header ── */
+    .article-header {
+      padding: 80px 0 48px;
+    }
+    .article-header .t-label {
+      margin-bottom: 20px;
+      display: block;
+    }
+    .article-subtitle {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(18px, 2vw, 22px);
+      color: var(--text-2);
+      margin-top: 20px;
+      margin-bottom: 36px;
+      max-width: 760px;
+      line-height: 1.5;
+    }
+    .article-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 20px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .article-meta-row .meta-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--border-lt);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-1);
+    }
+    .meta-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border);
+    }
+    .meta-info {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-2);
+    }
+    .meta-tag {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      padding: 3px 10px;
+    }
+
+    /* ── Hero image ── */
+    .article-hero {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: var(--border-lt);
+      margin: 40px 0 64px;
+    }
+    .article-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .article-hero-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #EBEBEA;
+      border-radius: var(--r-lg);
+      border: 1.5px dashed #CCCCCC;
+    }
+    .article-hero-placeholder .ph-name {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      color: #999;
+      letter-spacing: 0.5px;
+    }
+    .article-hero-placeholder .ph-hint {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: #BBB;
+    }
+
+    /* ── Article body layout ── */
+    .article-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 80px;
+      align-items: start;
+      padding-bottom: 120px;
+    }
+
+    /* ── Article prose ── */
+    .article-body {
+      min-width: 0;
+    }
+    .article-body p {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      color: #555;
+      line-height: 1.85;
+      margin-bottom: 28px;
+    }
+    .article-body h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(24px, 3vw, 32px);
+      letter-spacing: -1.2px;
+      line-height: 1.1;
+      color: var(--text-1);
+      margin: 56px 0 20px;
+    }
+    .article-body h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(18px, 2vw, 24px);
+      letter-spacing: -0.8px;
+      line-height: 1.15;
+      color: var(--text-1);
+      margin: 40px 0 16px;
+    }
+    .article-body ul,
+    .article-body ol {
+      margin-left: 24px;
+      margin-bottom: 28px;
+    }
+    .article-body li {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      color: #555;
+      line-height: 1.85;
+      margin-bottom: 8px;
+    }
+    .article-body blockquote {
+      border-left: 3px solid var(--accent);
+      padding: 4px 0 4px 28px;
+      margin: 36px 0;
+    }
+    .article-body blockquote p {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 300;
+      color: var(--text-1);
+      line-height: 1.5;
+      margin-bottom: 0;
+    }
+    .article-body .article-image {
+      width: 100%;
+      border-radius: var(--r-sm);
+      overflow: hidden;
+      background: var(--border-lt);
+      margin: 40px 0;
+    }
+    .article-body .article-image img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .article-body .article-image-placeholder {
+      width: 100%;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #EBEBEA;
+      border-radius: var(--r-sm);
+      border: 1.5px dashed #CCC;
+      padding: 32px;
+    }
+    .article-body .article-image-placeholder .ph-name {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 600;
+      color: #999;
+    }
+    .article-body .article-image-placeholder .ph-hint {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 300;
+      color: #BBB;
+      text-align: center;
+    }
+    .article-body .caption {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-2);
+      text-align: center;
+      margin-top: -28px;
+      margin-bottom: 40px;
+    }
+    .article-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 56px 0;
+    }
+
+    /* ── Sidebar (Table of Contents + Related) ── */
+    .article-sidebar {
+      position: sticky;
+      top: 96px;
+    }
+    .sidebar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-md);
+      padding: 28px 24px;
+      margin-bottom: 24px;
+    }
+    .sidebar-card-title {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-2);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .toc-list li a {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-2);
+      line-height: 1.4;
+      transition: color 0.2s;
+      display: block;
+    }
+    .toc-list li a:hover { color: var(--text-1); }
+    .toc-list li a.active { color: var(--text-1); font-weight: 500; }
+
+    .related-card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-lt);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .related-card:last-child { border-bottom: none; }
+    .related-card:hover { opacity: 0.7; }
+    .related-tag {
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .related-title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+    }
+    .related-meta {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--text-2);
+    }
+
+    /* ── Author bio card ── */
+    .author-bio {
+      background: var(--bg-card);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r-lg);
+      padding: 40px;
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      margin: 64px 0;
+    }
+    .author-bio-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--border-lt);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .author-bio-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-bio-content { flex: 1; }
+    .author-bio-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+    .author-bio-role {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .author-bio-text {
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 300;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    /* ── Next article / back navigation ── */
+    .article-nav {
+      padding: 48px 0 80px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--text-1);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 999px;
+      transition: opacity 0.2s;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-primary:hover { opacity: 0.75; }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-2);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-outline:hover { border-color: var(--text-2); color: var(--text-1); }
+
+    /* ── Contact ── */
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; padding-bottom:0px; }
+    .contact-input::placeholder { color:rgba(255,255,255,0.35); }
+    .contact-input:focus { outline:none; border-bottom-color:rgba(255,255,255,0.7) !important; }
+
+    /* ── Footer ── */
+    footer {
+      background: #2B2B2B;
+      color: #fff;
+      padding: 54px 80px;
+    }
+    .footer-content { max-width: 1440px; margin: 0 auto; }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .footer-brand { flex-shrink: 0; }
+    .footer-brand-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+    .footer-brand-title {
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-sections { display: flex; gap: 48px; flex-wrap: wrap; }
+    .footer-section-title {
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .footer-link {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      margin-bottom: 6px;
+      transition: color 0.3s;
+    }
+    .footer-link:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p {
+      font-family: var(--font-body);
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── Fade-up animation ── */
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .article-layout { grid-template-columns: 1fr; gap: 48px; }
+      .article-sidebar { position: static; }
+    }
+    @media (max-width: 768px) {
+      .nav-inner { padding: 0 20px; }
+      .cs-inner { padding: 0 20px; }
+      .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+      .article-header { padding: 48px 0 32px; }
+      .article-hero { aspect-ratio: 16 / 9; margin: 24px 0 40px; }
+      footer { padding: 40px 20px; }
+      .footer-top { flex-direction: column; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 8px; }
+      .author-bio { flex-direction: column; gap: 20px; padding: 28px; }
+      .nav-links { gap: 20px; }
+    }
+    @media (max-width: 480px) {
+      .nav-cta { display: none; }
+      .nav-links { gap: 16px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar injected by shared-nav.js -->
+
+  <!-- ═══════════════════════════ PAGE CONTENT ═══════════════════════════ -->
+  <div class="page-wrap">
+    <div class="cs-inner">
+
+      <!-- ── ARTICLE HEADER ── -->
+      <header class="article-header fade-up">
+        <!-- Category label — change to match actual category -->
+        <span class="t-label">UX Design · Case Study</span>
+
+        <!-- Article title — update this -->
+        <h1 class="t-display" style="margin-top:0; margin-bottom:0; max-width: 900px;">
+          The Hidden Cost of Ignoring Accessibility in Product Design
+        </h1>
+
+        <!-- One-line subtitle — update this -->
+        <p class="article-subtitle">
+          Why building for the 15% who are disabled makes your product better for the other 85% too — and how to start today.
+        </p>
+
+        <!-- Meta row: author · date · read time · tag -->
+        <div class="article-meta-row">
+          <div class="meta-author">
+            <div class="author-avatar">
+              <!-- Replace src with your actual headshot -->
+              <img src="images/about-hero.jpg" alt="Bonnie Xu"
+                onerror="this.style.display='none'" />
+            </div>
+            <div>
+              <div class="author-name">Bonnie Xu</div>
+            </div>
+          </div>
+          <div class="meta-sep"></div>
+          <span class="meta-info">Jan 15, 2026</span>
+          <div class="meta-sep"></div>
+          <span class="meta-info">6 min read</span>
+          <div class="meta-sep"></div>
+          <span class="meta-tag">UX Design</span>
+        </div>
+      </header>
+
+      <!-- ── HERO IMAGE ── -->
+      <!-- Replace src with your actual cover image, e.g. images/blog-accessibility-hero.jpg -->
+      <div class="article-hero fade-up" id="hero-wrap">
+        <div class="article-hero-placeholder" id="hero-placeholder">
+          <span style="font-size:28px; opacity:0.3;">🖼</span>
+          <div class="ph-name">blog-accessibility-hero.jpg</div>
+          <div class="ph-hint">Recommended: 1440 × 630 px</div>
+        </div>
+        <img src="images/blog-accessibility-hero.jpg" alt="Article hero"
+          style="width:100%; height:100%; object-fit:cover; display:none;"
+          onload="this.style.display='block'; document.getElementById('hero-placeholder').style.display='none';"
+          onerror="this.style.display='none';" />
+      </div>
+
+      <!-- ── ARTICLE BODY + SIDEBAR ── -->
+      <div class="article-layout">
+
+        <!-- ══════════════ LEFT: PROSE CONTENT ══════════════ -->
+        <article class="article-body fade-up">
+
+          <p>
+            Over the past decade working in product and UX design, I've sat in dozens of sprint planning sessions where accessibility was treated as a nice-to-have — something to be "tackled in a future sprint." In reality, that future sprint rarely comes. And the cost? Far higher than most teams realise.
+          </p>
+
+          <p>
+            Globally, about 1 in 6 people live with some form of disability. That's over 1 billion people. If your product isn't accessible, you're not just failing a moral test — you're leaving a huge market on the table and creating technical debt that compounds over time.
+          </p>
+
+          <h2 id="section-1">The Curb-Cut Effect</h2>
+
+          <p>
+            In the 1970s, disability activists lobbied for curb cuts — the small ramps that transition a footpath to the road level. Initially seen as a "special accommodation," they turned out to benefit everyone: parents with prams, delivery workers with carts, cyclists, elderly people, and travellers with rolling luggage.
+          </p>
+
+          <p>
+            The same principle applies to digital accessibility. Closed captions were designed for the Deaf community. Today, they're used by millions watching videos in noisy cafés, learning a second language, or simply preferring to read along. Keyboard navigation, originally for motor-impaired users, is heavily used by power users and developers who never touch a mouse.
+          </p>
+
+          <!-- Image example — swap filename for your actual image -->
+          <div class="article-image">
+            <div class="article-image-placeholder">
+              <span style="font-size:22px; opacity:0.35;">🖼</span>
+              <div class="ph-name">blog-accessibility-01-curbcut.jpg</div>
+              <div class="ph-hint">Diagram showing the curb-cut effect across different users</div>
+            </div>
+          </div>
+          <p class="caption">The curb-cut effect: designing for disability improves experience for everyone.</p>
+
+          <blockquote>
+            <p>"Accessible design is good design. It benefits people who don't have disabilities as well as people who do."</p>
+          </blockquote>
+
+          <h2 id="section-2">Where Most Teams Go Wrong</h2>
+
+          <p>
+            The most common mistake I see is treating accessibility as a visual checklist: colour contrast ratios, alt text on images, aria labels on icons. These are necessary — but they're only the surface layer.
+          </p>
+
+          <h3 id="section-2a">The four POUR principles</h3>
+
+          <p>
+            The Web Content Accessibility Guidelines (WCAG) organise accessibility around four principles, commonly known as POUR:
+          </p>
+
+          <ul>
+            <li><strong>Perceivable</strong> — Information must be presentable in ways users can perceive (e.g. text alternatives for images, sufficient colour contrast).</li>
+            <li><strong>Operable</strong> — Interface components must be operable (e.g. full keyboard navigation, enough time to complete tasks).</li>
+            <li><strong>Understandable</strong> — Information and UI operation must be understandable (e.g. consistent navigation, clear error messages).</li>
+            <li><strong>Robust</strong> — Content must be robust enough to be interpreted by a wide variety of user agents, including assistive technologies.</li>
+          </ul>
+
+          <p>
+            Most teams nail the first principle. Operable and understandable are where things typically fall apart — especially in complex, multi-step flows like checkout, onboarding, or settings management.
+          </p>
+
+          <h2 id="section-3">Practical Starting Points</h2>
+
+          <p>
+            Here's how I recommend starting without overhauling your entire design system at once:
+          </p>
+
+          <ol>
+            <li>Run an automated audit using a tool like axe DevTools or Lighthouse. This catches roughly 30–40% of issues and gives you a baseline.</li>
+            <li>Conduct a keyboard-only navigation test. Try completing your core user flow with zero mouse input. Where does it break?</li>
+            <li>Test with a screen reader (VoiceOver on Mac, NVDA on Windows). Even 20 minutes will reveal issues you'd never catch visually.</li>
+            <li>Audit your colour palette for WCAG AA contrast ratios — 4.5:1 for body text, 3:1 for large text and UI components.</li>
+          </ol>
+
+          <hr class="article-divider" />
+
+          <!-- Second image -->
+          <div class="article-image">
+            <div class="article-image-placeholder">
+              <span style="font-size:22px; opacity:0.35;">🖼</span>
+              <div class="ph-name">blog-accessibility-02-contrast.jpg</div>
+              <div class="ph-hint">Screenshot of contrast checker tool showing pass/fail states</div>
+            </div>
+          </div>
+          <p class="caption">Using a contrast checker to verify WCAG AA compliance across your colour palette.</p>
+
+          <h2 id="section-4">Building It Into Your Process</h2>
+
+          <p>
+            The real shift happens when accessibility moves from a QA checklist to a design value. This means:
+          </p>
+
+          <ul>
+            <li>Including accessibility criteria in your Definition of Done</li>
+            <li>Inviting people with disabilities to user research and usability testing sessions</li>
+            <li>Adding semantic HTML tokens to your design system documentation</li>
+            <li>Advocating for accessibility budget in roadmap conversations — it's significantly cheaper to build right than retrofit later</li>
+          </ul>
+
+          <p>
+            In my experience, the teams that do this consistently don't just produce more accessible products — they produce better products overall. The rigour required for accessibility forces clarity in information architecture, interaction design, and content strategy.
+          </p>
+
+          <!-- Author bio -->
+          <div class="author-bio fade-up">
+            <div class="author-bio-avatar">
+              <img src="images/about-hero.jpg" alt="Bonnie Xu"
+                onerror="this.style.display='none'" />
+            </div>
+            <div class="author-bio-content">
+              <div class="author-bio-name">Bonnie Xu</div>
+              <div class="author-bio-role">Product &amp; UX Designer</div>
+              <p class="author-bio-text">
+                Bonnie is a product and UX designer with experience at Domino's, Entain, and Ray White. She writes about design systems, UX craft, and the business of design.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ══════════════ RIGHT: SIDEBAR ══════════════ -->
+        <aside class="article-sidebar">
+
+          <!-- Table of Contents -->
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">In this article</p>
+            <ol class="toc-list">
+              <li><a href="#section-1">The Curb-Cut Effect</a></li>
+              <li><a href="#section-2">Where Most Teams Go Wrong</a></li>
+              <li><a href="#section-2a">The four POUR principles</a></li>
+              <li><a href="#section-3">Practical Starting Points</a></li>
+              <li><a href="#section-4">Building It Into Your Process</a></li>
+            </ol>
+          </div>
+
+          <!-- Related articles -->
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">More from Bonnie</p>
+
+            <a href="#" class="related-card">
+              <span class="related-tag">Design Systems</span>
+              <span class="related-title">How I Built a Design System From Scratch in 8 Weeks</span>
+              <span class="related-meta">Mar 2, 2026 · 8 min</span>
+            </a>
+
+            <a href="#" class="related-card">
+              <span class="related-tag">UX Design</span>
+              <span class="related-title">Designing for Scale: Lessons from 10 Global Markets</span>
+              <span class="related-meta">Dec 30, 2025 · 5 min</span>
+            </a>
+
+            <a href="#" class="related-card">
+              <span class="related-tag">Career</span>
+              <span class="related-title">From Junior to Senior: What Nobody Tells You About UX Growth</span>
+              <span class="related-meta">Nov 18, 2025 · 7 min</span>
+            </a>
+          </div>
+
+        </aside>
+      </div><!-- /article-layout -->
+
+      <!-- ── BOTTOM NAV ── -->
+      <div class="article-nav fade-up">
+        <a href="#" class="btn-primary">Next article →</a>
+        <a href="blog.html" class="btn-outline">← Back to blog</a>
+      </div>
+
+    </div><!-- /cs-inner -->
+  </div><!-- /page-wrap -->
+
+  <!-- ═══════════════════════ CONTACT + FOOTER ═══════════════════════ -->
+  <section id="contact" style="background:#2B2B2B;">
+    <div style="max-width:1440px;margin:0 auto;padding:80px 80px 80px;">
+      <div class="contact-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:80px;">
+        <div class="fade-up">
+          <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(42px,6vw,72px);letter-spacing:-3px;line-height:1.0;color:#fff;">Let's be<br>creative<br>together.</h2>
+        </div>
+        <div class="fade-up">
+          <form action="https://api.web3forms.com/submit" method="POST" style="display:flex;flex-direction:column;gap:20px;">
+            <input type="hidden" name="access_key" value="c706f602-bfd6-4810-aa0f-da098552839d" />
+            <input type="text" name="name" placeholder="Your name" required class="contact-input" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Poppins',sans-serif;font-size:14px;padding:12px 0;width:100%;" />
+            <input type="email" name="email" placeholder="Your email" required class="contact-input" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Poppins',sans-serif;font-size:14px;padding:12px 0;width:100%;" />
+            <textarea name="message" placeholder="Message" rows="5" required class="contact-input" style="background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.25);color:#fff;font-family:'Poppins',sans-serif;font-size:14px;padding:12px 0;width:100%;resize:none;"></textarea>
+            <button type="submit" style="background:#fff;color:#2B2B2B;font-family:'Poppins',sans-serif;font-size:14px;font-weight:500;padding:14px;border-radius:999px;border:none;cursor:pointer;width:100%;margin-top:8px;">Submit ↗︎︎</button>
+          </form>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.1);padding:40px 0 24px 0;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;margin-bottom:40px;">
+          <div>
+            <div style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:28px;letter-spacing:-1px;margin-bottom:8px;color:#fff;">Bonnie Xu</div>
+            <p style="font-family:'Poppins',sans-serif;font-size:13px;font-weight:300;color:rgba(255,255,255,0.5);">Product &amp; UX Designer</p>
+          </div>
+          <div style="display:flex;gap:64px;flex-wrap:wrap;">
+            <div>
+              <p style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;">Contact Me</p>
+              <a href="mailto:bonniexu61@gmail.com" style="font-family:'Poppins',sans-serif;font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;">bonniexu61@gmail.com</a>
+            </div>
+            <div>
+              <p style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;">Social</p>
+              <a href="https://www.linkedin.com/in/bonniexu61" target="_blank" style="display:block;font-family:'Poppins',sans-serif;font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;margin-bottom:10px;">LinkedIn</a>
+              <a href="https://www.instagram.com/designer_bonniexu/" target="_blank" style="display:block;font-family:'Poppins',sans-serif;font-size:13px;color:rgba(255,255,255,0.65);text-decoration:none;">Instagram</a>
+            </div>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <p style="font-family:'Poppins',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.4);">© 2026 Bonnie Xu. All rights reserved.</p>
+          <p style="font-family:'Poppins',sans-serif;font-size:12px;font-weight:300;color:rgba(255,255,255,0.4);">Designed &amp; built with ❤️</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scroll animation -->
+  <script>
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.08 }
+    );
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+
+    // Active TOC link on scroll
+    const headings = document.querySelectorAll('article h2[id], article h3[id]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const tocObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    headings.forEach(h => tocObserver.observe(h));
+  </script>
+    <script src="shared-nav.js"></script>
+</body>
+</html>

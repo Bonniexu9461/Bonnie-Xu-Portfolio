@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Bonnie Xu</title>
+  <meta name="description" content="UI/UX and digital designer based in Brisbane, open to remote globally. Background in Information Systems, passionate about AI-powered design workflows." />
+  <meta property="og:title" content="About — Bonnie Xu" />
+  <meta property="og:description" content="UI/UX and digital designer based in Brisbane, open to remote globally. Background in Information Systems, passionate about AI-powered design workflows." />
+  <meta property="og:image" content="images/about-selfie.avif" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script src="shared-components.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background: #F4F2F1; color: #2B2B2B; overflow-x: hidden; padding-top: 72px; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --accent:    #E8452A;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --r-sm: 15px; --r-md: 24px; --r-lg: 32px;
+    }
+
+    .inner     { max-width: 1440px; margin: 0 auto; width: 100%; padding: 0 80px; }
+    .page-wrap { max-width: 1440px; margin: 0 auto; width: 100%; }
+
+    /* Fade-up — premium easing */
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* Image reveal */
+    .img-reveal { overflow: hidden; }
+    .img-reveal img { transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease; transform: scale(1.08); opacity: 0; }
+    .img-reveal.visible img { transform: scale(1); opacity: 1; }
+
+    /* Line reveal */
+    .line-reveal { width: 0; height: 1px; background: var(--border); transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+    .line-reveal.visible { width: 100%; }
+
+    /* Stagger children */
+    .stagger > .fade-up:nth-child(1) { transition-delay: 0s; }
+    .stagger > .fade-up:nth-child(2) { transition-delay: 0.08s; }
+    .stagger > .fade-up:nth-child(3) { transition-delay: 0.16s; }
+    .stagger > .fade-up:nth-child(4) { transition-delay: 0.24s; }
+    .stagger > .fade-up:nth-child(5) { transition-delay: 0.32s; }
+    .stagger > .fade-up:nth-child(6) { transition-delay: 0.40s; }
+
+    /* Typography */
+    .t-label   { font-family: var(--font-body); font-size: 11px; font-weight: 500; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
+    .t-h2      { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.5vw, 42px); letter-spacing: -1.5px; line-height: 1.1; color: var(--text-1); }
+    .t-body-lg { font-family: var(--font-body); font-size: 15px; font-weight: 300; color: #555; line-height: 1.9; }
+    .t-body    { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.85; }
+
+    hr.div { border: none; border-top: 1px solid var(--border); }
+
+    /* Link pills */
+    .link-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px; border-radius: 100px;
+      border: 1px solid var(--border); background: var(--bg-card);
+      font-family: var(--font-body); font-size: 13px; font-weight: 500;
+      color: var(--text-1); text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .link-pill:hover { background: var(--border-lt); border-color: #BBBBBB; }
+
+
+    /* Images */
+    .story-img {
+      width: 100%; border-radius: var(--r-lg); display: block;
+      object-fit: cover; background: var(--border-lt);
+    }
+    .img-placeholder {
+      width: 100%; border-radius: var(--r-lg); background: var(--border-lt);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+      border: 1.5px dashed var(--border); padding: 40px 20px;
+    }
+    .img-placeholder span { font-family: var(--font-body); font-size: 11px; color: var(--text-2); }
+
+    /* Contact */
+    .contact-input {
+      background: transparent; border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      color: #fff; font-family: var(--font-body);
+      font-size: 14px; padding: 12px 0; width: 100%;
+    }
+    .contact-input::placeholder { color: rgba(255,255,255,0.35); }
+    .contact-input:focus { outline: none; border-bottom-color: rgba(255,255,255,0.7); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; padding-bottom: 0px; }
+
+    @media (max-width: 900px) {
+      .hero-split   { flex-direction: column-reverse !important; align-items: flex-start !important; gap: 32px !important; }
+      .hero-photo-col { width: 100% !important; max-width: 100% !important; margin: 0; }
+      .story-img { height: 400px !important; width: 100%; object-fit: cover; }
+      .two-col      { grid-template-columns: 1fr !important; }
+      .exp-grid     { grid-template-columns: 1fr !important; }
+      .values-grid  { grid-template-columns: 1fr 1fr !important; }
+      .skills-flex  { gap: 8px !important; }
+      .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+      #contact .page-wrap { padding-left: 20px !important; padding-right: 20px !important; padding-bottom: 60px !important; }
+    }
+
+    @media (max-width: 768px) {
+      .inner { padding: 0 20px; }
+      .values-grid { grid-template-columns: 1fr !important; }
+      section { padding: 48px 0 !important; }
+      section:first-of-type { padding-top: 32px !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function Img({ src, alt, style, className, height = 360 }) {
+      const [err, setErr] = useState(false);
+      if (err) {
+        return (
+          <div className="img-placeholder" style={{ minHeight: height, ...style }}>
+            <span style={{ fontSize: 28, opacity: 0.3 }}>🖼</span>
+            <span>{src.split('/').pop()}</span>
+          </div>
+        );
+      }
+      return <img src={src} alt={alt} className={className} style={style} onError={() => setErr(true)} />;
+    }
+
+    function AboutPage() {
+
+
+      return (
+        <>
+          <Navbar />
+
+          {/* ══════ HERO ══════ */}
+          <section style={{ background: 'var(--bg-page)', padding: '72px 0 80px', marginTop: '72px' }}>
+            <div className="inner">
+              <div className="hero-split fade-up" style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 56 }}>
+                <div style={{ flex: 1, textAlign: 'left' }}>
+                  <h1 style={{
+                    fontFamily: 'var(--font-display)', fontWeight: 700,
+                    fontSize: 'clamp(52px, 8vw, 108px)',
+                    letterSpacing: '-4px', lineHeight: 0.9, color: 'var(--text-1)',
+                    marginBottom: 24,
+                  }}>
+                    Hi, I'm<br />Bonnie Xu
+                  </h1>
+                </div>
+                <div className="hero-photo-col" style={{ width: '45%', flexShrink: 0 }}>
+                  <Img
+                    src="images/about-selfie.avif"
+                    alt="Bonnie Xu"
+                    className="story-img"
+                    style={{ height: 500, objectPosition: 'top 20%' }}
+                    height={500}
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <hr className="div" />
+
+          {/* ══════ INTRO + FIND ME + JOURNEY ══════ */}
+          <section style={{ padding: '80px 0' }}>
+            <div className="inner">
+              <div className="two-col fade-up" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
+
+                {/* Left — bio + links */}
+                <div>
+                  <p className="t-label">About me</p>
+                  <p className="t-body-lg" style={{ marginBottom: 20 }}>
+                    Welcome to my site! I'm Bonnie Xu, a UI/UX and digital designer based in
+                    Brisbane, Australia, open to remote and relocation globally. I started in graphic design and fell in love with creating
+                    experiences that actually work for people.
+                  </p>
+                  <p className="t-body-lg" style={{ marginBottom: 20 }}>
+                    I'm also obsessed with exploring how AI can help designers work smarter and
+                    faster. But honestly, what makes me happiest is collaborating with great people,
+                    trying new ideas, and creating work that actually makes a difference :)
+                  </p>
+                  <p className="t-body-lg" style={{ marginBottom: 48 }}>
+                    That's the quick version. Scroll down if you want to know more ↓
+                  </p>
+
+                  <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.5px', marginBottom: 16 }}>
+                    Find me here
+                  </p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'flex-start' }}>
+                    <a href="mailto:bonniexu61@gmail.com" className="link-pill">Request My Resume ↗︎︎</a>
+                    <a href="https://www.linkedin.com/in/bonniexu61" target="_blank" rel="noopener noreferrer" className="link-pill">LinkedIn ↗︎︎</a>
+                    <a href="https://www.instagram.com/designer_bonniexu/" target="_blank" rel="noopener noreferrer" className="link-pill">Instagram ↗︎︎</a>
+                  </div>
+                </div>
+
+                {/* Right — My Journey */}
+                <div>
+                  <p className="t-label">My Journey</p>
+                  <h2 className="t-h2" style={{ marginBottom: 24 }}>Three turning<br />points.</h2>
+                  <Img
+                    src="images/about-tafe-work.avif"
+                    alt="TAFE student work"
+                    className="story-img"
+                    style={{ marginBottom: 24, height: 240, objectFit: 'cover' }}
+                    height={240}
+                  />
+
+                  <p className="t-body-lg" style={{ marginBottom: 16 }}>
+                    I was 13 when it started. I wanted to make a poster of my favourite snooker
+                    player, John Higgins. So I opened Photoshop for the first time. I had no idea
+                    what I was doing, but I remember that feeling of watching something come
+                    together on screen and thinking, this is it.
+                  </p>
+                  <p className="t-body-lg" style={{ marginBottom: 16 }}>
+                    Years later, after finishing my Master's in Information Systems at UQ, I knew
+                    I couldn't keep pretending design was just a hobby. I started freelancing.
+                    Posters, restaurant menus, marketing materials. Nothing glamorous. But it was
+                    mine, and it was real.
+                  </p>
+                  <p className="t-body-lg">
+                    The real shift happened when I committed to studying graphic design properly
+                    at TAFE. I fell in love with the craft all over again. The late nights in the
+                    classroom, experimenting, pushing ideas until they finally clicked on screen.
+                    That year I won an Excellence in Typography award, and later came back to TAFE
+                    to share my story with future students. Full circle.
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <hr className="div" />
+
+          {/* ══════ HOW I WORK ══════ */}
+          <section style={{ padding: '80px 0' }}>
+            <div className="inner">
+              <div className="two-col fade-up" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+                <div>
+                  <p className="t-label">How I Work</p>
+                  <h2 className="t-h2" style={{ marginBottom: 24 }}>Design that<br />moves the needle.</h2>
+                  <p className="t-body-lg" style={{ marginBottom: 20 }}>
+                    Design isn't just about making things look nice, it's about serving a purpose.
+                    The way you structure content, choose a color, or arrange information directly
+                    influences how people see the world.
+                  </p>
+                  <p className="t-body-lg">
+                    My background in Information Systems gives me a unique edge. At Domino's, I
+                    learned that small design decisions matter enormously. A different text color,
+                    a subtle layout shift, a clearer hierarchy. These move metrics, influence
+                    behavior, and impact thousands of people's experiences.
+                  </p>
+                </div>
+                <div>
+                  <Img
+                    src="images/about-business-card.avif"
+                    alt="Bonnie Xu business card design"
+                    className="story-img"
+                    style={{ height: 420, objectFit: 'cover' }}
+                    height={420}
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <hr className="div" />
+
+          {/* ══════ LIFE OUTSIDE DESIGN ══════ */}
+          <section style={{ padding: '80px 0' }}>
+            <div className="inner">
+              <div className="two-col fade-up" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+                <div>
+                  <Img
+                    src="images/about-bonbon.avif"
+                    alt="Bon Bon Clay Art stall"
+                    className="story-img"
+                    style={{ height: 460, objectFit: 'cover' }}
+                    height={460}
+                  />
+                </div>
+                <div>
+                  <p className="t-label">Life Outside Design</p>
+                  <h2 className="t-h2" style={{ marginBottom: 24 }}>More than<br />a designer.</h2>
+                  <p className="t-body-lg" style={{ marginBottom: 20 }}>
+                    When I'm not designing, I'm creating with my hands in other ways. I started
+                    Bon Bon, a polymer clay earring brand, exploring design beyond screens. Right
+                    now, I've stepped back as a new mum (no jewelry allowed in this season!), but
+                    it's still very much a part of who I am.
+                  </p>
+                  <p className="t-body-lg">
+                    I'm also a devoted cat mum and a Disney enthusiast, the kind who tears up at
+                    the Princess meet-and-greet at Disneyland. I cry at beautiful architecture,
+                    stunning design, and moments of genuine beauty. For me, it's all connected.
+                    Beauty moves me, and that's why I design.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ══════ CONTACT ══════ */}
+          <section id="contact" style={{ background: '#2B2B2B' }}>
+            <div className="page-wrap" style={{ paddingTop: 80, paddingBottom: 80, paddingLeft: 80, paddingRight: 80 }}>
+              <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '80px' }}>
+                <div className="fade-up">
+                  <h2 style={{
+                    fontFamily: 'var(--font-display)', fontWeight: 700,
+                    fontSize: 'clamp(42px,6vw,72px)', letterSpacing: '-3px',
+                    lineHeight: 1.0, color: '#fff',
+                  }}>Let's be<br />creative<br />together.</h2>
+                </div>
+                <div className="fade-up">
+                  <form 
+                    action="https://api.web3forms.com/submit" 
+                    method="POST" 
+                    style={{ display: 'flex', flexDirection: 'column', gap: 20 }}
+                  >
+                    <input type="hidden" name="access_key" value="c706f602-bfd6-4810-aa0f-da098552839d" />
+                    <input type="text" name="name" placeholder="Your name" className="contact-input" required />
+                    <input type="email" name="email" placeholder="Your email" required className="contact-input" />
+                    <textarea name="message" placeholder="Message" rows={5} required className="contact-input" style={{ resize: 'none' }} />
+                    <button type="submit" style={{
+                      background: '#fff', color: '#2B2B2B', fontFamily: 'var(--font-body)',
+                      fontSize: 14, fontWeight: 500, padding: '14px', borderRadius: 999,
+                      border: 'none', cursor: 'pointer', width: '100%', marginTop: 8,
+                    }}>Submit ↗︎︎</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <Footer />
+        </>
+      );
+    }
+
+    function App() {
+      useEffect(() => {
+        const obs = new IntersectionObserver(
+          entries => entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+          }),
+          { threshold: 0.06, rootMargin: '0px 0px -60px 0px' }
+        );
+        document.querySelectorAll('.fade-up, .img-reveal, .line-reveal').forEach(el => obs.observe(el));
+        return () => obs.disconnect();
+      }, []);
+      return <AboutPage />;
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

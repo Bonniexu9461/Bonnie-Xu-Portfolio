@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product & UX Design — Domino's | Bonnie Xu</title>
+  <link rel="icon" href="../favicon.svg" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script src="../shared-components.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background: #F4F2F1; color: #2B2B2B; overflow-x: hidden; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --accent:    #E8452A;
+      --shadow:    0px 0px 20px 0px rgba(0,0,0,0.03);
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --r-sm: 15px; --r-md: 24px; --r-lg: 32px;
+    }
+
+    .cs-inner { max-width: 1440px; margin: 0 auto; width: 100%; padding: 0 80px; }
+
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .img-reveal { overflow: hidden; }
+    .img-reveal img { transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease; transform: scale(1.08); opacity: 0; }
+    .img-reveal.visible img { transform: scale(1); opacity: 1; }
+
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-3px; left:0; width:0; height:1px; background:#2B2B2B; transition: width 0.3s ease; }
+    .nav-link:hover::after { width:100%; }
+
+    .t-label   { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; }
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 64px); letter-spacing: -2.5px; line-height: 1.0; color: var(--text-1); }
+    .t-h2      { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3vw, 36px); letter-spacing: -1.5px; line-height: 1.1; color: var(--text-1); }
+    .t-h3      { font-family: var(--font-display); font-weight: 700; font-size: clamp(20px, 2vw, 28px); letter-spacing: -1px; line-height: 1.15; color: var(--text-1); }
+    .t-h4      { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; line-height: 1.2; color: var(--text-1); }
+    .t-body-lg { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; }
+    .t-body    { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    .img-placeholder { width: 100%; background: #EBEBEA; border-radius: var(--r-sm); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 32px; border: 1.5px dashed #CCCCCC; }
+    .img-placeholder .ph-name { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #999; letter-spacing: 0.5px; }
+    .img-placeholder .ph-hint { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: #BBBBBB; text-align: center; }
+
+    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .ba-label { font-family: var(--font-display); font-weight: 700; font-size: 12px; color: var(--text-2); margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+
+    .wid-section { display: grid; grid-template-columns: 220px 1fr; gap: 64px; align-items: start; }
+    .wid-num { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 1px; margin-bottom: 8px; }
+
+    .stat-chip { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-sm); padding: 16px 20px; display: flex; flex-direction: column; gap: 4px; }
+    .stat-num  { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: -1px; color: var(--accent); }
+    .stat-desc { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+
+    .pullquote { border-left: 3px solid var(--accent); padding: 20px 24px; background: var(--bg-card); border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+    .pullquote p { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #444; line-height: 1.8; font-style: italic; }
+    .pullquote .q-attr { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); margin-top: 12px; font-style: normal; }
+
+    .result-chip { background: var(--text-1); border-radius: var(--r-sm); padding: 20px 24px; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-page); }
+    ::-webkit-scrollbar-thumb { background: #AAAAAA; border-radius: 3px; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; padding-bottom: 80px; }
+    .contact-input::placeholder { color: rgba(255,255,255,0.35); }
+    .contact-input:focus { outline: none; border-bottom-color: rgba(255,255,255,0.7) !important; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; } }
+
+    @media (max-width: 768px) {
+      .cs-inner { padding: 0 20px; }
+      .wid-section { grid-template-columns: 1fr; gap: 20px; }
+      .before-after { grid-template-columns: 1fr; }
+      .cs-meta { flex-direction: column !important; gap: 24px !important; }
+      .cs-meta-grid { grid-template-columns: 1fr 1fr !important; }
+      .results-grid { grid-template-columns: 1fr !important; }
+      .context-grid { grid-template-columns: 1fr !important; }
+      .responsibility-grid { grid-template-columns: 1fr !important; }
+      .meta-strip { flex-direction: column !important; gap: 24px !important; }
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
+const { Navbar, Footer } = window;
+
+/* Images are in ../images/ (one level up from projects/) */
+const IMG = (name) => `../images/${name}`;
+
+function Img({ filename, height = 320, hint = '' }) {
+  const [ok, setOk] = useState(false);
+  const [err, setErr] = useState(false);
+  const src = IMG(filename);
+  return err ? (
+    <div className="img-placeholder" style={{ minHeight: height }}>
+      <span style={{ fontSize: 22, opacity: 0.35 }}>🖼</span>
+      <div className="ph-name">{filename}</div>
+      {hint && <div className="ph-hint">{hint}</div>}
+    </div>
+  ) : (
+    <div style={{ borderRadius: 15, overflow: 'hidden', background: '#EBEBEA', minHeight: ok ? 0 : height }}>
+      {!ok && (
+        <div className="img-placeholder" style={{ minHeight: height }}>
+          <span style={{ fontSize: 22, opacity: 0.35 }}>🖼</span>
+          <div className="ph-name">{filename}</div>
+          {hint && <div className="ph-hint">{hint}</div>}
+        </div>
+      )}
+      <img src={src} alt={filename} onLoad={() => setOk(true)} onError={() => setErr(true)}
+        style={{ width: '100%', display: ok ? 'block' : 'none', objectFit: 'cover' }} />
+    </div>
+  );
+}
+
+function Label({ children }) {
+  return <p className="t-label" style={{ marginBottom: 14 }}>{children}</p>;
+}
+
+function Divider() {
+  return <hr style={{ border: 'none', borderTop: '1px solid var(--border)', margin: '0' }} />;
+}
+
+
+function CaseStudy() {
+  return (
+    <main style={{ paddingTop: 72 }}>
+      <div className="cs-inner">
+
+        {/* ── HEADER ── */}
+        <section style={{ padding: '72px 0 0' }}>
+          <div className="fade-up">
+            <Label>Case Study · Domino's</Label>
+            <h1 className="t-display" style={{ marginBottom: 10 }}>Product & UX Design</h1>
+            <p style={{ fontFamily: 'var(--font-display)', fontWeight: 300, fontSize: 'clamp(18px, 2.5vw, 28px)', color: 'var(--text-2)', letterSpacing: '-0.5px', marginBottom: 48 }}>Redesigning core pages &amp; building a global design system</p>
+          </div>
+
+          {/* Background + My Role */}
+          <div className="fade-up context-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, paddingTop: 32, borderTop: '1px solid var(--border)', marginBottom: 48 }}>
+            <div>
+              <Label>Background</Label>
+              <p className="t-body-lg">Domino's had rebranded. But only the homepage knew it. The core pages, including Offers, Store, and Service Selector, still carried the legacy design: text-heavy layouts, low visual hierarchy, and an experience that felt disconnected from the refreshed brand. Customers were abandoning the Offers page before seeing a single deal. Delivery and pickup options were routinely confused. And across 12 global markets, every team was solving the same problems independently, with no shared standards, no reusable system, and campaign pages rebuilt from scratch every time.</p>
+              <p className="t-body-lg" style={{ marginTop: 16, fontWeight: 500, color: 'var(--text-1)' }}>So how might we design a core experience that felt as premium as the brand, and as consistent across every market?</p>
+            </div>
+            <div>
+              <Label>My Role</Label>
+              <p className="t-body-lg">Responsible for redesigning Domino's Australia's core pages (Offers, Store, and Service Selector), improving offer discoverability, store clarity, and user flow while aligning the experience with the refreshed brand identity. Alongside the core pages, I built a reusable component library for marketing landing pages, replacing one-off campaign builds with a system that regional teams could deploy independently and at speed.</p>
+              <p className="t-body-lg" style={{ marginTop: 16 }}>Collaborated with a distributed cross-functional team across New Zealand, France, Netherlands, Japan, Germany, Belgium, Malaysia, and Singapore to align the new work with Domino's design system, component library, and strategic goals, grounded in user feedback and telemetry. The redesign was later adopted globally across 10 markets.</p>
+            </div>
+          </div>
+
+          {/* Results */}
+          <div className="fade-up" style={{ marginBottom: 40 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+              {[
+                { num: '+$57K',   desc: 'Weekly sales uplift at launch' },
+                { num: '+3.52%',  desc: 'Progression · Netherlands A/B' },
+                { num: '+0.80%',  desc: 'Conversion · Netherlands A/B' },
+                { num: '+24%',    desc: 'Desktop progression · Australia' },
+                { num: '10',      desc: 'Markets adopted globally' },
+              ].map((s, i) => (
+                <div key={i} className="stat-chip">
+                  <span className="stat-num">{s.num}</span>
+                  <span className="stat-desc">{s.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Meta strip */}
+          <div className="fade-up meta-strip" style={{ display: 'flex', gap: '24px 48px', flexWrap: 'wrap', borderTop: '1px solid var(--border)', paddingTop: 32, paddingBottom: 64 }}>
+            <div><Label>Role</Label><p className="t-body">UI/UX Designer</p></div>
+            <div><Label>Tools</Label><p className="t-body">Figma · UserTesting · A/B Testing · Jira</p></div>
+            <div><Label>Timeline</Label><p className="t-body">Jan 2024 – Oct 2025</p></div>
+            <div><Label>Reach</Label><p className="t-body">10 global markets</p></div>
+            <div style={{ flexBasis: '100%' }}><Label>Collaboration</Label><p className="t-body">Partnered with PM and engineering; validated via analytics, UserTesting, and A/B testing; supported rollout across regional teams.</p></div>
+          </div>
+        </section>
+
+        {/* ── HERO IMAGE ── */}
+        <div className="fade-up" style={{ marginBottom: 80 }}>
+          <Img filename="dominos-web.png" height={480} hint="Hero mockup — laptop & tablet showing redesigned Domino's site" />
+        </div>
+
+        {/* ── UX APPROACH ── */}
+        <section className="fade-up" style={{ background: '#2B2B2B', borderRadius: 'var(--r-lg)', padding: '72px 64px', marginBottom: 80 }}>
+          <p className="t-label" style={{ color: 'rgba(255,255,255,0.4)', marginBottom: 16 }}>Process</p>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(28px, 3vw, 40px)', letterSpacing: '-1.5px', color: '#fff', marginBottom: 16 }}>UX Approach</h2>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 300, color: 'rgba(255,255,255,0.55)', lineHeight: 1.75, marginBottom: 56, maxWidth: 680 }}>I tackled each core page as a distinct problem, grounded in user research, validated through testing, and refined iteratively before scaling globally.</p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+            {[
+              {
+                icon: '🔍',
+                title: 'Research &\nDiscovery',
+                points: [
+                  'Reviewed analytics and heatmap data to identify drop-off points and CTA blindspots across core pages.',
+                  'Ran qualitative user testing to surface confusion around delivery vs pickup and the location gate on the Offers page.',
+                  'Audited competitor and internal benchmark patterns across automation and ordering flows.',
+                ]
+              },
+              {
+                icon: '✏️',
+                title: 'Definition &\nIdeation',
+                points: [
+                  'Restructured the information architecture to surface national offers first, removing friction from the location gate.',
+                  'Designed and tested three variations of the Service Selector to balance new brand standards with proven mobile UX.',
+                  'Built a pre-approved component library with built-in localisation to replace one-off campaign builds, reducing delivery time and eliminating repeat approval cycles across 10 markets.',
+                ]
+              },
+              {
+                icon: '🚀',
+                title: 'Deployment &\nIteration',
+                points: [
+                  'Validated redesigns through usability testing with 5 participants per platform before launch.',
+                  'A/B tested the Offer page in the Netherlands, confirming uplift in progression and conversion before a wider rollout.',
+                  'Supported 10 global markets with 30-minute enablement sessions, ensuring regional teams could deploy independently while staying on-brand.',
+                ]
+              }
+            ].map((card, i) => (
+              <div key={i} style={{ background: '#fff', borderRadius: 'var(--r-md)', padding: '36px 32px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+                <div style={{ fontSize: 28 }}>{card.icon}</div>
+                <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.5px', lineHeight: 1.25, color: 'var(--text-1)', whiteSpace: 'pre-line' }}>{card.title}</h3>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  {card.points.map((pt, j) => (
+                    <p key={j} style={{ fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 300, color: '#555', lineHeight: 1.75, paddingBottom: j < card.points.length - 1 ? 14 : 0, borderBottom: j < card.points.length - 1 ? '1px solid var(--border-lt)' : 'none' }}>{pt}</p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <Divider />
+
+        {/* ── WHAT I DID ── */}
+        <section style={{ padding: '80px 0' }}>
+          <div className="fade-up" style={{ marginBottom: 64 }}>
+            <Label>Process</Label>
+            <h2 className="t-h2">What I did</h2>
+          </div>
+
+          {/* 01 Service Selector */}
+          <div className="fade-up" style={{ paddingTop: 56, paddingBottom: 64 }}>
+            <div className="wid-section">
+              <div>
+                <div className="wid-num">01</div>
+                <h3 className="t-h3">Unified Entry Point</h3>
+                <p className="t-body" style={{ marginTop: 6, color: 'var(--text-2)' }}>Service Selector</p>
+              </div>
+              <div>
+                <p className="t-body-lg" style={{ marginBottom: 18 }}>I realigned the Service Selector with the new brand and design system, while preserving the strengths users valued in the legacy experience — the challenge was updating the look without breaking what already worked.</p>
+                <p className="t-body-lg" style={{ marginBottom: 18 }}>I tested three design variations with users. Results showed users preferred the new sleek typography and visual style but valued the compact mobile layout from the legacy version.</p>
+                <p className="t-body-lg" style={{ marginBottom: 24 }}>I combined the two: new brand standards with the compact mobile experience. The validated approach was adopted into the global design system, establishing a consistent entry point for the ordering flow across multiple markets.</p>
+                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-lt)', borderRadius: 'var(--r-sm)', padding: '16px 20px', marginBottom: 40 }}>
+                  <p style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 8 }}>Key decision</p>
+                  <p className="t-body" style={{ marginBottom: 6 }}><strong>Decision:</strong> Kept the legacy compact mobile layout while updating typography and visual system.</p>
+                  <p className="t-body"><strong>Why:</strong> Testing showed users preferred the new look, but the legacy layout supported faster scanning on mobile.</p>
+                </div>
+                <img src="../images/dominos-service-selector.avif" alt="Service Selector Redesign" style={{ width: '100%', borderRadius: 15, display: 'block' }} />
+              </div>
+            </div>
+          </div>
+
+          {/* 02 Offer Page */}
+          <div className="fade-up" style={{ borderTop: '1px solid var(--border)', paddingTop: 56, paddingBottom: 64 }}>
+            <div className="wid-section">
+              <div>
+                <div className="wid-num">02</div>
+                <h3 className="t-h3">Faster Offer Discovery</h3>
+                <p className="t-body" style={{ marginTop: 6, color: 'var(--text-2)' }}>Offer Page Redesign</p>
+              </div>
+              <div>
+                <p className="t-body-lg" style={{ marginBottom: 18 }}>Analytics and user testing surfaced three blockers: 67% of users abandoned before seeing deals due to a location gate, CTAs weren't clearly prioritised (heatmap data), and delivery vs pickup offers confused new users, with 5 of 8 test participants misclassifying them.</p>
+                <p className="t-body-lg" style={{ marginBottom: 40 }}>I restructured the IA to surface national offers immediately without requiring a location, positioned local deals below for store-specific browsing, and replaced colour-only differentiation with clear labels. The redesign was validated through A/B testing in the Netherlands before rolling out to Australia and 8 further markets.</p>
+
+                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-lt)', borderRadius: 'var(--r-sm)', padding: '16px 20px', marginBottom: 24 }}>
+                  <p style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 8 }}>Key decision</p>
+                  <p className="t-body" style={{ marginBottom: 6 }}><strong>Decision:</strong> Moved national offers above the location gate and separated local offers below.</p>
+                  <p className="t-body"><strong>Why:</strong> Reduced drop-off from the gate and made the primary CTA more obvious based on heatmap + testing.</p>
+                </div>
+                <div className="pullquote" style={{ marginBottom: 40 }}>
+                  <p>"Bonnie's UI designs have been successfully deployed across our website in 10 countries. Most notably, when her redesigned offers page went live, it generated an additional $57K in weekly sales, results we simply couldn't have achieved without her expertise."</p>
+                  <p className="q-attr">— Celene Grantham, Digital CX Design Lead, Domino's</p>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <img src="../images/dominos-offer-1.avif" alt="Offer Page Redesign" style={{ width: '100%', borderRadius: 15, display: 'block' }} />
+                  <img src="../images/dominos-offer-2.avif" alt="Offer Page Redesign" style={{ width: '100%', borderRadius: 15, display: 'block' }} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 03 Store Page */}
+          <div className="fade-up" style={{ borderTop: '1px solid var(--border)', paddingTop: 56, paddingBottom: 64 }}>
+            <div className="wid-section">
+              <div>
+                <div className="wid-num">03</div>
+                <h3 className="t-h3">Clearer Path to Action</h3>
+                <p className="t-body" style={{ marginTop: 6, color: 'var(--text-2)' }}>Store Page Redesign</p>
+              </div>
+              <div>
+                <p className="t-body-lg" style={{ marginBottom: 18 }}>I redesigned the Store page to fix several legacy UX issues that were quietly costing conversions: users had to click 'View All' to see deals (many never did), CTAs weren't prominent enough, and delivery vs pickup offers were differentiated by colour alone, which confused new users.</p>
+                <p className="t-body-lg" style={{ marginBottom: 40 }}>I separated delivery and pickup deals into distinct, labelled categories, made CTAs more prominent, and surfaced offers directly on the page without requiring extra clicks.</p>
+
+                <p className="t-body" style={{ marginBottom: 28 }}>Pre-launch usability testing with 5 participants per platform showed 5/5 on desktop preferred the new design (zero navigation errors vs. a 60% error rate in the legacy design), while 3/5 on mobile preferred it, with the main concern being that horizontal browsing felt unintuitive. I refined the design, adding more prominent directional cues, and re-tested before shipping.</p>
+
+                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-lt)', borderRadius: 'var(--r-sm)', padding: '16px 20px', marginBottom: 40 }}>
+                  <p style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 8 }}>Key decision</p>
+                  <p className="t-body" style={{ marginBottom: 6 }}><strong>Decision:</strong> Replaced "colour-only" differentiation with clear labelled categories and surfaced deals without extra clicks.</p>
+                  <p className="t-body"><strong>Why:</strong> New users were misclassifying delivery vs pickup, and "View all" was hiding value.</p>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                  <img src="../images/dominos-store-1.avif" alt="Store Page Redesign" style={{ width: '100%', borderRadius: 15, display: 'block' }} />
+                  <img src="../images/dominos-store-2.avif" alt="Store Page Redesign" style={{ width: '100%', borderRadius: 15, display: 'block' }} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 04 Component Library */}
+          <div className="fade-up" style={{ borderTop: '1px solid var(--border)', paddingTop: 56, paddingBottom: 64 }}>
+            <div className="wid-section">
+              <div>
+                <div className="wid-num">04</div>
+                <h3 className="t-h3">Scalable Campaign System</h3>
+                <p className="t-body" style={{ marginTop: 6, color: 'var(--text-2)' }}>Landing Page Component Library</p>
+              </div>
+              <div>
+                <p className="t-body-lg" style={{ marginBottom: 40 }}>Many regional markets don't have dedicated design or web teams. Rather than routing every campaign through HQ from scratch, I built a pre-approved component library that let me ship pages faster on their behalf and gave markets with design resource the ability to assemble and deploy campaigns independently.</p>
+
+                {[
+                  { title: 'Pre-Approved Building Blocks', body: 'Built a library of page modules (hero blocks, offer cards, app download banners, CTAs) that had already cleared brand and stakeholder approval. Because every component was pre-approved, building a new landing page no longer triggered a full review cycle — just a final sign-off on content, not structure.' },
+                  { title: 'Built-In Localisation', body: 'Each component included preset copy slots for all 10 markets, with language strings already localised and ready to swap. The app download banner, for example, ships with six language variants pre-built, so regional teams receive an approved, localised component rather than a blank canvas.' },
+                  { title: 'Flexible Delivery Model', body: 'Provided implementation sessions for markets with in-house design resource, giving them the ability to self-serve. For markets without design support, I assembled pages directly from the library, reducing their time-to-launch without creating new dependencies on HQ.' },
+                ].map((item, i, arr) => (
+                  <div key={i} style={{ marginBottom: 24, paddingBottom: 24, borderBottom: i < arr.length - 1 ? '1px solid var(--border-lt)' : 'none' }}>
+                    <h4 className="t-h4" style={{ marginBottom: 10 }}>{item.title}</h4>
+                    <p className="t-body">{item.body}</p>
+                  </div>
+                ))}
+
+                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-lt)', borderRadius: 'var(--r-sm)', padding: '16px 20px', marginBottom: 24 }}>
+                  <p style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--accent)', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 8 }}>Key decision</p>
+                  <p className="t-body" style={{ marginBottom: 6 }}><strong>Decision:</strong> Locked structural rules (grid, spacing, hierarchy, type scale) while keeping content zones flexible.</p>
+                  <p className="t-body"><strong>Why:</strong> Regional autonomy without breaking brand consistency: too much flexibility would undermine the system's purpose.</p>
+                </div>
+
+                <p className="t-body" style={{ marginBottom: 40, color: 'var(--text-2)' }}>Campaign delivery time reduced across 10 markets — not just from faster builds, but from eliminating the repeat approval cycles that came with one-off campaign designs.</p>
+
+                <img src="../images/dominos-module-library.avif" alt="Component Library" style={{ width: '100%', borderRadius: 15, display: 'block' }} />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <Divider />
+
+        {/* ── TAKEAWAYS ── */}
+        <section className="fade-up" style={{ padding: '80px 0', maxWidth: 720 }}>
+          <Label>Takeaways</Label>
+          <h2 className="t-h2" style={{ marginBottom: 40 }}>What I learned</h2>
+          {[
+            { num: '01', text: 'Successfully led four concurrent workstreams across a year, balancing new feature design with design system development and global rollout, without compromising on quality or consistency.' },
+            { num: '02', text: 'Learned that the hardest design constraint isn\'t time, it\'s scope. Regional teams needed flexibility, but too much of it breaks the system. The right answer was approved building blocks, not open-ended customisation.' },
+            { num: '03', text: 'If I ran this again, I\'d establish design token standards and a clearer process for managing regional variation requests earlier, reducing exceptions and making the system easier to scale from the start.' },
+          ].map((item, i) => (
+            <div key={i} style={{ display: 'flex', gap: 24, paddingBottom: 28, marginBottom: 28, borderBottom: i < 2 ? '1px solid var(--border-lt)' : 'none' }}>
+              <span style={{ fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 600, color: 'var(--accent)', letterSpacing: '1px', flexShrink: 0, paddingTop: 4 }}>{item.num}</span>
+              <p className="t-body-lg" style={{ margin: 0 }}>{item.text}</p>
+            </div>
+          ))}
+        </section>
+
+        {/* ── NEXT PROJECT ── */}
+        <div className="fade-up" style={{ borderTop: '1px solid var(--border)', paddingTop: 56, paddingBottom: 80, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 24 }}>
+          <div>
+            <p className="t-label" style={{ marginBottom: 8 }}>Next project</p>
+            <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 22, letterSpacing: '-1px' }}>Domino's — Gamification Series</p>
+          </div>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <a href="dominos-gamification-series.html" style={{ background: 'var(--text-1)', color: '#fff', textDecoration: 'none', padding: '14px 28px', borderRadius: 100, fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500 }}>View next ↗︎︎</a>
+            <a href="../portfolio.html#work" style={{ background: 'transparent', color: 'var(--text-1)', textDecoration: 'none', padding: '14px 28px', borderRadius: 100, fontFamily: 'var(--font-body)', fontSize: 13, fontWeight: 500, border: '1px solid var(--border)' }}>Back to all work</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  );
+}
+
+function App() {
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.06 }
+    );
+    document.querySelectorAll('.fade-up, .img-reveal, .line-reveal').forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+  return (
+    <div>
+      <Navbar />
+      <CaseStudy />
+      <Footer />
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
