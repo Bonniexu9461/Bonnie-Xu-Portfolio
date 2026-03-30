@@ -2,7 +2,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/", "destination": "/portfolio.html" }
+    { "source": "/", "destination": "/portfolio.html" },
+    { "source": "/portfolio", "destination": "/portfolio.html" }
   ],
   "headers": [
     {
