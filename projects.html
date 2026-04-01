@@ -139,15 +139,15 @@
     /* Grid */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
       margin-top: 0px;
     }
 
     @media (max-width: 1024px) {
       .projects-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 32px;
+        gap: 24px;
       }
     }
 
@@ -194,22 +194,32 @@
     /* Project Card */
     .project-card {
       cursor: pointer;
-      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
-      background: var(--bg-card);
-      border: 1px solid var(--border-lt);
-      border-radius: var(--r-md);
-      overflow: hidden;
       display: flex;
       flex-direction: column;
+      gap: 16px;
+      text-decoration: none;
     }
 
-    .project-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10);
+    .project-card .project-image-wrapper {
+      position: relative;
+      border-radius: var(--r-md);
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-lt);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+    }
+
+    .project-card:hover .project-image-wrapper {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
       border-color: var(--border);
     }
 
     .project-card .project-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
       transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
@@ -217,30 +227,23 @@
       transform: scale(1.03);
     }
 
-    .project-image {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      object-fit: cover;
-      overflow: hidden;
-    }
-
     .project-info {
-      padding: 24px 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 4px;
     }
 
     .project-company {
       font-family: var(--font-display);
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 700;
       color: var(--text-1);
+      line-height: 1.2;
     }
 
     .project-title {
       font-family: var(--font-body);
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 400;
       color: var(--text-2);
       line-height: 1.4;
@@ -258,10 +261,14 @@
       font-size: 11px;
       font-weight: 500;
       color: var(--text-2);
-      background: rgba(43, 43, 43, 0.04);
-      border: 1px solid var(--border-lt);
-      border-radius: var(--r-sm);
-      padding: 4px 8px;
+      background: transparent;
+      padding: 0;
+    }
+
+    .project-tag:not(:last-child)::after {
+      content: '·';
+      margin-left: 8px;
+      color: var(--border);
     }
 
     /* Fade-up animation — premium easing */
@@ -313,7 +320,8 @@
         title: "Product & UX Design",
         href: "projects/dominos-core-website-redesign.html",
         image: "images/dominos-web.png",
-        tags: ["Product Design", "UX"]
+        tags: ["Product Design", "UX"],
+        color: "#E8452A"
       },
       {
         id: 2,
@@ -321,7 +329,8 @@
         title: "Gamification Series",
         href: "projects/dominos-gamification-series.html",
         image: "images/dominos-gamification.gif",
-        tags: ["CRM", "Interaction Design"]
+        tags: ["CRM", "Interaction Design"],
+        color: "#E8452A"
       },
       {
         id: 3,
@@ -329,7 +338,8 @@
         title: "Brand & Marketing Design",
         href: "projects/dominos-brand-marketing-design.html",
         image: "images/dominos-brand.png",
-        tags: ["Branding", "Social", "Print"]
+        tags: ["Branding", "Social", "Print"],
+        color: "#E8452A"
       },
       {
         id: 4,
@@ -337,7 +347,8 @@
         title: "Digital & Campaign Design",
         href: "projects/entain-digital-campaign-design.html",
         image: "images/entain.jpg",
-        tags: ["eDM", "Branding", "Campaign"]
+        tags: ["eDM", "Branding", "Campaign"],
+        color: "#1A1A2E"
       },
       {
         id: 5,
@@ -345,7 +356,8 @@
         title: "Social & Print Design",
         href: "projects/raywhite-brand-marketing-design.html",
         image: "images/raywhite.png",
-        tags: ["Social Media", "Print", "Branding"]
+        tags: ["Social Media", "Print", "Branding"],
+        color: "#D4A017"
       },
       {
         id: 6,
@@ -353,7 +365,8 @@
         title: "Website Design",
         href: "projects/freelance-website-design.html",
         image: "images/freelance.png",
-        tags: ["Web Design", "UI/UX"]
+        tags: ["Web Design", "UI/UX"],
+        color: "#2B7A4B"
       }
     ];
 
@@ -384,9 +397,10 @@
           href={project.href}
           className={`project-card fade-up ${isVisible ? 'visible' : ''}`}
           ref={cardRef}
-          style={{ textDecoration: 'none', color: 'inherit' }}
         >
-          <img src={project.image} alt={project.title} className="project-image" />
+          <div className="project-image-wrapper">
+            <img src={project.image} alt={project.title} className="project-image" />
+          </div>
           <div className="project-info">
             <div className="project-company">{project.company}</div>
             <div className="project-title">{project.title}</div>
