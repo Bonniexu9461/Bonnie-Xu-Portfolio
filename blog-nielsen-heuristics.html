@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nielsen's 10 Usability Heuristics — Still the Design Industry's Bible — Bonnie Xu</title>
+  <meta name="description" content="Published in 1994, still quoted in every design crit. Here's what each principle actually means — with real examples from Figma, Gmail, Notion, and Linear." />
+  <meta property="og:title" content="Nielsen's 10 Usability Heuristics — Still the Design Industry's Bible — Bonnie Xu" />
+  <meta property="og:description" content="Published in 1994, still quoted in every design crit. Here's what each principle actually means — with real examples from the products you use every day." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --accent:    #E8452A;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --r-sm: 15px; --r-md: 24px; --r-lg: 32px;
+    }
+
+    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-1); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .t-label { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; }
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 64px); letter-spacing: -2.5px; line-height: 1.05; color: var(--text-1); }
+    .t-body-lg { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; }
+    .t-body { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    .page-wrap { padding-top: 72px; }
+    .cs-inner { max-width: 1440px; margin: 0 auto; padding: 0 80px; }
+
+    .article-header { padding: 80px 0 48px; }
+    .article-header .t-label { margin-bottom: 20px; display: block; }
+    .article-subtitle { font-family: var(--font-display); font-weight: 300; font-size: clamp(18px, 2vw, 22px); color: var(--text-2); margin-top: 20px; margin-bottom: 36px; max-width: 760px; line-height: 1.5; }
+    .article-meta-row { display: flex; align-items: center; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .meta-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-1); }
+    .meta-sep { width: 1px; height: 16px; background: var(--border); }
+    .meta-info { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); }
+    .meta-tag { font-family: var(--font-body); font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid var(--accent); border-radius: 999px; padding: 3px 10px; }
+
+    .hero-image { width: 100%; border-radius: var(--r-lg); overflow: hidden; margin: 40px 0 64px; background: linear-gradient(135deg, #1a1a2e 0%, #2d1b69 40%, #553a9e 75%, #8b6fcb 100%); min-height: 400px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .hero-image-text { text-align: center; padding: 60px 40px; }
+    .hero-image-text h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 4vw, 52px); letter-spacing: -2px; color: #fff; margin-bottom: 16px; line-height: 1.1; }
+    .hero-image-text p { font-family: var(--font-body); font-size: 16px; color: rgba(255,255,255,0.7); font-weight: 300; }
+
+    .article-layout { display: grid; grid-template-columns: 1fr 280px; gap: 80px; align-items: start; padding-bottom: 120px; }
+    .article-body { grid-column: 1; grid-row: 1; min-width: 0; }
+    .article-sidebar { grid-column: 2; grid-row: 1; position: sticky; top: 96px; }
+    .mobile-only { display: none; }
+    .inline-toc { display: none; background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 24px 28px; }
+
+    .article-body p { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; margin-bottom: 28px; }
+    .article-body h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2.5vw, 30px); letter-spacing: -1px; line-height: 1.15; color: var(--text-1); margin: 64px 0 16px; display: flex; align-items: baseline; gap: 12px; }
+    .article-body h2 .heuristic-num { font-family: var(--font-body); font-size: 12px; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; background: rgba(232,69,42,0.08); border-radius: 999px; padding: 3px 10px; flex-shrink: 0; }
+    .article-body h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(17px, 1.8vw, 20px); letter-spacing: -0.5px; color: var(--text-1); margin: 36px 0 12px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+
+    /* Visual mockup containers */
+    .mockup-wrap { margin: 36px 0; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--border-lt); background: var(--bg-card); }
+    .mockup-label { font-family: var(--font-body); font-size: 11px; font-weight: 500; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; padding: 12px 20px; border-bottom: 1px solid var(--border-lt); display: flex; align-items: center; gap: 8px; }
+    .mockup-label .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+    .mockup-body { padding: 28px 24px; }
+    .mockup-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .mockup-col-label { font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; }
+    .mockup-col-label.bad { color: #C0392B; }
+    .mockup-col-label.good { color: #27AE60; }
+
+    /* UI components used in mockups */
+    .ui-window { background: #fff; border-radius: 10px; border: 1px solid #E5E5E5; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .ui-titlebar { background: #F5F5F5; border-bottom: 1px solid #E5E5E5; padding: 8px 12px; display: flex; align-items: center; gap: 6px; }
+    .ui-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .ui-dot.red { background: #FF5F57; }
+    .ui-dot.yellow { background: #FEBC2E; }
+    .ui-dot.green { background: #28C840; }
+    .ui-body { padding: 16px; }
+    .ui-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 6px; font-family: var(--font-body); font-size: 12px; font-weight: 500; cursor: default; }
+    .ui-btn.primary { background: #0F62FE; color: #fff; }
+    .ui-btn.secondary { background: #E8E8E8; color: #333; }
+    .ui-btn.danger { background: #DA1E28; color: #fff; }
+    .ui-btn.loading { background: #0F62FE; color: rgba(255,255,255,0.7); }
+    .ui-btn.success { background: #198038; color: #fff; }
+    .ui-btn.ghost { background: transparent; color: #0F62FE; border: 1px solid #0F62FE; }
+    .ui-input { width: 100%; padding: 8px 12px; border: 1px solid #DDDBD9; border-radius: 6px; font-family: var(--font-body); font-size: 12px; color: #333; background: #fff; margin-bottom: 8px; }
+    .ui-input.error { border-color: #DA1E28; }
+    .ui-error-msg { font-family: var(--font-body); font-size: 11px; color: #DA1E28; margin-top: -4px; margin-bottom: 8px; }
+    .ui-error-msg.vague { color: #DA1E28; }
+    .ui-error-msg.specific { color: #0F62FE; }
+    .ui-label { font-family: var(--font-body); font-size: 11px; font-weight: 500; color: #555; margin-bottom: 4px; }
+    .ui-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-family: var(--font-body); font-size: 10px; font-weight: 600; }
+    .ui-tag.blue { background: #D0E2FF; color: #0043CE; }
+    .ui-tag.green { background: #DEFBE6; color: #198038; }
+    .ui-tag.red { background: #FFD7D9; color: #A2191F; }
+
+    .ui-progress-bar { height: 4px; background: #E8E8E8; border-radius: 2px; margin: 8px 0; overflow: hidden; }
+    .ui-progress-fill { height: 100%; border-radius: 2px; background: #0F62FE; }
+    .ui-progress-text { font-family: var(--font-body); font-size: 11px; color: var(--text-2); margin-top: 4px; }
+
+    .ui-toast { background: #2B2B2B; color: #fff; border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; font-family: var(--font-body); font-size: 12px; }
+    .ui-toast-undo { color: #74B3FF; font-weight: 500; cursor: default; }
+
+    .ui-menu { background: #fff; border: 1px solid #E5E5E5; border-radius: 8px; padding: 4px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    .ui-menu-item { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; border-radius: 5px; font-family: var(--font-body); font-size: 12px; color: #333; gap: 24px; }
+    .ui-menu-item:hover, .ui-menu-item.active { background: #F0F0F0; }
+    .ui-menu-shortcut { font-family: var(--font-body); font-size: 10px; color: #999; background: #F0F0F0; padding: 2px 5px; border-radius: 3px; }
+    .ui-menu-divider { height: 1px; background: #E8E8E8; margin: 4px 0; }
+
+    .ui-tooltip-wrap { position: relative; display: inline-block; }
+    .ui-tool-icon { width: 32px; height: 32px; background: #2C2C2C; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: default; }
+    .ui-tooltip { background: #1A1A1A; color: #fff; border-radius: 6px; padding: 8px 12px; font-family: var(--font-body); font-size: 11px; white-space: nowrap; }
+    .ui-tooltip-key { background: rgba(255,255,255,0.15); border-radius: 3px; padding: 1px 5px; font-size: 10px; margin-left: 6px; }
+
+    .ui-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .ui-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); flex-shrink: 0; }
+    .ui-filename { font-family: var(--font-body); font-size: 12px; color: #333; font-weight: 500; }
+    .ui-filedate { font-family: var(--font-body); font-size: 10px; color: #999; }
+    .ui-icon { width: 28px; height: 28px; border-radius: 6px; background: #F0F0F0; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+
+    .ui-modal { background: #fff; border-radius: 12px; padding: 24px; border: 1px solid #E5E5E5; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+    .ui-modal-title { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: #1a1a1a; margin-bottom: 8px; }
+    .ui-modal-body { font-family: var(--font-body); font-size: 12px; color: #555; line-height: 1.6; margin-bottom: 16px; }
+    .ui-modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+    .ui-search { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #fff; border: 1px solid #DDDBD9; border-radius: 8px; margin-bottom: 8px; }
+    .ui-search-icon { font-size: 13px; }
+    .ui-search-input { font-family: var(--font-body); font-size: 12px; color: #333; flex: 1; }
+    .ui-search-results { background: #fff; border: 1px solid #E5E5E5; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .ui-search-result { display: flex; align-items: center; gap: 10px; padding: 8px 12px; font-family: var(--font-body); font-size: 12px; border-bottom: 1px solid #F0F0F0; }
+    .ui-search-result:last-child { border-bottom: none; }
+    .ui-search-result:first-child { background: #F5F9FF; }
+    .ui-search-label { font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 1px; padding: 6px 12px 4px; font-family: var(--font-body); font-weight: 500; }
+
+    .ui-settings-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #F0F0F0; font-family: var(--font-body); font-size: 12px; }
+    .ui-settings-row:last-child { border-bottom: none; }
+    .ui-toggle { width: 32px; height: 18px; background: #0F62FE; border-radius: 9px; position: relative; flex-shrink: 0; }
+    .ui-toggle::after { content: ''; width: 12px; height: 12px; background: #fff; border-radius: 50%; position: absolute; top: 3px; right: 3px; }
+    .ui-toggle.off { background: #C6C6C6; }
+    .ui-toggle.off::after { right: auto; left: 3px; }
+
+    .ui-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 999px; font-family: var(--font-body); font-size: 10px; font-weight: 600; }
+    .ui-badge.info { background: #D0E2FF; color: #0043CE; }
+
+    /* Callout */
+    .callout { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-sm); padding: 20px 24px; margin: 28px 0; }
+    .callout-label { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; }
+    .callout p { margin-bottom: 0 !important; font-size: 14px !important; color: var(--text-1) !important; }
+
+    /* Sidebar */
+    .sidebar-card { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 28px 24px; margin-bottom: 24px; }
+    .sidebar-card-title { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-2); margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .toc-list li a { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-2); text-decoration: none; padding: 5px 0; display: block; border-left: 2px solid transparent; padding-left: 10px; transition: color 0.2s, border-color 0.2s; line-height: 1.5; }
+    .toc-list li a:hover, .toc-list li a.active { color: var(--text-1); border-left-color: var(--accent); }
+
+    .related-card { display: flex; flex-direction: column; gap: 6px; padding: 12px 0; border-bottom: 1px solid var(--border-lt); text-decoration: none; transition: opacity 0.2s; }
+    .related-card:last-child { border-bottom: none; padding-bottom: 0; }
+    .related-card:hover { opacity: 0.7; }
+    .related-tag { font-family: var(--font-body); font-size: 10px; font-weight: 600; color: var(--accent); letter-spacing: 1.2px; text-transform: uppercase; }
+    .related-title { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px; line-height: 1.3; }
+    .related-meta { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+
+    .author-bio { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-lg); padding: 40px; display: flex; gap: 28px; align-items: flex-start; margin: 64px 0; }
+    .author-bio-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-bio-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-bio-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 4px; }
+    .author-bio-role { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .author-bio-text { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    .article-nav { padding: 48px 0 80px; border-top: 1px solid var(--border); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 1024px) {
+      .article-layout { display: flex; flex-direction: column; align-items: stretch; gap: 40px; padding-bottom: 80px; }
+      .article-sidebar { display: none; }
+      .mobile-only { display: block; }
+      .inline-toc { display: block; }
+      .mockup-cols { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .cs-inner { padding: 0 20px; }
+      .article-header { padding: 48px 0 32px; }
+      .hero-image { min-height: 260px; border-radius: var(--r-md); }
+      .author-bio { flex-direction: column; gap: 20px; padding: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    <div class="cs-inner">
+
+      <header class="article-header fade-up">
+        <span class="t-label">UX Design</span>
+        <h1 class="t-display" style="margin-top: 16px; margin-bottom: 0; max-width: 900px;">
+          Nielsen's 10 Usability Heuristics
+        </h1>
+        <p class="article-subtitle">
+          Published in 1994, still quoted in every design crit. Here's what each principle actually means — with examples from the products you use every day.
+        </p>
+        <div class="article-meta-row">
+          <div class="meta-author">
+            <div class="author-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div><div class="author-name">Bonnie Xu</div></div>
+          </div>
+          <div class="meta-sep"></div>
+          <span class="meta-info">Apr 2026</span>
+          <div class="meta-sep"></div>
+          <span class="meta-info">12 min read</span>
+          <div class="meta-sep"></div>
+          <span class="meta-tag">UX Design</span>
+        </div>
+      </header>
+
+      <!-- Hero -->
+      <div class="hero-image fade-up">
+        <div class="hero-image-text">
+          <h2>10 Rules.<br>30 Years.</h2>
+          <p>Jakob Nielsen · 1994 · Still industry standard</p>
+        </div>
+      </div>
+
+      <div class="article-layout">
+
+        <!-- Mobile-only: Inline TOC -->
+        <div class="inline-toc mobile-only fade-up">
+          <p class="sidebar-card-title">In this article</p>
+          <ol class="toc-list">
+            <li><a href="#h1">Visibility of System Status</a></li>
+            <li><a href="#h2">Match the Real World</a></li>
+            <li><a href="#h3">User Control & Freedom</a></li>
+            <li><a href="#h4">Consistency & Standards</a></li>
+            <li><a href="#h5">Error Prevention</a></li>
+            <li><a href="#h6">Recognition Over Recall</a></li>
+            <li><a href="#h7">Flexibility & Efficiency</a></li>
+            <li><a href="#h8">Aesthetic & Minimalist Design</a></li>
+            <li><a href="#h9">Help Recover from Errors</a></li>
+            <li><a href="#h10">Help & Documentation</a></li>
+          </ol>
+        </div>
+
+        <article class="article-body fade-up">
+
+          <p>Jakob Nielsen published these 10 heuristics in 1994. That's over 30 years ago. The web barely existed, smartphones were science fiction, and Figma wouldn't exist for another two decades. And yet, every senior designer you know can recite most of them from memory.</p>
+
+          <p>That longevity isn't nostalgia. It's because these principles aren't about technology — they're about how humans perceive, remember, and react to systems. Those things don't change when iOS releases a new version.</p>
+
+          <p>This isn't a beginner's intro. If you've been designing for a while, you've applied most of these without naming them. What's useful at this stage is being precise: knowing exactly <em>which</em> heuristic you're violating, and being intentional about when a violation is actually justified.</p>
+
+          <hr class="article-divider">
+
+          <!-- H1 -->
+          <h2 id="h1"><span class="heuristic-num">01</span> Visibility of System Status</h2>
+
+          <p>The system should always keep users informed about what is going on, through appropriate feedback within reasonable time.</p>
+
+          <p>Put simply: users should never have to wonder if something worked. When they click a button, submit a form, or upload a file, something should visually confirm that the system received the action and is doing something about it.</p>
+
+          <p>Where this breaks is usually one of two places: either the feedback is missing entirely (nothing happens after a click), or it's there but too slow — the confirmation arrives 4 seconds later, after the user has already clicked again.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by Google Drive file upload</div>
+            <div class="mockup-body">
+              <div class="mockup-cols">
+                <div>
+                  <div class="mockup-col-label bad">✗ No feedback</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body">
+                      <div class="ui-row" style="margin-bottom:12px;">
+                        <div class="ui-icon">📄</div>
+                        <div><div class="ui-filename">Project Brief.pdf</div><div class="ui-filedate">3.2 MB</div></div>
+                      </div>
+                      <div class="ui-btn primary" style="width:100%;justify-content:center;">Upload</div>
+                      <div style="height:36px;"></div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mockup-col-label good">✓ Clear system status</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body">
+                      <div class="ui-row" style="margin-bottom:12px;">
+                        <div class="ui-icon">📄</div>
+                        <div><div class="ui-filename">Project Brief.pdf</div><div class="ui-filedate">3.2 MB · Uploading…</div></div>
+                      </div>
+                      <div class="ui-progress-bar"><div class="ui-progress-fill" style="width:68%"></div></div>
+                      <div class="ui-progress-text">68% — about 2 seconds remaining</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Instagram's story upload bar, Gmail's "Sending…" → "Sent" state, Figma's multiplayer cursor indicators — all of these exist specifically to satisfy this heuristic. When Linear shows a spinner on a slow network request instead of a frozen UI, that's intentional design, not a nice-to-have.</p>
+          </div>
+
+          <!-- H2 -->
+          <h2 id="h2"><span class="heuristic-num">02</span> Match Between System and the Real World</h2>
+
+          <p>The system should speak the users' language. Use words, phrases, and concepts familiar to the user, rather than system-oriented terms. Follow real-world conventions, making information appear in a natural and logical order.</p>
+
+          <p>This one is harder than it sounds at mid-level because the failure mode isn't "terrible jargon" — it's subtle mismatch. The difference between a button labelled "Discard" vs "Delete" vs "Remove" vs "Clear" seems minor but creates real cognitive overhead across a session.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by Figma's layers panel metaphor</div>
+            <div class="mockup-body">
+              <div class="mockup-cols">
+                <div>
+                  <div class="mockup-col-label bad">✗ System language</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body" style="font-family:var(--font-body);font-size:12px;color:#555;">
+                      <div style="margin-bottom:6px;color:#333;font-weight:500;">Node tree</div>
+                      <div style="padding-left:8px;border-left:2px solid #E5E5E5;">
+                        <div style="margin:4px 0;">CONTAINER_ROOT_01</div>
+                        <div style="margin:4px 0;padding-left:12px;">FLEX_NODE_A</div>
+                        <div style="margin:4px 0;padding-left:12px;">TEXT_ELEMENT_B</div>
+                        <div style="margin:4px 0;padding-left:12px;">IMG_ASSET_C</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mockup-col-label good">✓ User's language</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body" style="font-family:var(--font-body);font-size:12px;color:#555;">
+                      <div style="margin-bottom:6px;color:#333;font-weight:500;">Layers</div>
+                      <div style="padding-left:8px;border-left:2px solid #E5E5E5;">
+                        <div style="margin:4px 0;">📁 Card component</div>
+                        <div style="margin:4px 0;padding-left:12px;">◻ Content area</div>
+                        <div style="margin:4px 0;padding-left:24px;">T Heading</div>
+                        <div style="margin:4px 0;padding-left:24px;">🖼 Hero image</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Apple named it a "Trash can," not "Pending deletion queue." Zoom added a literal 🤚 "Raise Hand" button because the metaphor transfers perfectly from a physical meeting. Figma calls them "Frames" and "Components" — not "containers" and "templates" — because the former matches how designers already think.</p>
+          </div>
+
+          <!-- H3 -->
+          <h2 id="h3"><span class="heuristic-num">03</span> User Control and Freedom</h2>
+
+          <p>Users often choose system functions by mistake and will need a clearly marked "emergency exit" to leave the unwanted state without having to go through an extended dialogue. Support undo and redo.</p>
+
+          <p>The deeper principle here is psychological safety. When users know they can undo, they explore more. When every action feels permanent, they slow down, second-guess, and disengage. Good undo is a feature that makes the rest of the product feel better.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by Gmail's "Undo Send"</div>
+            <div class="mockup-body">
+              <div class="mockup-cols">
+                <div>
+                  <div class="mockup-col-label bad">✗ No escape route</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body">
+                      <div style="background:#F5F5F5;border-radius:6px;padding:10px 12px;font-family:var(--font-body);font-size:11px;color:#555;margin-bottom:12px;">
+                        To: client@studio.com<br>
+                        Subject: Final invoice
+                      </div>
+                      <div class="ui-btn primary" style="font-size:11px;">Send →</div>
+                      <div style="height:20px;"></div>
+                      <div style="font-family:var(--font-body);font-size:11px;color:#999;font-style:italic;">Message sent. No undo available.</div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mockup-col-label good">✓ Graceful exit</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body">
+                      <div style="background:#F5F5F5;border-radius:6px;padding:10px 12px;font-family:var(--font-body);font-size:11px;color:#555;margin-bottom:12px;">
+                        To: client@studio.com<br>
+                        Subject: Final invoice
+                      </div>
+                      <div class="ui-btn primary" style="font-size:11px;">Send →</div>
+                      <div style="height:12px;"></div>
+                      <div class="ui-toast" style="font-size:11px;">
+                        <span>Message sent</span>
+                        <span class="ui-toast-undo">Undo (5s)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Gmail's "Undo Send" is a textbook implementation — you can configure up to 30 seconds. Figma's undo history goes back through an entire session. Notion's Cmd+Z works across block moves, deletions, and even page renames. Notice how all three are high-stakes collaboration tools where accidental actions have real consequences — so the designers invested accordingly.</p>
+          </div>
+
+          <!-- H4 -->
+          <h2 id="h4"><span class="heuristic-num">04</span> Consistency and Standards</h2>
+
+          <p>Users should not have to wonder whether different words, situations, or actions mean the same thing. Follow platform conventions.</p>
+
+          <p>This operates at two levels: internal consistency (your product is consistent with itself) and external consistency (your product follows conventions users already know). Violating internal consistency creates friction. Violating external consistency creates confusion.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by design systems across SaaS tools</div>
+            <div class="mockup-body">
+              <div class="mockup-cols">
+                <div>
+                  <div class="mockup-col-label bad">✗ Inconsistent actions</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body" style="display:flex;flex-direction:column;gap:10px;">
+                      <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);font-size:11px;border-bottom:1px solid #F0F0F0;padding-bottom:8px;">
+                        <span>Project Alpha</span>
+                        <div class="ui-btn danger" style="padding:4px 10px;font-size:10px;">Remove</div>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);font-size:11px;border-bottom:1px solid #F0F0F0;padding-bottom:8px;">
+                        <span>Project Beta</span>
+                        <div class="ui-btn ghost" style="padding:4px 10px;font-size:10px;border-color:#DA1E28;color:#DA1E28;">Delete</div>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);font-size:11px;">
+                        <span>Project Gamma</span>
+                        <div class="ui-btn secondary" style="padding:4px 10px;font-size:10px;">Discard</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mockup-col-label good">✓ Consistent pattern</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body" style="display:flex;flex-direction:column;gap:10px;">
+                      <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);font-size:11px;border-bottom:1px solid #F0F0F0;padding-bottom:8px;">
+                        <span>Project Alpha</span>
+                        <div class="ui-btn ghost" style="padding:4px 10px;font-size:10px;border-color:#DA1E28;color:#DA1E28;">Delete</div>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);font-size:11px;border-bottom:1px solid #F0F0F0;padding-bottom:8px;">
+                        <span>Project Beta</span>
+                        <div class="ui-btn ghost" style="padding:4px 10px;font-size:10px;border-color:#DA1E28;color:#DA1E28;">Delete</div>
+                      </div>
+                      <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);font-size:11px;">
+                        <span>Project Gamma</span>
+                        <div class="ui-btn ghost" style="padding:4px 10px;font-size:10px;border-color:#DA1E28;color:#DA1E28;">Delete</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Cmd+Z for undo works in Figma, Notion, Gmail, VS Code, and your notes app. That's external consistency at its most powerful — you don't think about it, you just do it. Notion's design system is worth studying for internal consistency: every block type behaves the same way when you hover, select, or drag it.</p>
+          </div>
+
+          <!-- H5 -->
+          <h2 id="h5"><span class="heuristic-num">05</span> Error Prevention</h2>
+
+          <p>Even better than good error messages is a careful design which prevents a problem from occurring in the first place. Either eliminate error-prone conditions or check for them and present users with a confirmation option before they commit to the action.</p>
+
+          <p>This is arguably the most underrated heuristic. Most design teams spend time on error <em>recovery</em> — writing better error messages — when they should be spending it on error <em>prevention</em>. A confirmation modal before a destructive action is worth ten well-worded error messages.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by Figma's unsaved changes warning</div>
+            <div class="mockup-body">
+              <div class="mockup-cols">
+                <div>
+                  <div class="mockup-col-label bad">✗ No safeguard</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body">
+                      <div style="font-family:var(--font-body);font-size:11px;color:#333;margin-bottom:12px;font-weight:500;">All team files</div>
+                      <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-body);font-size:11px;color:#555;background:#FFF0F0;border:1px solid #FFD7D9;border-radius:6px;padding:8px 10px;">
+                        <span>Q1 Brand Refresh.fig</span>
+                        <div class="ui-btn danger" style="padding:3px 8px;font-size:10px;">Delete</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mockup-col-label good">✓ Confirmation before action</div>
+                  <div class="ui-modal">
+                    <div class="ui-modal-title">Delete "Q1 Brand Refresh"?</div>
+                    <div class="ui-modal-body">This file will be permanently deleted and removed from all team members. This can't be undone.</div>
+                    <div class="ui-modal-actions">
+                      <div class="ui-btn secondary" style="font-size:11px;padding:6px 12px;">Cancel</div>
+                      <div class="ui-btn danger" style="font-size:11px;padding:6px 12px;">Delete file</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Google Forms won't let you submit without filling in required fields — it highlights them before you even try. Figma prompts "You have unsaved changes" before closing a tab. GitHub asks you to type the repository name before deleting it. The friction is intentional and calibrated to the severity of the action.</p>
+          </div>
+
+          <!-- H6 -->
+          <h2 id="h6"><span class="heuristic-num">06</span> Recognition Rather Than Recall</h2>
+
+          <p>Minimize the user's memory load by making objects, actions, and options visible. The user should not have to remember information from one part of an interface to another. Instructions for use of the system should be visible or easily retrievable whenever appropriate.</p>
+
+          <p>Human working memory is limited to about 4 items at a time. Every time your interface forces a user to remember something from a previous screen, you're taxing a scarce resource. Recognition (seeing options) is essentially free. Recall (remembering them) is expensive.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by Figma's Quick Actions (Cmd+/)</div>
+            <div class="mockup-body">
+              <div class="mockup-cols">
+                <div>
+                  <div class="mockup-col-label bad">✗ Forces recall</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body">
+                      <div class="ui-search">
+                        <span class="ui-search-icon">🔍</span>
+                        <span class="ui-search-input" style="color:#AAA;">Type a command…</span>
+                      </div>
+                      <div style="font-family:var(--font-body);font-size:11px;color:#CCC;text-align:center;padding:16px 0;">Start typing to search</div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mockup-col-label good">✓ Surfaces options</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body" style="padding:8px;">
+                      <div class="ui-search" style="margin-bottom:4px;">
+                        <span class="ui-search-icon">🔍</span>
+                        <span class="ui-search-input" style="color:#AAA;">Quick actions…</span>
+                      </div>
+                      <div class="ui-search-results">
+                        <div class="ui-search-label">Recent</div>
+                        <div class="ui-search-result"><span>📄</span><span>Q1 Brand Refresh</span></div>
+                        <div class="ui-search-result"><span>🎨</span><span>Colour styles</span></div>
+                        <div class="ui-search-label">Suggested</div>
+                        <div class="ui-search-result"><span>⚙️</span><span>Plugin: Unsplash</span></div>
+                        <div class="ui-search-result"><span>🔤</span><span>Text styles</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Figma's Cmd+/ shows recent files, components, and actions before you type a single character. Notion's / command menu surfaces every block type with icons and descriptions — you don't need to memorise slash commands. Google search shows autocomplete based on what you've searched before. The common thread: surface the most likely next actions proactively.</p>
+          </div>
+
+          <!-- H7 -->
+          <h2 id="h7"><span class="heuristic-num">07</span> Flexibility and Efficiency of Use</h2>
+
+          <p>Accelerators — unseen by the novice user — may often speed up the interaction for the expert user such that the system can cater to both inexperienced and experienced users. Allow users to tailor frequent actions.</p>
+
+          <p>The key insight: your interface should serve two audiences simultaneously without making either feel like a second-class citizen. Novices need affordances. Experts need speed. Keyboard shortcuts are the classic solution — invisible to beginners, invaluable to power users.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by Figma's right-click context menu</div>
+            <div class="mockup-body" style="max-width:320px;margin:0 auto;">
+              <div class="mockup-col-label good" style="margin-bottom:10px;">✓ Action visible + shortcut shown</div>
+              <div class="ui-menu">
+                <div class="ui-menu-item"><span>Copy</span><div class="ui-menu-shortcut">⌘C</div></div>
+                <div class="ui-menu-item"><span>Paste here</span><div class="ui-menu-shortcut">⌘V</div></div>
+                <div class="ui-menu-divider"></div>
+                <div class="ui-menu-item"><span>Group selection</span><div class="ui-menu-shortcut">⌘G</div></div>
+                <div class="ui-menu-item"><span>Frame selection</span><div class="ui-menu-shortcut">⌘⌥G</div></div>
+                <div class="ui-menu-divider"></div>
+                <div class="ui-menu-item"><span>Bring to front</span><div class="ui-menu-shortcut">⌘]</div></div>
+                <div class="ui-menu-item"><span>Send to back</span><div class="ui-menu-shortcut">⌘[</div></div>
+                <div class="ui-menu-divider"></div>
+                <div class="ui-menu-item active"><span>Delete</span><div class="ui-menu-shortcut">⌫</div></div>
+              </div>
+              <div style="font-family:var(--font-body);font-size:11px;color:var(--text-2);margin-top:10px;">Novice clicks the item. Expert learns the shortcut over time.</div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Figma's right-click menu always shows keyboard shortcuts alongside every action — passive education for power users. Notion's toolbar is visible for beginners but / commands are faster for experts. Linear lets you assign issues, change priorities, and set dates entirely from the keyboard. Notice how none of these force you to choose — they accommodate both modes at once.</p>
+          </div>
+
+          <!-- H8 -->
+          <h2 id="h8"><span class="heuristic-num">08</span> Aesthetic and Minimalist Design</h2>
+
+          <p>Dialogues should not contain irrelevant or rarely needed information. Every extra unit of information in a dialogue competes with the relevant units of information and diminishes their relative visibility.</p>
+
+          <p>This is often misread as "make it look clean." It's actually about information hierarchy and cognitive load. Every element on screen competes for attention. Unnecessary elements don't just fail to help — they actively hurt by diluting signal. The principle isn't aesthetic; it's functional.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by Linear vs older project management tools</div>
+            <div class="mockup-body">
+              <div class="mockup-cols">
+                <div>
+                  <div class="mockup-col-label bad">✗ Everything visible at once</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body" style="font-family:var(--font-body);font-size:11px;">
+                      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;">
+                        <div class="ui-badge info">Backlog</div><div class="ui-badge" style="background:#FFF0D6;color:#7A4900;">High</div><div class="ui-badge" style="background:#DEFBE6;color:#198038;">Sprint 4</div><div class="ui-badge" style="background:#F0F0F0;color:#555;">Design</div>
+                      </div>
+                      <div style="font-weight:500;color:#333;margin-bottom:4px;">Redesign checkout flow</div>
+                      <div style="color:#999;font-size:10px;margin-bottom:8px;">Created 14 days ago · Updated 2h ago · 3 subtasks · 2 attachments · 5 comments · Linked to PROJ-14</div>
+                      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                        <div class="ui-btn secondary" style="padding:3px 8px;font-size:10px;">Edit</div>
+                        <div class="ui-btn secondary" style="padding:3px 8px;font-size:10px;">Assign</div>
+                        <div class="ui-btn secondary" style="padding:3px 8px;font-size:10px;">Label</div>
+                        <div class="ui-btn secondary" style="padding:3px 8px;font-size:10px;">Link</div>
+                        <div class="ui-btn secondary" style="padding:3px 8px;font-size:10px;">Watch</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mockup-col-label good">✓ Focused, progressive disclosure</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body" style="font-family:var(--font-body);font-size:11px;">
+                      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                        <div class="ui-badge info">In Progress</div>
+                      </div>
+                      <div style="font-weight:500;color:#333;margin-bottom:12px;font-size:13px;">Redesign checkout flow</div>
+                      <div style="display:flex;align-items:center;gap:8px;color:#999;font-size:10px;">
+                        <div class="ui-avatar" style="width:18px;height:18px;"></div>
+                        <span>Bonnie Xu</span>
+                        <span>·</span>
+                        <span>Due Apr 15</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Linear is the clearest modern example. Each issue shows: title, status, assignee, priority. Everything else is one click away. Apple's iOS home screen shows app icons and names — nothing else. Stripe's dashboard surfaces the three numbers you check every day front and centre. Minimalism here isn't visual style — it's a deliberate decision about what information earns real estate.</p>
+          </div>
+
+          <!-- H9 -->
+          <h2 id="h9"><span class="heuristic-num">09</span> Help Users Recognize, Diagnose, and Recover from Errors</h2>
+
+          <p>Error messages should be expressed in plain language (no codes), precisely indicate the problem, and constructively suggest a solution.</p>
+
+          <p>Three parts: recognise (plain language), diagnose (what went wrong), recover (what to do next). Most error messages only nail the first one. A message that says "Invalid input" tells you something broke — but not what, or how to fix it. That's a single-part error message pretending to be a full one.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by Stripe's payment error handling</div>
+            <div class="mockup-body">
+              <div class="mockup-cols">
+                <div>
+                  <div class="mockup-col-label bad">✗ Error message that doesn't help</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body">
+                      <div class="ui-label">Email address</div>
+                      <input class="ui-input error" value="bonnie @gmail.com" readonly />
+                      <div class="ui-error-msg vague">❌ Invalid input</div>
+                      <div class="ui-label" style="margin-top:8px;">Password</div>
+                      <input class="ui-input" type="password" value="••••••" readonly />
+                      <div class="ui-btn primary" style="width:100%;justify-content:center;margin-top:12px;font-size:12px;">Sign in</div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mockup-col-label good">✓ Tells you exactly what to fix</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body">
+                      <div class="ui-label">Email address</div>
+                      <input class="ui-input error" value="bonnie @gmail.com" readonly />
+                      <div class="ui-error-msg specific">Remove the space — email addresses can't contain spaces.</div>
+                      <div class="ui-label" style="margin-top:8px;">Password</div>
+                      <input class="ui-input" type="password" value="••••••" readonly />
+                      <div class="ui-btn primary" style="width:100%;justify-content:center;margin-top:12px;font-size:12px;">Sign in</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Stripe's error messages are genuinely excellent: "Your card was declined. Contact your bank, or try a different card." — that's all three parts. Loom tells you exactly why a recording failed and what to check. Git's error messages are notoriously terrible — opaque codes, no suggested fixes — and it's become an industry joke. The gap between the two is entirely this heuristic.</p>
+          </div>
+
+          <!-- H10 -->
+          <h2 id="h10"><span class="heuristic-num">10</span> Help and Documentation</h2>
+
+          <p>Even though it is better if the system can be used without documentation, it may be necessary to provide help and documentation. Any such information should be easy to search, focused on the user's task, list concrete steps to be carried out, and not be too large.</p>
+
+          <p>Counterintuitively, this heuristic is often used to justify lazy design ("we'll just document it"). That's a misread. It's the last resort, not the first solution. The right reading: if your interface requires documentation, you've probably already violated one of the previous nine heuristics. But when documentation is genuinely needed, make it contextual, specific, and close to the point of confusion.</p>
+
+          <!-- Mockup -->
+          <div class="mockup-wrap">
+            <div class="mockup-label"><span class="dot"></span> Inspired by Figma's in-canvas tooltips</div>
+            <div class="mockup-body">
+              <div class="mockup-cols">
+                <div>
+                  <div class="mockup-col-label bad">✗ Generic, hard-to-find help</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body" style="font-family:var(--font-body);font-size:11px;">
+                      <div style="color:#333;font-weight:500;margin-bottom:8px;">Auto layout settings</div>
+                      <div style="display:flex;gap:8px;margin-bottom:4px;">
+                        <div style="background:#F0F0F0;border-radius:4px;padding:6px 8px;font-size:11px;color:#333;">↔ 8</div>
+                        <div style="background:#F0F0F0;border-radius:4px;padding:6px 8px;font-size:11px;color:#333;">↕ 12</div>
+                        <div style="background:#F0F0F0;border-radius:4px;padding:6px 8px;font-size:11px;color:#333;">⊞ 16</div>
+                      </div>
+                      <div style="color:#AAA;font-size:10px;margin-top:8px;">See Help → Documentation → Auto layout → Advanced spacing</div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="mockup-col-label good">✓ Contextual, right where you need it</div>
+                  <div class="ui-window">
+                    <div class="ui-titlebar"><div class="ui-dot red"></div><div class="ui-dot yellow"></div><div class="ui-dot green"></div></div>
+                    <div class="ui-body" style="font-family:var(--font-body);font-size:11px;">
+                      <div style="color:#333;font-weight:500;margin-bottom:8px;">Auto layout settings</div>
+                      <div style="display:flex;gap:8px;margin-bottom:8px;">
+                        <div style="background:#F0F0F0;border-radius:4px;padding:6px 8px;font-size:11px;color:#333;">↔ 8</div>
+                        <div style="background:#F0F0F0;border-radius:4px;padding:6px 8px;font-size:11px;color:#333;">↕ 12</div>
+                        <div style="background:#0F62FE;border-radius:4px;padding:6px 8px;font-size:11px;color:#fff;">⊞ 16</div>
+                      </div>
+                      <div class="ui-tooltip" style="font-size:10px;">
+                        <strong>Gap between items</strong><span class="ui-tooltip-key">Alt + hover to set</span><br>
+                        <span style="color:rgba(255,255,255,0.65);margin-top:3px;display:block;">Space between each child in the auto layout frame.</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="callout-label">Real world</div>
+            <p>Figma shows tooltips with tool names and keyboard shortcuts on every toolbar item when you hover. Notion's empty pages show suggested templates and starter content — guidance without a separate help page. Slack's empty channels show instructions inside the channel itself. All three deliver help exactly at the moment of confusion, not buried in a separate documentation tab.</p>
+          </div>
+
+          <hr class="article-divider">
+
+          <h3>Using these as a diagnostic tool, not a checklist</h3>
+
+          <p>The most useful shift in how to apply these is moving from "am I following rule 6?" to "which heuristic am I violating, and is that violation justified?" Nielsen himself acknowledges that sometimes breaking a heuristic is the right call — what matters is that you're breaking it consciously and have a reason.</p>
+
+          <p>The common patterns worth memorising: if users make the same mistake repeatedly, you have a #5 problem (error prevention). If users can't find features they know exist, you likely have #6 (recognition) or #8 (minimalist design). If your support tickets are full of "how do I..." questions, check #10 first, then #3 and #6.</p>
+
+          <p>These 10 principles took Jakob Nielsen years of research to distil. Thirty years later, the teams building the best products in the world still design with them in mind. That's not tradition — it's just that the problems haven't changed.</p>
+
+          <!-- Author bio -->
+          <div class="author-bio fade-up">
+            <div class="author-bio-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div>
+              <div class="author-bio-name">Bonnie Xu</div>
+              <div class="author-bio-role">Product &amp; UX Designer</div>
+              <p class="author-bio-text">Designing digital products at global scale. Thinking out loud about UX strategy, AI, and the craft of design.</p>
+            </div>
+          </div>
+
+        </article>
+
+        <!-- Mobile-only: More from Bonnie -->
+        <div class="sidebar-card mobile-only fade-up">
+          <div class="sidebar-card-title">More from Bonnie</div>
+          <a href="blog-57k-dominos.html" class="related-card">
+            <span class="related-tag">Case Study</span>
+            <span class="related-title">How I Increased Domino's Weekly Sales by $57K Through Design</span>
+            <span class="related-meta">Mar 10, 2026 · 6 min</span>
+          </a>
+          <a href="blog-ai-vocabulary.html" class="related-card">
+            <span class="related-tag">AI &amp; Design</span>
+            <span class="related-title">Designer's AI Instruction Vocabulary</span>
+            <span class="related-meta">Mar 17, 2026 · 4 min</span>
+          </a>
+        </div>
+
+        <!-- Desktop sidebar -->
+        <aside class="article-sidebar fade-up">
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">In this article</p>
+            <ol class="toc-list">
+              <li><a href="#h1">01 — Visibility of System Status</a></li>
+              <li><a href="#h2">02 — Match the Real World</a></li>
+              <li><a href="#h3">03 — User Control &amp; Freedom</a></li>
+              <li><a href="#h4">04 — Consistency &amp; Standards</a></li>
+              <li><a href="#h5">05 — Error Prevention</a></li>
+              <li><a href="#h6">06 — Recognition Over Recall</a></li>
+              <li><a href="#h7">07 — Flexibility &amp; Efficiency</a></li>
+              <li><a href="#h8">08 — Aesthetic &amp; Minimalist Design</a></li>
+              <li><a href="#h9">09 — Help Recover from Errors</a></li>
+              <li><a href="#h10">10 — Help &amp; Documentation</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">More from Bonnie</p>
+            <a href="blog-57k-dominos.html" class="related-card">
+              <span class="related-tag">Case Study</span>
+              <span class="related-title">How I Increased Domino's Weekly Sales by $57K</span>
+              <span class="related-meta">Mar 10, 2026 · 6 min</span>
+            </a>
+            <a href="blog-ai-vocabulary.html" class="related-card">
+              <span class="related-tag">AI &amp; Design</span>
+              <span class="related-title">Designer's AI Instruction Vocabulary</span>
+              <span class="related-meta">Mar 17, 2026 · 4 min</span>
+            </a>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="shared-nav.js"></script>
+  <script>
+    // Fade-up on scroll
+    const obs = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    }), { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+    // TOC active state
+    const sections = document.querySelectorAll('[id^="h"]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const tocObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.toc-list a[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => tocObs.observe(s));
+  </script>
+</body>
+</html>
