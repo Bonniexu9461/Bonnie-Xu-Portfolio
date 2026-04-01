@@ -230,45 +230,24 @@
     .project-info {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
+      margin-top: 12px;
     }
 
-    .project-company {
+    .project-title-row {
       font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 600;
       color: var(--text-1);
-      line-height: 1.2;
+      line-height: 1.3;
     }
 
-    .project-title {
+    .project-tags-row {
       font-family: var(--font-body);
       font-size: 14px;
       font-weight: 400;
       color: var(--text-2);
       line-height: 1.4;
-    }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .project-tag {
-      font-family: var(--font-body);
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-2);
-      background: transparent;
-      padding: 0;
-    }
-
-    .project-tag:not(:last-child)::after {
-      content: '·';
-      margin-left: 8px;
-      color: var(--border);
     }
 
     /* Fade-up animation — premium easing */
@@ -402,12 +381,11 @@
             <img src={project.image} alt={project.title} className="project-image" />
           </div>
           <div className="project-info">
-            <div className="project-company">{project.company}</div>
-            <div className="project-title">{project.title}</div>
-            <div className="project-tags">
-              {project.tags.map((tag, idx) => (
-                <span key={idx} className="project-tag">{tag}</span>
-              ))}
+            <div className="project-title-row">
+              {project.company} &nbsp;|&nbsp; {project.title}
+            </div>
+            <div className="project-tags-row">
+              {project.tags.join(', ')}
             </div>
           </div>
         </a>
