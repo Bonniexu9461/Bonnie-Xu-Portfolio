@@ -177,6 +177,18 @@
     '<a href="' + contactHref + '" class="sn-mobile-cta">Work with me \u2197\uFE0E</a>';
   document.body.insertBefore(mobileMenu, navbar.nextSibling);
 
+  function bindContactCta(selector) {
+    var el = document.querySelector(selector);
+    if (!el) return;
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.location.assign(contactHref);
+    });
+  }
+
+  bindContactCta('.sn-cta');
+  bindContactCta('.sn-mobile-cta');
+
   /* Toggle handler */
   document.getElementById('sn-hamburger').addEventListener('click', function () {
     this.classList.toggle('open');

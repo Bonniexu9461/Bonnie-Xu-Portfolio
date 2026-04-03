@@ -84,6 +84,20 @@
     return 'home';
   }
 
+  function getContactHref() {
+    return '#contact';
+  }
+
+  function navigateToContact(e, contactHref, scrollTo) {
+    if (contactHref === '#contact') {
+      e.preventDefault();
+      scrollTo('contact');
+      return;
+    }
+    e.preventDefault();
+    window.location.assign(contactHref);
+  }
+
   /* ── SCROLL SPY ─────────────────────────────────────────
    * Returns the ID of the section currently in the viewport.
    * ──────────────────────────────────────────────────────── */
@@ -149,6 +163,7 @@
     const [progress, setProgress] = useState(0);
     const currentPage = getPageKey();
     const isHome = currentPage === 'home';
+    const contactHref = getContactHref(currentPage);
 
     // Scroll-hide + progress bar effect
     useEffect(() => {
@@ -172,6 +187,26 @@
       }
       window.addEventListener('scroll', onScroll, { passive: true });
       return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    useEffect(() => {
+      if (window.location.hash !== '#contact') return;
+      let attempts = 0;
+      const maxAttempts = 20;
+
+      function scrollToHashTarget() {
+        const el = document.getElementById('contact');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+        if (attempts < maxAttempts) {
+          attempts += 1;
+          window.requestAnimationFrame(scrollToHashTarget);
+        }
+      }
+
+      scrollToHashTarget();
     }, []);
 
     const scrollTo = id => {
@@ -267,8 +302,8 @@
               }, item.label)
             ),
             h('a', {
-              href: isHome ? '#contact' : (window.location.pathname.includes('/projects/') ? '../portfolio.html#contact' : 'portfolio.html#contact'),
-              onClick: isHome ? e => { e.preventDefault(); scrollTo('contact'); } : null,
+              href: contactHref,
+              onClick: e => navigateToContact(e, contactHref, scrollTo),
               style: {
                 background: '#2B2B2B', color: '#fff', padding: '10px 20px',
                 borderRadius: 999, fontFamily: "'Poppins', sans-serif",
@@ -321,7 +356,8 @@
             }, item.label)
           ),
         h('a', {
-          href: isHome ? '#contact' : (window.location.pathname.includes('/projects/') ? '../portfolio.html#contact' : 'portfolio.html#contact'),
+          href: contactHref,
+          onClick: e => navigateToContact(e, contactHref, scrollTo),
           style: {
             marginTop: 24, background: '#2B2B2B', color: '#fff', padding: '14px 24px',
             borderRadius: 100, fontFamily: "'Poppins', sans-serif", fontSize: 15,
@@ -427,6 +463,58 @@
   /* ── FOOTER ─────────────────────────────────────────────
    * Dark footer with contact info, social links, copyright.
    * ──────────────────────────────────────────────────────── */
+  window.ContactSection = function ContactSection() {
+    const bodyFont = "'Poppins', sans-serif";
+    const displayFont = "'Bricolage Grotesque', sans-serif";
+    const inputStyle = {
+      background: 'transparent',
+      border: 'none',
+      borderBottom: '1px solid rgba(255,255,255,0.25)',
+      color: '#fff',
+      fontFamily: bodyFont,
+      fontSize: 14,
+      padding: '12px 0',
+      width: '100%',
+    };
+
+    return h('section', { id: 'contact', style: { background: '#2B2B2B' } },
+      h('div', { className: 'page-wrap', style: { paddingTop: 80, paddingBottom: 80, paddingLeft: 80, paddingRight: 80 } },
+        h('div', { className: 'contact-grid', style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 80 } },
+          h('div', { className: 'fade-up' },
+            h('h2', {
+              style: {
+                fontFamily: displayFont, fontWeight: 700, fontSize: 'clamp(42px,6vw,72px)',
+                letterSpacing: '-3px', lineHeight: 1.0, color: '#fff',
+              }
+            }, 'Let\'s be', h('br'), 'creative', h('br'), 'together.')
+          ),
+          h('div', { className: 'fade-up' },
+            h('form', {
+              action: 'https://api.web3forms.com/submit',
+              method: 'POST',
+              style: { display: 'flex', flexDirection: 'column', gap: 20 },
+            },
+              h('input', { type: 'hidden', name: 'access_key', value: 'c706f602-bfd6-4810-aa0f-da098552839d' }),
+              h('label', { htmlFor: 'shared-contact-name', style: { position: 'absolute', left: -9999 } }, 'Your name'),
+              h('input', { id: 'shared-contact-name', type: 'text', name: 'name', placeholder: 'Your name', required: true, autoComplete: 'name', style: inputStyle, className: 'contact-input' }),
+              h('label', { htmlFor: 'shared-contact-email', style: { position: 'absolute', left: -9999 } }, 'Your email'),
+              h('input', { id: 'shared-contact-email', type: 'email', name: 'email', placeholder: 'Your email', required: true, autoComplete: 'email', style: inputStyle, className: 'contact-input' }),
+              h('label', { htmlFor: 'shared-contact-message', style: { position: 'absolute', left: -9999 } }, 'Message'),
+              h('textarea', { id: 'shared-contact-message', name: 'message', placeholder: 'Message', rows: 5, required: true, style: { ...inputStyle, resize: 'none' }, className: 'contact-input' }),
+              h('button', {
+                type: 'submit',
+                style: {
+                  background: '#fff', color: '#2B2B2B', fontFamily: bodyFont, fontSize: 14, fontWeight: 500,
+                  padding: '14px', borderRadius: 999, border: 'none', cursor: 'pointer', width: '100%', marginTop: 8,
+                }
+              }, 'Submit ↗︎︎')
+            )
+          )
+        )
+      )
+    );
+  };
+
   window.Footer = function Footer() {
     const SOCIAL = [
       { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/bonniexu61' },
@@ -437,7 +525,11 @@
     const displayFont = "'Bricolage Grotesque', sans-serif";
     const mutedLink   = { display: 'block', fontFamily: bodyFont, fontSize: 13, fontWeight: 300, color: 'rgba(255,255,255,0.7)', textDecoration: 'none', marginBottom: 6 };
 
-    return h('footer', { style: { background: '#2B2B2B', color: '#fff', padding: '40px 0 24px 0' } },
+    const shouldRenderContact = window.location.pathname.includes('/projects/');
+
+    return h(Fragment, null,
+        shouldRenderContact && h(window.ContactSection),
+        h('footer', { style: { background: '#2B2B2B', color: '#fff', padding: '40px 0 24px 0' } },
         h('div', { className: 'page-wrap', style: { padding: '0 80px' } },
           h('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 40, flexWrap: 'wrap', marginBottom: 40 } },
             h('div', null,
@@ -463,6 +555,7 @@
             h('p', { style: { fontFamily: bodyFont, fontSize: 12, fontWeight: 300, color: 'rgba(255,255,255,0.4)' } }, 'Designed & built with \u2764\uFE0F')
           )
         )
+      )
     );
   };
 

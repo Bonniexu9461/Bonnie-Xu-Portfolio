@@ -144,6 +144,15 @@
       padding: 14px 24px; border-radius: 100px; font-family: "Poppins", sans-serif;\
       font-size: 15px; font-weight: 500; text-decoration: none; text-align: center;\
     }\
+    #shared-contact { background: #2B2B2B; }\
+    .sc-inner { max-width: 1440px; margin: 0 auto; padding: 80px; }\
+    .sc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 80px; }\
+    .sc-input {\
+      background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.25);\
+      color: #fff; font-family: "Poppins", sans-serif; font-size: 14px; padding: 12px 0; width: 100%;\
+    }\
+    .sc-input::placeholder { color: rgba(255,255,255,0.35); }\
+    .sc-input:focus { outline: none; border-bottom-color: rgba(255,255,255,0.7); }\
     #shared-nl-banner { background: #FBFAF9; border-top: 1px solid #EDEDEB; border-bottom: 1px solid #EDEDEB; }\
     .snl-inner { max-width: 1440px; margin: 0 auto; padding: 36px 80px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; }\
     .snl-form  { display: flex; gap: 10px; align-items: center; }\
@@ -176,20 +185,17 @@
   }).join('');
 
   /* Mobile nav links */
-   var isHome = (currentKey === 'home');
-   var rootPrefix = window.location.pathname.includes('/projects/') ? '../' : '';
-   var logoHref = rootPrefix + 'portfolio.html';
-   var contactHref = isHome ? '#contact' : rootPrefix + 'portfolio.html#contact';
-
-   var mobileLinksHtml = NAV_ITEMS.map(function (item) {
-     var finalHref = item.href;
-       if (isHome && item.scrollId) {
-         finalHref = '#' + item.scrollId;
-       } else if (item.key === 'home') {
-         finalHref = window.location.pathname.includes('/projects/') ? '../' + item.href : item.href;
-       }
-       return '<a href="' + finalHref + '" class="sn-mobile-link">' + item.label + '</a>';
-   }).join('');
+  var isHome = (currentKey === 'home');
+  var rootPrefix = window.location.pathname.includes('/projects/') ? '../' : '';
+  var logoHref = rootPrefix + 'portfolio.html';
+  var contactHref = '#contact';
+  var mobileLinksHtml = NAV_ITEMS.map(function (item) {
+    var finalHref = item.href;
+    if (item.key === 'home' && window.location.pathname.includes('/projects/')) {
+      finalHref = '../' + item.href;
+    }
+    return '<a href="' + finalHref + '" class="sn-mobile-link">' + item.label + '</a>';
+  }).join('');
 
   var navbar = document.createElement('div');
   navbar.id = 'shared-navbar';
@@ -213,6 +219,18 @@
   mobileMenu.innerHTML = mobileLinksHtml +
     '<a href="' + contactHref + '" class="sn-mobile-cta">Work with me \u2197\uFE0E</a>';
   document.body.insertBefore(mobileMenu, navbar.nextSibling);
+
+  function bindContactCta(selector) {
+    var el = document.querySelector(selector);
+    if (!el) return;
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.location.assign(contactHref);
+    });
+  }
+
+  bindContactCta('.sn-cta');
+  bindContactCta('.sn-mobile-cta');
 
   /* Toggle handler */
   document.getElementById('sn-hamburger').addEventListener('click', function () {
@@ -282,6 +300,33 @@
     return '<a href="' + s.href + '" class="sf-link" target="_blank" rel="noopener noreferrer">' + s.label + ' \u2197\uFE0E</a>';
   }).join('');
 
+  if (!document.getElementById('contact')) {
+    var contactSection = document.createElement('section');
+    contactSection.id = 'contact';
+    contactSection.style.background = '#2B2B2B';
+    contactSection.innerHTML =
+      '<div class="sc-inner">' +
+        '<div class="sc-grid">' +
+          '<div>' +
+            '<h2 style="font-family:\'Bricolage Grotesque\',sans-serif;font-weight:700;font-size:clamp(42px,6vw,72px);letter-spacing:-3px;line-height:1.0;color:#fff;">Let\'s be<br>creative<br>together.</h2>' +
+          '</div>' +
+          '<div>' +
+            '<form action="https://api.web3forms.com/submit" method="POST" style="display:flex;flex-direction:column;gap:20px;">' +
+              '<input type="hidden" name="access_key" value="c706f602-bfd6-4810-aa0f-da098552839d" />' +
+              '<label for="shared-contact-name" style="position:absolute;left:-9999px;">Your name</label>' +
+              '<input id="shared-contact-name" type="text" name="name" placeholder="Your name" required autocomplete="name" class="sc-input" />' +
+              '<label for="shared-contact-email" style="position:absolute;left:-9999px;">Your email</label>' +
+              '<input id="shared-contact-email" type="email" name="email" placeholder="Your email" required autocomplete="email" class="sc-input" />' +
+              '<label for="shared-contact-message" style="position:absolute;left:-9999px;">Message</label>' +
+              '<textarea id="shared-contact-message" name="message" placeholder="Message" rows="5" required class="sc-input" style="resize:none;"></textarea>' +
+              '<button type="submit" style="background:#fff;color:#2B2B2B;font-family:\'Poppins\',sans-serif;font-size:14px;font-weight:500;padding:14px;border-radius:999px;border:none;cursor:pointer;width:100%;margin-top:8px;">Submit ↗︎︎</button>' +
+            '</form>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(contactSection);
+  }
+
   /* ── BUILD + INJECT NEWSLETTER BANNER ────────────────────── */
   var nlBanner = document.createElement('div');
   nlBanner.id = 'shared-nl-banner';
@@ -307,7 +352,6 @@
   } else {
     document.body.appendChild(nlBanner);
   }
-
   /* Newsletter form handler */
   (function () {
     var form = document.getElementById('snl-form');
