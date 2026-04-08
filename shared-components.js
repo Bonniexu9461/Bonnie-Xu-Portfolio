@@ -81,6 +81,11 @@
     if (p === 'about.html')    return 'about';
     if (p === 'projects.html') return 'portfolio';
     if (p === 'blog.html')     return 'blog';
+    
+    // Check if we are in a sub-page
+    if (p.startsWith('blog-') || window.location.pathname.includes('/blog/')) return 'blog';
+    if (window.location.pathname.includes('/projects/')) return 'portfolio';
+
     return 'home';
   }
 

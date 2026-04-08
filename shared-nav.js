@@ -28,6 +28,15 @@
     'blog.html':      'blog',
   };
   var currentKey = PAGE_KEYS[currentFile] || '';
+  
+  // If we're on a blog article (starts with blog- or is in a blog folder), highlight blog
+  if (currentFile.startsWith('blog-') || window.location.pathname.includes('/blog/')) {
+    currentKey = 'blog';
+  }
+  // If we're in the projects folder, highlight projects
+  if (window.location.pathname.includes('/projects/')) {
+    currentKey = 'portfolio';
+  }
 
   /* ── NAV ITEMS ────────────────────────────────────────────── */
   var NAV_ITEMS = [
@@ -188,11 +197,15 @@
   var isHome = (currentKey === 'home');
   var rootPrefix = window.location.pathname.includes('/projects/') ? '../' : '';
   var logoHref = rootPrefix + 'portfolio.html';
-  var contactHref = '#contact';
+  var hasLocalContact = (currentKey === 'home' || currentKey === 'about' || currentKey === 'portfolio');
+  var contactHref = hasLocalContact ? '#contact' : rootPrefix + 'portfolio.html#contact';
+
   var mobileLinksHtml = NAV_ITEMS.map(function (item) {
     var finalHref = item.href;
-    if (item.key === 'home' && window.location.pathname.includes('/projects/')) {
-      finalHref = '../' + item.href;
+    if (isHome && item.scrollId) {
+      finalHref = '#' + item.scrollId;
+    } else if (item.key === 'home') {
+      finalHref = window.location.pathname.includes('/projects/') ? '../' + item.href : item.href;
     }
     return '<a href="' + finalHref + '" class="sn-mobile-link">' + item.label + '</a>';
   }).join('');

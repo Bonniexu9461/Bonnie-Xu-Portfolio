@@ -152,7 +152,7 @@
 
   var rootPrefix = window.location.pathname.includes('/projects/') ? '../' : '';
   var logoHref = rootPrefix + 'portfolio.html';
-  var contactHref = (typeof isHome !== 'undefined' && isHome) ? '#contact' : rootPrefix + 'portfolio.html#contact';
+  var contactHref = rootPrefix + 'portfolio.html#contact';
 
   var navbar = document.createElement('div');
   navbar.id = 'shared-navbar';
