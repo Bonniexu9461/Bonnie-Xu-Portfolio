@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Roots, New Branches — Bonnie Xu</title>
+  <meta name="description" content="The designers who win long-term have timeless foundations and a curious eye for what's changing. Here's how to build both." />
+  <meta property="og:title" content="Deep Roots, New Branches — Bonnie Xu" />
+  <meta property="og:description" content="The designers who win long-term have timeless foundations and a curious eye for what's changing. Here's how to build both." />
+  <meta property="og:image" content="images/blog-cover-deep-roots.png" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --accent:    #E8452A;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --r-sm: 15px; --r-md: 24px; --r-lg: 32px;
+    }
+
+    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-1); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .t-label { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; }
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 64px); letter-spacing: -2.5px; line-height: 1.05; color: var(--text-1); }
+    .t-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(26px, 3vw, 36px); letter-spacing: -1.5px; line-height: 1.1; color: var(--text-1); }
+    .t-body-lg { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; }
+
+    .page-wrap { padding-top: 72px; }
+    .cs-inner { max-width: 1440px; margin: 0 auto; padding: 0 80px; }
+
+    .article-header { padding: 80px 0 48px; }
+    .article-header .t-label { margin-bottom: 20px; display: block; }
+    .article-subtitle { font-family: var(--font-display); font-weight: 300; font-size: clamp(18px, 2vw, 22px); color: var(--text-2); margin-top: 20px; margin-bottom: 36px; max-width: 760px; line-height: 1.5; }
+    .article-meta-row { display: flex; align-items: center; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .meta-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-1); }
+    .meta-sep { width: 1px; height: 16px; background: var(--border); }
+    .meta-info { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); }
+    .meta-tag { font-family: var(--font-body); font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid var(--accent); border-radius: 999px; padding: 3px 10px; }
+
+    .article-layout { display: grid; grid-template-columns: 1fr 280px; gap: 80px; align-items: start; padding-bottom: 120px; }
+    .article-body { grid-column: 1; grid-row: 1; min-width: 0; }
+    .article-sidebar { grid-column: 2; grid-row: 1; }
+    .mobile-only { display: none; }
+    .inline-toc { display: none; background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 24px 28px; }
+    .related-card { display: flex; flex-direction: column; gap: 8px; padding: 14px 0; border-bottom: 1px solid var(--border-lt); text-decoration: none; transition: opacity 0.2s; }
+    .related-card:last-child { border-bottom: none; }
+    .related-card:hover { opacity: 0.7; }
+    .related-tag { font-family: var(--font-body); font-size: 10px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; }
+    .related-title { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px; line-height: 1.3; }
+    .related-meta { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+
+    .article-body p { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; margin-bottom: 28px; }
+    .article-body h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 3vw, 32px); letter-spacing: -1.2px; line-height: 1.1; color: var(--text-1); margin: 56px 0 20px; }
+    .article-body h3 { font-family: var(--font-display); font-weight: 700; font-size: clamp(18px, 2vw, 22px); letter-spacing: -0.8px; line-height: 1.15; color: var(--text-1); margin: 40px 0 16px; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+
+    .hero-image { width: 100%; border-radius: var(--r-lg); overflow: hidden; margin: 0 0 48px; background: var(--border-lt); }
+    .hero-image img { width: 100%; display: block; max-height: 600px; object-fit: cover; }
+
+    /* Layer callout boxes */
+    .layer-box { border-radius: var(--r-md); padding: 36px 40px; margin: 40px 0; }
+    .layer-box.roots { background: #1a1029; }
+    .layer-box.branches { background: #f0ede8; border: 1px solid var(--border-lt); }
+    .layer-box-label { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+    .layer-box.roots .layer-box-label { color: rgba(255,255,255,0.45); }
+    .layer-box.branches .layer-box-label { color: var(--text-2); }
+    .layer-box-title { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px; }
+    .layer-box.roots .layer-box-title { color: #fff; }
+    .layer-box.branches .layer-box-title { color: var(--text-1); }
+    .layer-box p { font-family: var(--font-body); font-size: 15px; font-weight: 300; line-height: 1.8; margin-bottom: 0; }
+    .layer-box.roots p { color: rgba(255,255,255,0.65); }
+    .layer-box.branches p { color: #666; }
+
+    /* Pull quote */
+    .pull-quote { border-left: 3px solid var(--accent); padding: 4px 0 4px 28px; margin: 48px 0; }
+    .pull-quote p { font-family: var(--font-display); font-size: clamp(20px, 2.5vw, 26px); font-weight: 700; color: var(--text-1); line-height: 1.35; letter-spacing: -0.8px; margin-bottom: 0; }
+
+    .article-sidebar { position: sticky; top: 96px; }
+    .sidebar-card { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 28px 24px; margin-bottom: 24px; }
+    .sidebar-card-title { font-family: var(--font-body); font-size: 11px; font-weight: 600; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .toc-list li a { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); line-height: 1.4; transition: color 0.2s; display: block; }
+    .toc-list li a:hover, .toc-list li a.active { color: var(--text-1); }
+
+    .author-bio { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-lg); padding: 40px; display: flex; gap: 28px; align-items: flex-start; margin: 64px 0; }
+    .author-bio-avatar { width: 64px; height: 64px; border-radius: 50%; overflow: hidden; flex-shrink: 0; background: var(--border-lt); }
+    .author-bio-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-bio-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 4px; }
+    .author-bio-role { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .author-bio-text { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    .article-nav { padding: 48px 0 80px; border-top: 1px solid var(--border); display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .btn-primary { background: var(--text-1); color: #fff; font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 14px 28px; border-radius: 999px; transition: opacity 0.2s; display: inline-flex; align-items: center; }
+    .btn-primary:hover { opacity: 0.75; }
+    .btn-outline { background: transparent; color: var(--text-2); font-family: var(--font-body); font-size: 14px; font-weight: 500; padding: 14px 28px; border-radius: 999px; border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; display: inline-flex; align-items: center; }
+    .btn-outline:hover { border-color: var(--text-2); color: var(--text-1); }
+
+    .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1024px) {
+      .article-layout { display: flex; flex-direction: column; align-items: stretch; gap: 40px; padding-bottom: 80px; }
+      .article-sidebar { display: none; }
+      .mobile-only { display: block; }
+      .inline-toc { display: block; }
+    }
+    @media (max-width: 768px) {
+      .cs-inner { padding: 0 20px; }
+      .article-header { padding: 48px 0 32px; }
+      .hero-image { border-radius: var(--r-md); }
+      .author-bio { flex-direction: column; gap: 20px; padding: 28px; }
+      .layer-box { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    <div class="cs-inner">
+
+      <header class="article-header fade-up">
+        <span class="t-label">Design Thinking</span>
+        <h1 class="t-display" style="margin-top: 0; margin-bottom: 0; max-width: 900px;">
+          Deep Roots, New Branches
+        </h1>
+        <p class="article-subtitle">
+          The designers who win long-term have timeless foundations and a curious eye for what's changing. Here's how to build both.
+        </p>
+        <div class="article-meta-row">
+          <div class="meta-author">
+            <div class="author-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" width="36" height="36" loading="lazy" onerror="this.style.display='none'" />
+            </div>
+            <div><div class="author-name">Bonnie Xu</div></div>
+          </div>
+          <div class="meta-sep"></div>
+          <span class="meta-info">Apr 9, 2026</span>
+          <div class="meta-sep"></div>
+          <span class="meta-info">7 min read</span>
+          <div class="meta-sep"></div>
+          <span class="meta-tag">Design Thinking</span>
+        </div>
+      </header>
+
+      <div class="hero-image fade-up">
+        <img src="images/blog-cover-deep-roots.png" alt="Deep Roots, New Branches" width="1200" height="600" onerror="this.style.display='none'; this.parentElement.style.background='#1a1029'; this.parentElement.style.minHeight='400px';" />
+      </div>
+
+      <div class="article-layout">
+
+        <!-- Mobile TOC -->
+        <div class="inline-toc mobile-only fade-up">
+          <p class="sidebar-card-title">In this article</p>
+          <ol class="toc-list">
+            <li><a href="#section-1">The Two-Layer System</a></li>
+            <li><a href="#section-2">Layer 1: First Principles</a></li>
+            <li><a href="#section-3">Layer 2: Current Signal</a></li>
+            <li><a href="#section-4">The Traps</a></li>
+            <li><a href="#section-5">How to Build Both</a></li>
+          </ol>
+        </div>
+
+        <!-- Mobile More from Bonnie -->
+        <div class="sidebar-card mobile-only fade-up">
+          <p class="sidebar-card-title">More from Bonnie</p>
+          <a href="blog-ai-workflow.html" class="related-card">
+            <span class="related-tag">AI &amp; Design</span>
+            <span class="related-title">My AI-Powered Design Workflow</span>
+            <span class="related-meta">Mar 10, 2026 · 5 min</span>
+          </a>
+          <a href="blog-57k-dominos.html" class="related-card">
+            <span class="related-tag">Case Study</span>
+            <span class="related-title">How I Increased Domino's Weekly Sales by $57K</span>
+            <span class="related-meta">Mar 10, 2026 · 6 min</span>
+          </a>
+        </div>
+
+        <article class="article-body fade-up">
+
+          <p>
+            There's a question I keep coming back to in conversations with other designers: how much do you invest in learning something new versus deepening what you already know?
+          </p>
+
+          <p>
+            The framing is usually wrong. It's not either/or. It's a two-layer system — and the healthiest designers I know have both.
+          </p>
+
+          <h2 id="section-1">The Two-Layer System</h2>
+
+          <p>
+            Think of your design practice like a tree. The roots go deep — slow to grow, invisible to most, but the reason you don't fall over when the wind changes. The branches reach outward — always moving, responsive to light, visibly alive.
+          </p>
+
+          <p>
+            One without the other doesn't work. Roots without branches is a stump. Branches without roots is just... kindling.
+          </p>
+
+          <div class="pull-quote">
+            <p>"The designers who win long-term are the ones with deep roots and curious branches."</p>
+          </div>
+
+          <h2 id="section-2">Layer 1: First Principles</h2>
+
+          <div class="layer-box roots">
+            <div class="layer-box-label">Layer 1 — The Bottom Layer</div>
+            <div class="layer-box-title">Things that won't change in 20 years</div>
+            <p>Human psychology. Decision-making. Trust. Hierarchy. Contrast. Empathy as a research skill. The ability to frame a problem before solving it.</p>
+          </div>
+
+          <p>
+            First principles are grounded in human nature, which is ancient. Why people make decisions doesn't change. What makes something feel trustworthy, clear, or delightful has been the same for centuries. The way the eye moves across a composition. The brain's need to group and categorize. The discomfort of ambiguity. The satisfaction of completion.
+          </p>
+
+          <p>
+            The further you go in your career, the more you realize how much of "good design" is just applied psychology dressed up in different tools. This is why a designer with ten years of experience can look at a new interface they've never seen before and immediately know what's wrong with it. They're not pattern-matching against a trend. They're reading human behavior.
+          </p>
+
+          <p>
+            Hierarchy. Contrast. Whitespace. Framing the right problem before opening Figma. Empathy as something you practice in every user conversation, not just when it's in the brief. The ability to walk into a room, understand what everyone actually needs, and translate it into something concrete and shippable.
+          </p>
+
+          <p>
+            None of this has an expiry date.
+          </p>
+
+          <h2 id="section-3">Layer 2: Current Signal</h2>
+
+          <div class="layer-box branches">
+            <div class="layer-box-label">Layer 2 — The Top Layer</div>
+            <div class="layer-box-title">Things that are changing fast — right now</div>
+            <p>Tools, workflows, formats, platforms, interaction patterns. The things that make you competent and relevant in this particular moment.</p>
+          </div>
+
+          <p>
+            Five years ago the current signal was Figma replacing Sketch. Two years ago it was AI going from "interesting research" to "in every job description." Today it's prompting, building, agentic workflows, and understanding exactly where the human still needs to drive.
+          </p>
+
+          <p>
+            These change constantly. Your job isn't to master every new thing — it's to quickly evaluate whether something is worth your time, or just noise.
+          </p>
+
+          <p>
+            The signal worth chasing is the kind that changes <em>how you work</em>, not just what you click. AI isn't just a new tool — it changed the process itself. That's signal. A new plugin for color palettes? That's noise. The difference is whether it reshapes your thinking or just adds a shortcut.
+          </p>
+
+          <hr class="article-divider" />
+
+          <h2 id="section-4">The Traps</h2>
+
+          <p>
+            There's a trap on each side, and I've seen talented designers fall into both.
+          </p>
+
+          <h3>Only following trends</h3>
+          <p>
+            You're always chasing. Exhausted, reactive, and shallow. You mistake fluency with tools for actual design thinking. And when the tools change — and they will — you panic. You've built your identity around being "good at X" where X is a product or a workflow, not a skill. It feels like being current, but it's actually fragile.
+          </p>
+
+          <h3>Only studying first principles</h3>
+          <p>
+            You become irrelevant. Great taste, nothing to apply it to. You sound wise in interviews and then struggle to ship anything at the pace the job requires. You judge the designers chasing trends without realizing you've stopped doing the work that earns you the right to have opinions. Theory without velocity is just philosophy.
+          </p>
+
+          <div class="pull-quote">
+            <p>"If you only chase trends, you're always chasing. If you only study principles, you become irrelevant."</p>
+          </div>
+
+          <h2 id="section-5">How to Build Both</h2>
+
+          <p>
+            For the roots: read outside design. Psychology, behavioral economics, systems thinking, storytelling. The best designers I know have read <em>Thinking, Fast and Slow</em> more recently than the latest design systems article. Study interfaces that have stood the test of time — not for inspiration, but to understand why they worked. Ask the mechanism, not just admire the outcome.
+          </p>
+
+          <p>
+            For the branches: stay in the practice. Build things, not just moodboards. Use AI tools until you have an actual opinion on what they're good at and where they fall down. Follow the people who are one step ahead in your specific area — not to copy their aesthetic, but to understand what problems they're working on.
+          </p>
+
+          <p>
+            And when you're unsure whether something new is worth your time? Ask yourself: does this change how I <em>think</em>, or just how I click?
+          </p>
+
+          <p>
+            The first kind is always worth learning. It deepens the roots.
+          </p>
+
+          <p>
+            The second kind — stay curious, but don't make it your identity.
+          </p>
+
+          <div class="author-bio fade-up">
+            <div class="author-bio-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" width="64" height="64" loading="lazy" onerror="this.style.display='none'" />
+            </div>
+            <div class="author-bio-content">
+              <div class="author-bio-name">Bonnie Xu</div>
+              <div class="author-bio-role">Product &amp; UX Designer</div>
+              <p class="author-bio-text">
+                Bonnie is a product and UX designer with experience at Domino's, Entain, and Ray White. She writes about design craft, AI in design, and the thinking behind the work.
+              </p>
+            </div>
+          </div>
+
+        </article>
+
+        <!-- Mobile More from Bonnie (bottom) -->
+        <div class="sidebar-card mobile-only fade-up">
+          <p class="sidebar-card-title">More from Bonnie</p>
+          <a href="blog-ai-vocabulary.html" class="related-card">
+            <span class="related-tag">AI &amp; Design</span>
+            <span class="related-title">Designer's AI Instruction Vocabulary</span>
+            <span class="related-meta">Mar 17, 2026 · 4 min</span>
+          </a>
+          <a href="blog-57k-dominos.html" class="related-card">
+            <span class="related-tag">Case Study</span>
+            <span class="related-title">How I Increased Domino's Weekly Sales by $57K</span>
+            <span class="related-meta">Mar 10, 2026 · 6 min</span>
+          </a>
+        </div>
+
+        <!-- Desktop sidebar -->
+        <aside class="article-sidebar">
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">In this article</p>
+            <ol class="toc-list">
+              <li><a href="#section-1">The Two-Layer System</a></li>
+              <li><a href="#section-2">Layer 1: First Principles</a></li>
+              <li><a href="#section-3">Layer 2: Current Signal</a></li>
+              <li><a href="#section-4">The Traps</a></li>
+              <li><a href="#section-5">How to Build Both</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">More from Bonnie</p>
+            <a href="blog-ai-workflow.html" class="related-card">
+              <span class="related-tag">AI &amp; Design</span>
+              <span class="related-title">My AI-Powered Design Workflow</span>
+              <span class="related-meta">Mar 10, 2026 · 5 min</span>
+            </a>
+            <a href="blog-57k-dominos.html" class="related-card">
+              <span class="related-tag">Case Study</span>
+              <span class="related-title">How I Increased Domino's Weekly Sales by $57K</span>
+              <span class="related-meta">Mar 10, 2026 · 6 min</span>
+            </a>
+          </div>
+        </aside>
+
+      </div>
+
+      <div class="article-nav fade-up">
+        <a href="blog.html" class="btn-outline">←︎ Back to Blog</a>
+        <a href="blog-ai-workflow.html" class="btn-primary" style="margin-left: auto;">My AI Workflow →︎</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="shared-nav.js"></script>
+
+  <script>
+    const obs = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }),
+      { threshold: 0.06, rootMargin: '0px 0px -60px 0px' }
+    );
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+    const sections = document.querySelectorAll('h2[id], h3[id]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const tocObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => tocObs.observe(s));
+  </script>
+
+</body>
+</html>

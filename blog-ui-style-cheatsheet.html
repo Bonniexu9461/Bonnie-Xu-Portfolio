@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The UI Style Cheat Sheet — Bonnie Xu</title>
+  <meta name="description" content="8 iconic UI aesthetics described in prompt-ready language, each with a canonical reference site. Use this when you need to align on a visual direction fast." />
+  <meta property="og:title" content="The UI Style Cheat Sheet — Bonnie Xu" />
+  <meta property="og:description" content="8 iconic UI aesthetics described in prompt-ready language, each with a canonical reference site." />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg-page:   #F4F2F1;
+      --bg-card:   #FBFAF9;
+      --text-1:    #2B2B2B;
+      --text-2:    #808080;
+      --accent:    #E8452A;
+      --border:    #DDDBD9;
+      --border-lt: #EDEDEB;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Poppins', sans-serif;
+      --r-sm: 15px; --r-md: 24px; --r-lg: 32px;
+    }
+
+    body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-1); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .t-label  { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 2px; text-transform: uppercase; }
+    .t-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(36px, 5vw, 64px); letter-spacing: -2.5px; line-height: 1.05; color: var(--text-1); }
+
+    .page-wrap  { padding-top: 72px; }
+    .cs-inner   { max-width: 1440px; margin: 0 auto; padding: 0 80px; }
+
+    /* Article header */
+    .article-header { padding: 80px 0 48px; }
+    .article-header .t-label { margin-bottom: 20px; display: block; }
+    .article-subtitle { font-family: var(--font-display); font-weight: 300; font-size: clamp(17px, 2vw, 21px); color: var(--text-2); margin-top: 20px; margin-bottom: 36px; max-width: 760px; line-height: 1.5; }
+    .article-meta-row { display: flex; align-items: center; gap: 24px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .meta-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-name { font-family: var(--font-body); font-size: 13px; font-weight: 500; color: var(--text-1); }
+    .meta-sep  { width: 1px; height: 16px; background: var(--border); }
+    .meta-info { font-family: var(--font-body); font-size: 13px; font-weight: 300; color: var(--text-2); }
+    .meta-tag  { font-family: var(--font-body); font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid var(--accent); border-radius: 999px; padding: 3px 10px; }
+
+    /* Hero */
+    .hero-image { width: 100%; border-radius: var(--r-lg); overflow: hidden; margin: 40px 0 64px; background: var(--text-1); min-height: 360px; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); }
+    .hero-tile { display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; min-height: 180px; border: 1px solid rgba(255,255,255,0.06); }
+    .hero-tile-name { font-family: var(--font-display); font-weight: 700; font-size: 13px; color: rgba(255,255,255,0.9); letter-spacing: -0.3px; line-height: 1.3; }
+    .hero-tile-brand { font-family: var(--font-body); font-size: 10px; font-weight: 300; color: rgba(255,255,255,0.4); margin-top: 4px; letter-spacing: 0.5px; }
+
+    /* Article layout */
+    .article-layout { display: grid; grid-template-columns: 1fr 280px; gap: 80px; align-items: start; padding-bottom: 120px; }
+    .article-body { grid-column: 1; min-width: 0; }
+    .article-sidebar { grid-column: 2; position: sticky; top: 96px; }
+    .mobile-only { display: none; }
+    .inline-toc { display: none; background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 24px 28px; }
+
+    /* Intro prose */
+    .article-body p { font-family: var(--font-body); font-size: 16px; font-weight: 300; color: #555; line-height: 1.85; margin-bottom: 28px; }
+    .article-body h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 2.5vw, 30px); letter-spacing: -1px; color: var(--text-1); margin: 64px 0 0; }
+    .article-divider { border: none; border-top: 1px solid var(--border); margin: 56px 0; }
+
+    /* Style card */
+    .style-card { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-lg); overflow: hidden; margin: 40px 0; }
+    .style-card-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 28px 20px; border-bottom: 1px solid var(--border-lt); gap: 16px; flex-wrap: wrap; }
+    .style-card-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(18px, 2vw, 22px); letter-spacing: -0.5px; color: var(--text-1); }
+    .style-card-num { font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-2); }
+    .style-ref-link { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-page); border: 1px solid var(--border); border-radius: 999px; padding: 5px 14px; font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-1); transition: border-color 0.2s; white-space: nowrap; }
+    .style-ref-link:hover { border-color: var(--text-2); }
+    .style-ref-link .ref-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .style-card-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .style-card-desc { padding: 28px; border-right: 1px solid var(--border-lt); }
+    .style-card-screenshot { padding: 28px; }
+
+    .prompt-box { background: var(--bg-page); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 16px 18px; margin: 16px 0 0; font-family: var(--font-body); font-size: 13px; font-weight: 300; color: #555; line-height: 1.75; position: relative; }
+    .prompt-box::before { content: 'PROMPT LANGUAGE'; font-size: 9px; font-weight: 600; letter-spacing: 1.5px; color: var(--text-2); display: block; margin-bottom: 8px; }
+    .style-card-desc p { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; margin: 0; }
+
+    /* Screenshot placeholder */
+    .screenshot-ph { width: 100%; aspect-ratio: 16/10; border-radius: var(--r-md); overflow: hidden; display: flex; align-items: flex-end; justify-content: flex-start; padding: 16px; position: relative; }
+    .screenshot-ph-label { font-family: var(--font-body); font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase; background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 999px; backdrop-filter: blur(4px); }
+    .screenshot-ph img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+
+    /* Sidebar */
+    .sidebar-card { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-md); padding: 28px 24px; margin-bottom: 24px; }
+    .sidebar-card-title { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-2); margin-bottom: 16px; }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .toc-list li a { font-family: var(--font-body); font-size: 12px; font-weight: 300; color: var(--text-2); padding: 5px 0 5px 10px; display: block; border-left: 2px solid transparent; transition: color 0.2s, border-color 0.2s; line-height: 1.5; }
+    .toc-list li a:hover, .toc-list li a.active { color: var(--text-1); border-left-color: var(--accent); }
+
+    .related-card { display: flex; flex-direction: column; gap: 6px; padding: 12px 0; border-bottom: 1px solid var(--border-lt); text-decoration: none; transition: opacity 0.2s; }
+    .related-card:last-child { border-bottom: none; padding-bottom: 0; }
+    .related-card:hover { opacity: 0.7; }
+    .related-tag   { font-family: var(--font-body); font-size: 10px; font-weight: 600; color: var(--accent); letter-spacing: 1.2px; text-transform: uppercase; }
+    .related-title { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--text-1); letter-spacing: -0.3px; line-height: 1.3; }
+    .related-meta  { font-family: var(--font-body); font-size: 11px; font-weight: 300; color: var(--text-2); }
+
+    /* Author bio */
+    .author-bio { background: var(--bg-card); border: 1px solid var(--border-lt); border-radius: var(--r-lg); padding: 40px; display: flex; gap: 28px; align-items: flex-start; margin: 64px 0; }
+    .author-bio-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--border-lt); overflow: hidden; flex-shrink: 0; }
+    .author-bio-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .author-bio-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 4px; }
+    .author-bio-role { font-family: var(--font-body); font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 12px; }
+    .author-bio-text { font-family: var(--font-body); font-size: 14px; font-weight: 300; color: #555; line-height: 1.8; }
+
+    /* Scroll reveal */
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-page); }
+    ::-webkit-scrollbar-thumb { background: #AAAAAA; border-radius: 3px; }
+
+    @media (max-width: 1024px) {
+      .article-layout { display: flex; flex-direction: column; gap: 40px; padding-bottom: 80px; }
+      .article-sidebar { display: none; }
+      .mobile-only { display: block; }
+      .inline-toc { display: block; }
+      .style-card-body { grid-template-columns: 1fr; }
+      .style-card-desc { border-right: none; border-bottom: 1px solid var(--border-lt); }
+    }
+    @media (max-width: 768px) {
+      .cs-inner { padding: 0 20px; }
+      .article-header { padding: 48px 0 32px; }
+      .hero-image { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); min-height: 400px; border-radius: var(--r-md); }
+      .author-bio { flex-direction: column; gap: 20px; padding: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    <div class="cs-inner">
+
+      <header class="article-header fade-up">
+        <span class="t-label">Design Reference</span>
+        <h1 class="t-display" style="margin-top: 16px; margin-bottom: 0; max-width: 880px;">
+          The UI Style Cheat Sheet
+        </h1>
+        <p class="article-subtitle">
+          8 iconic UI aesthetics — described in prompt-ready language with a canonical reference site for each. Useful when you need to align on a visual direction fast, in a design crit, in an AI prompt, or in a brief.
+        </p>
+        <div class="article-meta-row">
+          <div class="meta-author">
+            <div class="author-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div><div class="author-name">Bonnie Xu</div></div>
+          </div>
+          <div class="meta-sep"></div>
+          <span class="meta-info">Apr 2026</span>
+          <div class="meta-sep"></div>
+          <span class="meta-info">5 min read</span>
+          <div class="meta-sep"></div>
+          <span class="meta-tag">Design Reference</span>
+        </div>
+      </header>
+
+      <!-- Hero: 8-tile grid -->
+      <div class="hero-image fade-up">
+        <div class="hero-tile" style="background:#000;">
+          <div class="hero-tile-name">Stark Black &amp; White Precision</div>
+          <div class="hero-tile-brand">Vercel</div>
+        </div>
+        <div class="hero-tile" style="background:linear-gradient(135deg,#1a0533,#6b3fa0);">
+          <div class="hero-tile-name">Purple Gradient Prestige</div>
+          <div class="hero-tile-brand">Stripe</div>
+        </div>
+        <div class="hero-tile" style="background:#0d1117;">
+          <div class="hero-tile-name">Dark + One Vivid Accent</div>
+          <div class="hero-tile-brand">Supabase</div>
+        </div>
+        <div class="hero-tile" style="background:#F7F6F3;">
+          <div class="hero-tile-name" style="color:#2B2B2B;">Warm Editorial Minimalism</div>
+          <div class="hero-tile-brand" style="color:#888;">Notion</div>
+        </div>
+        <div class="hero-tile" style="background:#1d1d1f;">
+          <div class="hero-tile-name">Cinematic Full-Bleed</div>
+          <div class="hero-tile-brand">Apple</div>
+        </div>
+        <div class="hero-tile" style="background:linear-gradient(135deg,#7b61ff,#ff7262);">
+          <div class="hero-tile-name">Playful Multi-Color Brand</div>
+          <div class="hero-tile-brand">Figma</div>
+        </div>
+        <div class="hero-tile" style="background:#12131a;">
+          <div class="hero-tile-name">Terminal-Native Dark</div>
+          <div class="hero-tile-brand">Warp</div>
+        </div>
+        <div class="hero-tile" style="background:#fff;">
+          <div class="hero-tile-name" style="color:#2B2B2B;">Fintech Clarity</div>
+          <div class="hero-tile-brand" style="color:#888;">Wise</div>
+        </div>
+      </div>
+
+      <div class="article-layout">
+
+        <!-- Mobile inline TOC -->
+        <div class="inline-toc mobile-only fade-up">
+          <p class="sidebar-card-title">In this article</p>
+          <ol class="toc-list">
+            <li><a href="#s1">Stark Black &amp; White Precision</a></li>
+            <li><a href="#s2">Purple Gradient Prestige</a></li>
+            <li><a href="#s3">Dark + One Vivid Accent</a></li>
+            <li><a href="#s4">Warm Editorial Minimalism</a></li>
+            <li><a href="#s5">Cinematic Full-Bleed</a></li>
+            <li><a href="#s6">Playful Multi-Color Brand</a></li>
+            <li><a href="#s7">Terminal-Native Dark</a></li>
+            <li><a href="#s8">Fintech Clarity</a></li>
+          </ol>
+        </div>
+
+        <article class="article-body">
+
+          <div class="fade-up">
+            <p>Talking about visual direction is notoriously slippery. "Clean" means different things to a fintech designer and a Figma designer. "Dark" could mean Vercel or Spotify or Warp — three completely different things.</p>
+            <p>This is a reference sheet. Each entry gives you the aesthetic's defining characteristics in prompt-ready language — the exact kind of description you'd paste into v0, give a developer, or use to align in a crit. And a canonical URL to point at when words fail.</p>
+          </div>
+
+          <!-- ── STYLE 1 ── -->
+          <h2 id="s1" class="fade-up" style="margin-bottom: 8px;">01 — Stark Black &amp; White Precision</h2>
+
+          <div class="style-card fade-up">
+            <div class="style-card-header">
+              <span class="style-card-title">Stark Black &amp; White Precision</span>
+              <a href="https://vercel.com" target="_blank" class="style-ref-link">
+                <span class="ref-dot" style="background:#fff;border:1px solid #ccc;"></span>
+                vercel.com ↗
+              </a>
+            </div>
+            <div class="style-card-body">
+              <div class="style-card-desc">
+                <p>Absolute restraint. Every element earns its place or gets removed. Negative space is the primary design tool, not a byproduct of good layout.</p>
+                <div class="prompt-box">
+                  Pure black background (#000 or #0a0a0a), white body text, zero gradients, zero illustration. Tight letter-spacing on headings. Inter or Geist typeface. Grid-perfect layout with generous white space. No decorative elements. If it doesn't carry information, it doesn't exist.
+                </div>
+              </div>
+              <div class="style-card-screenshot">
+                <!-- Replace src with your screenshot -->
+                <div class="screenshot-ph" style="background: #111; border: 1px solid #222;">
+                  <span class="screenshot-ph-label">Screenshot — vercel.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STYLE 2 ── -->
+          <h2 id="s2" class="fade-up" style="margin-bottom: 8px;">02 — Purple Gradient Prestige</h2>
+
+          <div class="style-card fade-up">
+            <div class="style-card-header">
+              <span class="style-card-title">Purple Gradient Prestige</span>
+              <a href="https://stripe.com" target="_blank" class="style-ref-link">
+                <span class="ref-dot" style="background:linear-gradient(135deg,#6b3fa0,#a78bfa);"></span>
+                stripe.com ↗
+              </a>
+            </div>
+            <div class="style-card-body">
+              <div class="style-card-desc">
+                <p>Feels expensive without being loud. The gradient does the emotional work. Typography pulls back — weight 300, generous line-height, nothing competing with the depth of the background.</p>
+                <div class="prompt-box">
+                  Deep indigo-to-periwinkle gradient background (e.g. #1a0533 → #6b3fa0 → #a78bfa). Font weight 300–400, large display text at tight tracking. Floating card elements with soft glow or shadow. Smooth layered depth. Clean sans-serif (Söhne, Haas Grot, or similar). Premium feel without ornamentation.
+                </div>
+              </div>
+              <div class="style-card-screenshot">
+                <div class="screenshot-ph" style="background: linear-gradient(135deg,#1a0533,#6b3fa0); border: 1px solid #3d1a6e;">
+                  <span class="screenshot-ph-label">Screenshot — stripe.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STYLE 3 ── -->
+          <h2 id="s3" class="fade-up" style="margin-bottom: 8px;">03 — Dark + One Vivid Accent</h2>
+
+          <div class="style-card fade-up">
+            <div class="style-card-header">
+              <span class="style-card-title">Dark + One Vivid Accent</span>
+              <a href="https://supabase.com" target="_blank" class="style-ref-link">
+                <span class="ref-dot" style="background:#3ecf8e;"></span>
+                supabase.com ↗
+              </a>
+            </div>
+            <div class="style-card-body">
+              <div class="style-card-desc">
+                <p>Near-black surfaces, everything neutral — until the accent appears. The single saturated color hits harder precisely because nothing else is competing with it. Restraint as amplification.</p>
+                <div class="prompt-box">
+                  Very dark background (#0a0a0a to #1a1a1a). All UI chrome in neutral greys. One accent color — saturated, pure — used only for CTAs, key metrics, active states, and hover highlights. Zero gradient on the accent. Body text at 80% white. Inter or similar geometric sans.
+                </div>
+              </div>
+              <div class="style-card-screenshot">
+                <div class="screenshot-ph" style="background: #0d1117; border: 1px solid #1c2333;">
+                  <span class="screenshot-ph-label">Screenshot — supabase.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STYLE 4 ── -->
+          <h2 id="s4" class="fade-up" style="margin-bottom: 8px;">04 — Warm Editorial Minimalism</h2>
+
+          <div class="style-card fade-up">
+            <div class="style-card-header">
+              <span class="style-card-title">Warm Editorial Minimalism</span>
+              <a href="https://notion.so" target="_blank" class="style-ref-link">
+                <span class="ref-dot" style="background:#F7F6F3;border:1px solid #ddd;"></span>
+                notion.so ↗
+              </a>
+            </div>
+            <div class="style-card-body">
+              <div class="style-card-desc">
+                <p>Feels like a well-designed book, not a dashboard. Off-white surfaces, warm neutrals, generous line height. The content is the visual — decoration would be a distraction.</p>
+                <div class="prompt-box">
+                  Off-white background (#F7F6F3 or similar warm cream). Mixed-weight sans or display serif for headings. Body text at 16–18px, Poppins Light or equivalent, 1.8× line height. Soft box shadows. Rounded corners (12–20px). Muted tertiary palette — no saturated colours. Feels calm, readable, human.
+                </div>
+              </div>
+              <div class="style-card-screenshot">
+                <div class="screenshot-ph" style="background: #F7F6F3; border: 1px solid #E0DDD9;">
+                  <span class="screenshot-ph-label" style="background:rgba(0,0,0,0.12);color:#555;">Screenshot — notion.so</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STYLE 5 ── -->
+          <h2 id="s5" class="fade-up" style="margin-bottom: 8px;">05 — Cinematic Full-Bleed</h2>
+
+          <div class="style-card fade-up">
+            <div class="style-card-header">
+              <span class="style-card-title">Cinematic Full-Bleed</span>
+              <a href="https://apple.com" target="_blank" class="style-ref-link">
+                <span class="ref-dot" style="background:#1d1d1f;border:1px solid #444;"></span>
+                apple.com ↗
+              </a>
+            </div>
+            <div class="style-card-body">
+              <div class="style-card-desc">
+                <p>The photography does the work. Type is an annotation, not a headline. Scrolling is the interaction — every viewport is a scene. Product as protagonist.</p>
+                <div class="prompt-box">
+                  Full-viewport imagery or video, no visible grid. Text appears sparse, large, centered over photography — often white or very light. SF Pro, Neue Haas Grotesk, or Universal Sans. Ultra-wide horizontal compositions. Tight headline tracking (−3 to −4px at large sizes). No visible UI chrome on hero sections. Let the image breathe.
+                </div>
+              </div>
+              <div class="style-card-screenshot">
+                <div class="screenshot-ph" style="background: #1d1d1f; border: 1px solid #333;">
+                  <span class="screenshot-ph-label">Screenshot — apple.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STYLE 6 ── -->
+          <h2 id="s6" class="fade-up" style="margin-bottom: 8px;">06 — Playful Multi-Color Brand</h2>
+
+          <div class="style-card fade-up">
+            <div class="style-card-header">
+              <span class="style-card-title">Playful Multi-Color Brand</span>
+              <a href="https://figma.com" target="_blank" class="style-ref-link">
+                <span class="ref-dot" style="background:linear-gradient(135deg,#ff7262,#a259ff,#1abcfe,#0acf83);"></span>
+                figma.com ↗
+              </a>
+            </div>
+            <div class="style-card-body">
+              <div class="style-card-desc">
+                <p>Four or five brand colours used simultaneously — but with enough structure that they don't fight each other. Energy over precision. Feels engineered but approachable.</p>
+                <div class="prompt-box">
+                  Multi-hue palette used in harmony (4–5 colors, no single dominant). Rounded UI — 16–24px border radius. Illustration or icon accents at key touchpoints. Friendly display typeface or bold geometric sans. White or very light backgrounds to let colour pop. Avoid dark mode unless secondary. High visual energy, low formality.
+                </div>
+              </div>
+              <div class="style-card-screenshot">
+                <div class="screenshot-ph" style="background: linear-gradient(135deg,#7b61ff 0%,#ff7262 50%,#0acf83 100%); border: 1px solid #aaa;">
+                  <span class="screenshot-ph-label">Screenshot — figma.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STYLE 7 ── -->
+          <h2 id="s7" class="fade-up" style="margin-bottom: 8px;">07 — Terminal-Native Dark</h2>
+
+          <div class="style-card fade-up">
+            <div class="style-card-header">
+              <span class="style-card-title">Terminal-Native Dark</span>
+              <a href="https://warp.dev" target="_blank" class="style-ref-link">
+                <span class="ref-dot" style="background:#12131a;border:1px solid #444;"></span>
+                warp.dev ↗
+              </a>
+            </div>
+            <div class="style-card-body">
+              <div class="style-card-desc">
+                <p>Designed for people who live in terminals. Monospace and sans coexist. Panel-based, block-based layout. The aesthetic signals: this tool respects your intelligence and your workflow.</p>
+                <div class="prompt-box">
+                  True dark background (#0d0d0d to #1a1a24). Monospace font mixed with geometric sans for UI chrome. Syntax-colored accents (cyan, green, amber, pink) used sparingly for code and highlights. Panel-style or block-command UI. Dense but not cluttered. Minimal marketing gloss — looks like a product screenshot, not a landing page.
+                </div>
+              </div>
+              <div class="style-card-screenshot">
+                <div class="screenshot-ph" style="background: #12131a; border: 1px solid #2a2b38;">
+                  <span class="screenshot-ph-label">Screenshot — warp.dev</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── STYLE 8 ── -->
+          <h2 id="s8" class="fade-up" style="margin-bottom: 8px;">08 — Fintech Clarity</h2>
+
+          <div class="style-card fade-up">
+            <div class="style-card-header">
+              <span class="style-card-title">Fintech Clarity</span>
+              <a href="https://wise.com" target="_blank" class="style-ref-link">
+                <span class="ref-dot" style="background:#9fe870;border:1px solid #ccc;"></span>
+                wise.com ↗
+              </a>
+            </div>
+            <div class="style-card-body">
+              <div class="style-card-desc">
+                <p>High information density that never feels cluttered. A single bright accent on clean white. Trust is built through layout: visible numbers, clear labels, no dark patterns.</p>
+                <div class="prompt-box">
+                  White or very light background. Single accent (bright green, blue, or teal) for CTAs and key actions only. Body type at 14–16px, regular weight, 1.7× line height. Dense tables and data displays with subtle row dividers. No illustration where numbers suffice. Radiates reliability — functional beauty, nothing decorative.
+                </div>
+              </div>
+              <div class="style-card-screenshot">
+                <div class="screenshot-ph" style="background: #fff; border: 1px solid #E0E0E0;">
+                  <span class="screenshot-ph-label" style="background:rgba(0,0,0,0.08);color:#555;">Screenshot — wise.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="article-divider fade-up">
+
+          <div class="fade-up">
+            <p style="margin-bottom: 12px;"><strong style="font-weight:600;color:var(--text-1);">How to use this</strong></p>
+            <p>Copy the prompt language directly into v0, Framer AI, or any generative UI tool. Use the site links as visual reference when briefing a developer or presenting a direction. The canonical examples were chosen because they're consistent — no campaigns, no one-off pages, just their core product or marketing site done well and kept current.</p>
+            <p>The boundaries between styles blur intentionally. Vercel occasionally uses gradient accents. Stripe has editorial sections. Real products mix fluently — which is exactly why it's useful to name the underlying aesthetics precisely rather than reaching for vague words like "clean" or "modern."</p>
+          </div>
+
+          <!-- Author bio -->
+          <div class="author-bio fade-up">
+            <div class="author-bio-avatar">
+              <img src="images/about-selfie.avif" alt="Bonnie Xu" onerror="this.style.display='none'" />
+            </div>
+            <div>
+              <div class="author-bio-name">Bonnie Xu</div>
+              <div class="author-bio-role">Product &amp; UX Designer</div>
+              <p class="author-bio-text">Designing digital products at global scale. Thinking out loud about UX strategy, AI, and the craft of design.</p>
+            </div>
+          </div>
+
+        </article>
+
+        <!-- Mobile: more from Bonnie -->
+        <div class="sidebar-card mobile-only fade-up">
+          <div class="sidebar-card-title">More from Bonnie</div>
+          <a href="blog-nielsen-heuristics.html" class="related-card">
+            <span class="related-tag">UX Design</span>
+            <span class="related-title">Nielsen's 10 Usability Heuristics — Still the Design Industry's Bible</span>
+            <span class="related-meta">Apr 2026 · 12 min</span>
+          </a>
+          <a href="blog-ai-vocabulary.html" class="related-card">
+            <span class="related-tag">AI &amp; Design</span>
+            <span class="related-title">Designer's AI Instruction Vocabulary</span>
+            <span class="related-meta">Mar 2026 · 4 min</span>
+          </a>
+        </div>
+
+        <!-- Desktop sidebar -->
+        <aside class="article-sidebar fade-up">
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">In this article</p>
+            <ol class="toc-list">
+              <li><a href="#s1">01 — Stark Black &amp; White</a></li>
+              <li><a href="#s2">02 — Purple Gradient Prestige</a></li>
+              <li><a href="#s3">03 — Dark + One Vivid Accent</a></li>
+              <li><a href="#s4">04 — Warm Editorial Minimal</a></li>
+              <li><a href="#s5">05 — Cinematic Full-Bleed</a></li>
+              <li><a href="#s6">06 — Playful Multi-Color</a></li>
+              <li><a href="#s7">07 — Terminal-Native Dark</a></li>
+              <li><a href="#s8">08 — Fintech Clarity</a></li>
+            </ol>
+          </div>
+          <div class="sidebar-card">
+            <p class="sidebar-card-title">More from Bonnie</p>
+            <a href="blog-nielsen-heuristics.html" class="related-card">
+              <span class="related-tag">UX Design</span>
+              <span class="related-title">Nielsen's 10 Usability Heuristics</span>
+              <span class="related-meta">Apr 2026 · 12 min</span>
+            </a>
+            <a href="blog-ai-vocabulary.html" class="related-card">
+              <span class="related-tag">AI &amp; Design</span>
+              <span class="related-title">Designer's AI Instruction Vocabulary</span>
+              <span class="related-meta">Mar 2026 · 4 min</span>
+            </a>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="shared-nav.js"></script>
+  <script>
+    // Fade-up on scroll
+    const obs = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    }), { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+    // TOC active state
+    const sections = document.querySelectorAll('[id^="s"]');
+    const tocLinks = document.querySelectorAll('.toc-list a');
+    const tocObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          tocLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.toc-list a[href="#${e.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(s => tocObs.observe(s));
+  </script>
+</body>
+</html>
